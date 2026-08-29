@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+<title>Pong</title>
+<style>
+  :root { --bg-1:#0f0c29; --bg-2:#302b63; --bg-3:#24243e; --accent:#7dd3fc; --accent-2:#a78bfa; --card-bg:rgba(255,255,255,0.06); --card-border:rgba(255,255,255,0.14); --text:#eef2ff; --text-dim:#b8c0e0; }
+  * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+  html, body { margin:0; height:100%; overscroll-behavior:none; }
+  body { font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Inter,Roboto,sans-serif; background:linear-gradient(135deg,var(--bg-1),var(--bg-2) 50%,var(--bg-3)); color:var(--text); display:flex; flex-direction:column; align-items:center; padding:18px 14px 24px; min-height:100%; user-select:none; }
+  h1 { font-size:clamp(24px,6vw,32px); margin:0 0 12px; background:linear-gradient(90deg,#fff,var(--accent) 60%,var(--accent-2)); -webkit-background-clip:text; background-clip:text; color:transparent; }
+  .hud { display:flex; gap:40px; margin-bottom:12px; font-size:28px; font-weight:700; }
+  .hud .p1 { color:var(--accent); }
+  .hud .p2 { color:var(--accent-2); }
+  .board-wrap { position:relative; background:var(--card-bg); border:1px solid var(--card-border); border-radius:16px; padding:8px; backdrop-filter:blur(6px); }
+  canvas#board { display:block; border-radius:8px; background:rgba(0,0,0,0.35); touch-action:none; }
+  .overlay { position:absolute; inset:8px; background:rgba(10,8,30,0.85); border-radius:8px; display:none; flex-direction:column; align-items:center; justify-content:center; gap:10px; text-align:center; padding:16px; }
+  .overlay.show { display:flex; }
+  .overlay h2 { margin:0; font-size:22px; color:var(--accent); }
+  .overlay p { margin:0; color:var(--text-dim); font-size:13px; }
+  button { appearance:none; border:1px solid var(--card-border); background:rgba(255,255,255,0.08); color:var(--text); padding:9px 18px; border-radius:10px; font-size:14px; font-weight:600; cursor:pointer; }
+  button:active { transform:scale(0.96); }
+  .hint { margin-top:16px; font-size:12px; color:var(--text-dim); text-align:center; max-width:300px; }
+  footer { margin-top:20px; font-size:12px; color:var(--text-dim); }
+  footer a { color:var(--accent); text-decoration:none; }
+</style>
+</head>
+<body>
+  <h1>Pong</h1>
+  <div class="hud"><div class="p1" id="score1">0</div><div class="p2" id="score2">0</div></div>
+  <div class="board-wrap">
+    <canvas id="board" width="300" height="400"></canvas>
+    <div class="overlay show" id="overlay">
+      <h2 id="overlayTitle">Pong</h2>
+      <p id="overlaySub">You (bottom) vs CPU (top). Drag to move.</p>
+      <button id="overlayBtn">Start</button>
+    </div>
+  </div>
+  <p class="hint">Drag left/right on the board, or use ← → keys. First to 7 wins.</p>
+  <footer>Served from <a href="/">mcp-info-server</a> · <a href="/games.html">All games</a></footer>
+<script>
+(function () {
+  const W = 300, H = 400;
+  const canvas = document.getElementById('board');
+  const ctx = canvas.getContext('2d');
+  const score1El = document.getElementById('score1');
+  const score2El = document.getElementById('score2');
+  const overlay = document.getElementById('overlay');
+  const overlayTitle = document.getElementById('overlayTitle');
+  const overlaySub = document.getElementById('overlaySub');
+  const overlayBtn = document.getElementById('overlayBtn');
+
+  const PADDLE_W = 60, PADDLE_H = 10;
+  let playerX, cpuX, ballX, ballY, ballVX, ballVY, score1, score2, running;
+
+  function reset(serveToPlayer) {
+    playerX = W / 2 - PADDLE_W / 2;
+    cpuX = W / 2 - PADDLE_W / 2;
+    ballX = W / 2;
+    ballY = H / 2;
+    const speed = 3.2;
+    ballVX = (Math.random() > 0.5 ? 1 : -1) * speed;
+    ballVY = (serveToPlayer ? 1 : -1) * speed;
+  }
+
+  function startGame() {
+    score1 = 0; score2 = 0;
+    score1El.textContent = score1;
+    score2El.textContent = score2;
+    reset(true);
+    running = true;
+    overlay.classList.remove('show');
+    requestAnimationFrame(loop);
+  }
+
+  function draw() {
+    ctx.clearRect(0, 0, W, H);
+    ctx.strokeStyle = 'rgba(255,255,255,0.08)';
+    ctx.setLineDash([6, 8]);
+    ctx.beginPath();
+    ctx.moveTo(0, H / 2);
+    ctx.lineTo(W, H / 2);
+    ctx.stroke();
+    ctx.setLineDash([]);
+
+    ctx.fillStyle = '#a78bfa';
+    ctx.fillRect(cpuX, 14, PADDLE_W, PADDLE_H);
+    ctx.fillStyle = '#7dd3fc';
+    ctx.fillRect(playerX, H - 24, PADDLE_W, PADDLE_H);
+
+    ctx.fillStyle = '#fff';
+    ctx.beginPath();
+    ctx.arc(ballX, ballY, 6, 0, Math.PI * 2);
+    ctx.fill();
+  }
+
+  function endRound(playerWon) {
+    if (playerWon) { score1++; score1El.textContent = score1; }
+    else { score2++; score2El.textContent = score2; }
+
+    if (score1 >= 7 || score2 >= 7) {
+      running = false;
+      overlayTitle.textContent = score1 >= 7 ? 'You Win!' : 'CPU Wins';
+      overlaySub.textContent = 'Score: ' + score1 + ' - ' + score2;
+      overlayBtn.textContent = 'Play Again';
+      overlay.classList.add('show');
+    } else {
+      reset(!playerWon);
+    }
+  }
+
+  function loop() {
+    if (!running) return;
+
+    ballX += ballVX;
+    ballY += ballVY;
+
+    if (ballX - 6 < 0 || ballX + 6 > W) {
+      ballVX *= -1;
+      ballX = Math.max(6, Math.min(W - 6, ballX));
+    }
+
+    const cpuCenter = cpuX + PADDLE_W / 2;
+    const cpuTarget = ballX;
+    cpuX += (cpuTarget - cpuCenter) * 0.06;
+    cpuX = Math.max(0, Math.min(W - PADDLE_W, cpuX));
+
+    if (ballY - 6 < 24 && ballX > cpuX && ballX < cpuX + PADDLE_W && ballVY < 0) {
+      ballVY *= -1.03;
+      ballVX *= 1.02;
+      ballY = 24 + 6;
+    }
+    if (ballY + 6 > H - 24 && ballX > playerX && ballX < playerX + PADDLE_W && ballVY > 0) {
+      ballVY *= -1.03;
+      const hitPos = (ballX - (playerX + PADDLE_W / 2)) / (PADDLE_W / 2);
+      ballVX += hitPos * 1.5;
+      ballY = H - 24 - 6;
+    }
+
+    if (ballY < 0) { draw(); return endRound(false); }
+    if (ballY > H) { draw(); return endRound(true); }
+
+    draw();
+    requestAnimationFrame(loop);
+  }
+
+  function setPlayerCenter(clientX) {
+    const rect = canvas.getBoundingClientRect();
+    const scale = W / rect.width;
+    const x = (clientX - rect.left) * scale;
+    playerX = Math.max(0, Math.min(W - PADDLE_W, x - PADDLE_W / 2));
+  }
+
+  canvas.addEventListener('touchmove', (e) => {
+    e.preventDefault();
+    setPlayerCenter(e.touches[0].clientX);
+  }, { passive: false });
+  canvas.addEventListener('touchstart', (e) => {
+    setPlayerCenter(e.touches[0].clientX);
+  }, { passive: true });
+  canvas.addEventListener('mousemove', (e) => {
+    if (e.buttons === 1) setPlayerCenter(e.clientX);
+  });
+
+  document.addEventListener('keydown', (e) => {
+    if (!running) return;
+    if (e.key === 'ArrowLeft') playerX = Math.max(0, playerX - 18);
+    if (e.key === 'ArrowRight') playerX = Math.min(W - PADDLE_W, playerX + 18);
+  });
+
+  overlayBtn.addEventListener('click', startGame);
+
+  reset(true);
+  draw();
+})();
+</script>
+</body>
+</html>

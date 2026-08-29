@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Termux MCP</title>
+<style>
+  :root {
+    --bg-1: #0f0c29;
+    --bg-2: #302b63;
+    --bg-3: #24243e;
+    --accent: #7dd3fc;
+    --accent-2: #a78bfa;
+    --card-bg: rgba(255,255,255,0.06);
+    --card-border: rgba(255,255,255,0.12);
+    --text: #eef2ff;
+    --text-dim: #b8c0e0;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Inter, Roboto, sans-serif;
+    background: linear-gradient(135deg, var(--bg-1), var(--bg-2) 50%, var(--bg-3));
+    color: var(--text);
+    min-height: 100vh;
+    padding: 48px 20px 80px;
+  }
+  .wrap { max-width: 880px; margin: 0 auto; }
+  .badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 6px 14px;
+    border-radius: 999px;
+    background: rgba(125, 211, 252, 0.12);
+    border: 1px solid rgba(125, 211, 252, 0.35);
+    color: var(--accent);
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+  }
+  .dot {
+    width: 8px; height: 8px; border-radius: 50%;
+    background: #4ade80;
+    box-shadow: 0 0 8px #4ade80;
+  }
+  h1 {
+    font-size: clamp(32px, 5vw, 52px);
+    margin: 20px 0 8px;
+    background: linear-gradient(90deg, #fff, var(--accent) 60%, var(--accent-2));
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    line-height: 1.1;
+  }
+  .sub {
+    color: var(--text-dim);
+    font-size: 17px;
+    max-width: 620px;
+    line-height: 1.6;
+    margin-bottom: 40px;
+  }
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 18px;
+    margin-bottom: 40px;
+  }
+  .card {
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
+    border-radius: 16px;
+    padding: 22px;
+    backdrop-filter: blur(6px);
+    transition: transform 0.2s ease, border-color 0.2s ease;
+  }
+  .card:hover {
+    transform: translateY(-3px);
+    border-color: rgba(125, 211, 252, 0.4);
+  }
+  .card .icon {
+    width: 38px; height: 38px;
+    display: flex; align-items: center; justify-content: center;
+    border-radius: 10px;
+    background: linear-gradient(135deg, var(--accent), var(--accent-2));
+    font-size: 18px;
+    margin-bottom: 14px;
+  }
+  .card h3 { margin: 0 0 8px; font-size: 17px; }
+  .card p { margin: 0; color: var(--text-dim); font-size: 14px; line-height: 1.55; }
+  code {
+    background: rgba(0,0,0,0.35);
+    padding: 2px 7px;
+    border-radius: 6px;
+    font-size: 0.9em;
+    color: var(--accent);
+  }
+  .section-title {
+    font-size: 13px;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--text-dim);
+    margin: 40px 0 14px;
+    font-weight: 700;
+  }
+  .panel {
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
+    border-radius: 16px;
+    padding: 24px;
+  }
+  table { width: 100%; border-collapse: collapse; }
+  th, td { text-align: left; padding: 10px 8px; font-size: 14px; }
+  th { color: var(--text-dim); font-weight: 600; border-bottom: 1px solid var(--card-border); }
+  td { border-bottom: 1px solid rgba(255,255,255,0.05); color: var(--text); }
+  .pill {
+    display: inline-block;
+    padding: 3px 10px;
+    border-radius: 999px;
+    font-size: 12px;
+    font-weight: 600;
+  }
+  .pill.ok { background: rgba(74,222,128,0.15); color: #4ade80; }
+  .pill.warn { background: rgba(251,191,36,0.15); color: #fbbf24; }
+  footer {
+    margin-top: 48px;
+    text-align: center;
+    color: var(--text-dim);
+    font-size: 13px;
+  }
+</style>
+</head>
+<body>
+  <div class="wrap">
+    <span class="badge"><span class="dot"></span>Server Online</span>
+    <h1>Termux MCP</h1>
+    <p class="sub">
+      A lightweight Model Context Protocol server running directly on an Android device via Termux.
+      It exposes a small toolset that lets an AI assistant inspect and run commands inside a dedicated
+      workspace on this phone, all gated behind Bearer token authentication.
+    </p>
+
+    <div class="grid">
+      <div class="card">
+        <div class="icon">📁</div>
+        <h3>workspace_info</h3>
+        <p>Reports the MCP workspace path, OS platform, CPU architecture, and the running Node.js version &mdash; a quick snapshot of the environment the assistant is operating in.</p>
+      </div>
+      <div class="card">
+        <div class="icon">⚙️</div>
+        <h3>exec</h3>
+        <p>Runs a command with arguments and an optional working directory, returning exit code, stdout, and stderr. This is the core tool that lets the assistant act on the filesystem.</p>
+      </div>
+      <div class="card">
+        <div class="icon">🔐</div>
+        <h3>Bearer Auth</h3>
+        <p>Every request to <code>/mcp</code> must carry a valid Bearer token, checked with a timing-safe comparison. Requests without it are rejected with 401 before anything else runs.</p>
+      </div>
+      <div class="card">
+        <div class="icon">📡</div>
+        <h3>HTTP Transport</h3>
+        <p>Speaks MCP over plain HTTP, bound to <code>127.0.0.1</code> only. A separate unauthenticated <code>/health</code> endpoint reports basic liveness.</p>
+      </div>
+    </div>
+
+    <div class="section-title">How a request flows</div>
+    <div class="panel">
+      <table>
+        <tr><th>Step</th><th>What happens</th></tr>
+        <tr><td>1. Request in</td><td>Client sends a request to <code>/mcp</code> with an <code>Authorization: Bearer &lt;token&gt;</code> header</td></tr>
+        <tr><td>2. Auth check</td><td>Token is compared against the value stored in the token file using a timing-safe equality check</td></tr>
+        <tr><td>3. Tool call</td><td>The MCP handler routes the call to <code>workspace_info</code> or <code>exec</code></td></tr>
+        <tr><td>4. Execution</td><td>For <code>exec</code>, the command is spawned as a child process (no shell interpolation) with a 30s timeout and a truncated output buffer</td></tr>
+        <tr><td>5. Response</td><td>Exit code, stdout, and stderr are packaged and streamed back to the client</td></tr>
+      </table>
+    </div>
+
+    <div class="section-title">Current status</div>
+    <div class="panel">
+      <table>
+        <tr><th>Property</th><th>Value</th></tr>
+        <tr><td>Transport</td><td><span class="pill ok">HTTP · 127.0.0.1</span></td></tr>
+        <tr><td>Auth</td><td><span class="pill ok">Bearer token required</span></td></tr>
+        <tr><td>Command restrictions</td><td><span class="pill warn">None &mdash; any command is permitted</span></td></tr>
+        <tr><td>Path / cwd restrictions</td><td><span class="pill warn">None &mdash; not confined to workspace</span></td></tr>
+      </table>
+    </div>
+
+    <footer>Served locally from <code>mcp-info-server</code> &middot; powered by Express</footer>
+  </div>
+</body>
+</html>

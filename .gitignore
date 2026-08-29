@@ -1,0 +1,4 @@
+node_modules/
+install.log
+server.log
+adb.log
