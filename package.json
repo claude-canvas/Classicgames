@@ -1,11 +1,21 @@
 {
-  "name": "mcp-info-server",
+  "name": "classic-games",
   "version": "1.0.0",
+  "description": "A small arcade of classic browser games served with Express",
   "private": true,
+  "main": "index.js",
   "scripts": {
     "start": "node index.js"
   },
+  "engines": {
+    "node": ">=18.0.0"
+  },
   "dependencies": {
     "express": "^4.19.2"
-  }
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/claude-canvas/Classicgames.git"
+  },
+  "license": "MIT"
 }
