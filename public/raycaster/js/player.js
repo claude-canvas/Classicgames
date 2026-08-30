@@ -9,6 +9,12 @@ class Player {
     this.moveSpeed = CONFIG.MOVE_SPEED;
     this.rotSpeed = CONFIG.ROT_SPEED;
     this.radius = CONFIG.PLAYER_RADIUS;
+
+    // Distance actually moved (post-collision) on the most recent
+    // update, in cells. Consumed by AudioEngine (footsteps) and the
+    // renderer (head-bob) — not written by anything else.
+    this.lastMoveDist = 0;
+    this.bobPhase = 0;
   }
 
   update(input, map, cellSize, dt) {
@@ -44,6 +50,8 @@ class Player {
 
   // Move on each axis independently so sliding along walls feels smooth.
   tryMove(dx, dy, map, cellSize) {
+    const prevX = this.x;
+    const prevY = this.y;
     const nextX = this.x + dx;
     const nextY = this.y + dy;
 
@@ -52,6 +60,12 @@ class Player {
     }
     if (!this.collidesAt(this.x, nextY, map, cellSize)) {
       this.y = nextY;
+    }
+
+    const movedDist = Math.hypot(this.x - prevX, this.y - prevY) / cellSize;
+    this.lastMoveDist = movedDist;
+    if (movedDist > 0) {
+      this.bobPhase += movedDist * CONFIG.BOB_FREQUENCY;
     }
   }
 

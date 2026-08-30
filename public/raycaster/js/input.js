@@ -88,7 +88,9 @@ class InputHandler {
 
   // Classic FPS mouse-look: click the canvas to lock the pointer, then
   // horizontal mouse movement turns the player. Esc (or clicking again
-  // with the browser's own UI) releases the lock.
+  // with the browser's own UI) releases the lock. The same click also
+  // unlocks the Web Audio context, since browsers require a user
+  // gesture before any sound can play.
   _bindMouseLook() {
     const canvas = document.getElementById('game-canvas');
     const hint = document.getElementById('lock-hint');
@@ -96,6 +98,9 @@ class InputHandler {
 
     canvas.addEventListener('click', () => {
       canvas.requestPointerLock();
+      if (window.AudioEngine) {
+        AudioEngine.start();
+      }
     });
 
     document.addEventListener('mousemove', (e) => {

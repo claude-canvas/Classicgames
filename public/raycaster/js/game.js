@@ -1,6 +1,6 @@
 // game.js
-// Wires up all the pieces (map, player, input, raycaster, renderer) and
-// runs the requestAnimationFrame loop.
+// Wires up all the pieces (map, player, input, raycaster, renderer, audio)
+// and runs the requestAnimationFrame loop.
 
 class Game {
   constructor(canvas) {
@@ -20,6 +20,7 @@ class Game {
     this.renderer = new Renderer(this.ctx, this.canvas.width, this.canvas.height);
 
     this.lastTime = 0;
+    this.flicker = 0;
     this._loop = this._loop.bind(this);
   }
 
@@ -47,6 +48,10 @@ class Game {
 
     this.player.update(this.input.state, this.map, this.cellSize, dt);
 
+    if (window.AudioEngine) {
+      AudioEngine.reportMovement(this.player.lastMoveDist);
+    }
+
     // Mouse-look: apply accumulated horizontal mouse movement, then
     // clear it so it doesn't keep spinning the player next frame.
     if (this.input.mouseDeltaX) {
@@ -56,11 +61,20 @@ class Game {
       this.input.mouseDeltaX = 0;
     }
 
+    // Walking head-bob: eases toward zero when standing still, since
+    // bobPhase only advances while the player is actually moving.
+    const movingFactor = this.player.lastMoveDist > 0 ? 1 : 0.4;
+    const bobOffset = Math.sin(this.player.bobPhase) * CONFIG.BOB_AMPLITUDE * movingFactor;
+
+    // Torch flicker: a small clamped random walk, recomputed every frame.
+    this.flicker += (Math.random() - 0.5) * 0.05;
+    this.flicker = Math.max(-0.05, Math.min(0.1, this.flicker));
+
     // One ray roughly every 3 display pixels keeps this smooth on phones.
     const numRays = Math.max(60, Math.floor(this.renderer.width / 3));
     const rays = this.raycaster.castAll(this.player, numRays, CONFIG.FOV);
 
-    this.renderer.draw(rays, this.player, this.map);
+    this.renderer.draw(rays, this.player, this.map, bobOffset, this.flicker);
 
     requestAnimationFrame(this._loop);
   }

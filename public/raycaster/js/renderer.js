@@ -1,7 +1,7 @@
 // renderer.js
 // Turns raycast results into pixels: a textured floor (via floor-casting),
 // texture-mapped wall strips (real per-column texture sampling using the
-// DDA hit offset), and a small minimap overlay.
+// DDA hit offset), a flickering torchlight vignette, and a minimap.
 
 class Renderer {
   constructor(ctx, width, height) {
@@ -15,25 +15,32 @@ class Renderer {
     this.height = height;
   }
 
-  draw(rays, player, map) {
+  // bobOffset shifts the horizon up/down a few pixels to simulate a
+  // walking camera bob. flicker (-0.05..0.1 roughly) darkens/lightens
+  // the torchlight vignette frame to frame.
+  draw(rays, player, map, bobOffset = 0, flicker = 0) {
     const ctx = this.ctx;
     const w = this.width;
     const h = this.height;
+    const horizon = h / 2 + bobOffset;
 
     // Ceiling (kept flat — a texture here adds little at this camera angle)
     ctx.fillStyle = '#3a3a52';
-    ctx.fillRect(0, 0, w, h / 2);
+    ctx.fillRect(0, 0, w, horizon);
 
     // Floor, textured via floor-casting
-    this.drawFloor(player, w, h);
+    this.drawFloor(player, w, h, horizon);
 
     // Walls, texture-mapped per column
-    this.drawWalls(rays, w, h);
+    this.drawWalls(rays, w, horizon);
+
+    // Torch flicker vignette
+    this.drawVignette(w, h, flicker);
 
     this.drawMinimap(player, map);
   }
 
-  drawWalls(rays, w, h) {
+  drawWalls(rays, w, horizon) {
     const ctx = this.ctx;
     const numRays = rays.length;
     const stripWidth = w / numRays;
@@ -41,7 +48,7 @@ class Renderer {
     for (let i = 0; i < numRays; i++) {
       const ray = rays[i];
       const dist = ray.distance;
-      const wallHeight = Math.min(h * 3, h / dist);
+      const wallHeight = Math.min(horizon * 6, (horizon * 2) / dist);
 
       const texture = Textures.wallTextures[ray.wallType] || Textures.wallTextures[1];
       let texX = Math.floor(ray.wallX * texture.width);
@@ -49,7 +56,7 @@ class Renderer {
       if (texX >= texture.width) texX = texture.width - 1;
 
       const x = i * stripWidth;
-      const y = (h - wallHeight) / 2;
+      const y = horizon - wallHeight / 2;
 
       ctx.drawImage(texture, texX, 0, 1, texture.height, x, y, stripWidth + 1, wallHeight);
 
@@ -66,7 +73,7 @@ class Renderer {
     }
   }
 
-  drawFloor(player, w, h) {
+  drawFloor(player, w, h, horizon) {
     const ctx = this.ctx;
     const step = CONFIG.FLOOR_STEP;
     const texSize = Textures.floorSize;
@@ -81,9 +88,9 @@ class Renderer {
     const posYCells = player.y / CONFIG.CELL_SIZE;
 
     const numCols = Math.max(1, Math.floor(w / step));
-    const horizon = h / 2;
+    const startY = Math.max(0, Math.floor(horizon));
 
-    for (let y = Math.floor(horizon); y < h; y += step) {
+    for (let y = startY; y < h; y += step) {
       const p = y - horizon || 1;
       const rowDistance = horizon / p;
 
@@ -110,6 +117,23 @@ class Renderer {
         floorY += floorStepY;
       }
     }
+  }
+
+  // A soft radial darkening toward the screen edges that flickers subtly
+  // frame to frame, like the scene is lit by an unsteady torch.
+  drawVignette(w, h, flicker) {
+    const ctx = this.ctx;
+    const cx = w / 2;
+    const cy = h / 2;
+    const outerR = Math.max(w, h) * 0.75;
+    const darkness = Math.max(0, Math.min(0.75, 0.55 + flicker));
+
+    const grad = ctx.createRadialGradient(cx, cy, outerR * 0.15, cx, cy, outerR);
+    grad.addColorStop(0, 'rgba(0,0,0,0)');
+    grad.addColorStop(1, `rgba(0,0,0,${darkness})`);
+
+    ctx.fillStyle = grad;
+    ctx.fillRect(0, 0, w, h);
   }
 
   drawMinimap(player, map) {

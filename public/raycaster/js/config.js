@@ -38,4 +38,9 @@ const CONFIG = {
   // Pixel step size used when casting the floor. Bigger = faster/blockier,
   // smaller = sharper/slower. 4 is a good phone-friendly default.
   FLOOR_STEP: 4,
+
+  // Walking "juice": head-bob frequency (radians of bob phase per cell
+  // walked) and amplitude (pixels of vertical camera shift at the peak).
+  BOB_FREQUENCY: 14,
+  BOB_AMPLITUDE: 5,
 };
