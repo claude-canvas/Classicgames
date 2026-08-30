@@ -12,7 +12,7 @@ class Player {
   }
 
   update(input, map, cellSize, dt) {
-    // Turning
+    // Turning (keyboard)
     if (input.left) this.angle -= this.rotSpeed * dt;
     if (input.right) this.angle += this.rotSpeed * dt;
     this.angle = normalizeAngle(this.angle);

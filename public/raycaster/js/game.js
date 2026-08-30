@@ -47,6 +47,15 @@ class Game {
 
     this.player.update(this.input.state, this.map, this.cellSize, dt);
 
+    // Mouse-look: apply accumulated horizontal mouse movement, then
+    // clear it so it doesn't keep spinning the player next frame.
+    if (this.input.mouseDeltaX) {
+      this.player.angle = normalizeAngle(
+        this.player.angle + this.input.mouseDeltaX * CONFIG.MOUSE_SENSITIVITY
+      );
+      this.input.mouseDeltaX = 0;
+    }
+
     // One ray roughly every 3 display pixels keeps this smooth on phones.
     const numRays = Math.max(60, Math.floor(this.renderer.width / 3));
     const rays = this.raycaster.castAll(this.player, numRays, CONFIG.FOV);

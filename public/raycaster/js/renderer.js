@@ -1,7 +1,7 @@
 // renderer.js
-// Turns raycast results into pixels: ceiling/floor fill, shaded wall
-// strips, and a small minimap overlay. Swap the flat-color wall fill
-// for a textured one later without touching anything else in the game.
+// Turns raycast results into pixels: a textured floor (via floor-casting),
+// texture-mapped wall strips (real per-column texture sampling using the
+// DDA hit offset), and a small minimap overlay.
 
 class Renderer {
   constructor(ctx, width, height) {
@@ -20,14 +20,16 @@ class Renderer {
     const w = this.width;
     const h = this.height;
 
-    // Ceiling
+    // Ceiling (kept flat — a texture here adds little at this camera angle)
     ctx.fillStyle = '#3a3a52';
     ctx.fillRect(0, 0, w, h / 2);
-    // Floor
-    ctx.fillStyle = '#555555';
-    ctx.fillRect(0, h / 2, w, h / 2);
 
+    // Floor, textured via floor-casting
+    this.drawFloor(player, w, h);
+
+    // Walls, texture-mapped per column
     this.drawWalls(rays, w, h);
+
     this.drawMinimap(player, map);
   }
 
@@ -41,21 +43,72 @@ class Renderer {
       const dist = ray.distance;
       const wallHeight = Math.min(h * 3, h / dist);
 
-      const color = CONFIG.WALL_COLORS[ray.wallType] || CONFIG.WALL_COLORS[1];
+      const texture = Textures.wallTextures[ray.wallType] || Textures.wallTextures[1];
+      let texX = Math.floor(ray.wallX * texture.width);
+      if (texX < 0) texX = 0;
+      if (texX >= texture.width) texX = texture.width - 1;
 
-      // Fade toward black with distance (simple fog), and darken
-      // one wall orientation slightly so edges read as 3D.
-      const fogFactor = Math.max(0.15, 1 - dist / CONFIG.MAX_DEPTH);
-      const sideFactor = ray.side === 1 ? 0.7 : 1;
-
-      const r = Math.floor(color.r * fogFactor * sideFactor);
-      const g = Math.floor(color.g * fogFactor * sideFactor);
-      const b = Math.floor(color.b * fogFactor * sideFactor);
-
-      ctx.fillStyle = `rgb(${r},${g},${b})`;
       const x = i * stripWidth;
       const y = (h - wallHeight) / 2;
-      ctx.fillRect(x, y, stripWidth + 1, wallHeight);
+
+      ctx.drawImage(texture, texX, 0, 1, texture.height, x, y, stripWidth + 1, wallHeight);
+
+      // Distance fog + a touch of extra shade on one wall orientation so
+      // corners read as 3D, applied as a translucent overlay on top of
+      // the texture strip.
+      const fog = Math.min(0.85, dist / CONFIG.MAX_DEPTH);
+      const sideShade = ray.side === 1 ? 0.25 : 0;
+      const alpha = Math.min(0.9, fog + sideShade);
+      if (alpha > 0.02) {
+        ctx.fillStyle = `rgba(0,0,0,${alpha})`;
+        ctx.fillRect(x, y, stripWidth + 1, wallHeight);
+      }
+    }
+  }
+
+  drawFloor(player, w, h) {
+    const ctx = this.ctx;
+    const step = CONFIG.FLOOR_STEP;
+    const texSize = Textures.floorSize;
+    const fov = CONFIG.FOV;
+
+    const rayDirX0 = Math.cos(player.angle - fov / 2);
+    const rayDirY0 = Math.sin(player.angle - fov / 2);
+    const rayDirX1 = Math.cos(player.angle + fov / 2);
+    const rayDirY1 = Math.sin(player.angle + fov / 2);
+
+    const posXCells = player.x / CONFIG.CELL_SIZE;
+    const posYCells = player.y / CONFIG.CELL_SIZE;
+
+    const numCols = Math.max(1, Math.floor(w / step));
+    const horizon = h / 2;
+
+    for (let y = Math.floor(horizon); y < h; y += step) {
+      const p = y - horizon || 1;
+      const rowDistance = horizon / p;
+
+      const floorStepX = (rowDistance * (rayDirX1 - rayDirX0)) / numCols;
+      const floorStepY = (rowDistance * (rayDirY1 - rayDirY0)) / numCols;
+
+      let floorX = posXCells + rowDistance * rayDirX0;
+      let floorY = posYCells + rowDistance * rayDirY0;
+
+      const fog = Math.max(0, Math.min(0.85, rowDistance / CONFIG.MAX_DEPTH));
+      const shade = 1 - fog;
+
+      for (let x = 0; x < w; x += step) {
+        const cellX = Math.floor(floorX);
+        const cellY = Math.floor(floorY);
+        const tx = Math.floor((floorX - cellX) * texSize) & (texSize - 1);
+        const ty = Math.floor((floorY - cellY) * texSize) & (texSize - 1);
+
+        const [r, g, b] = Textures.sampleFloor(tx, ty);
+        ctx.fillStyle = `rgb(${Math.floor(r * shade)},${Math.floor(g * shade)},${Math.floor(b * shade)})`;
+        ctx.fillRect(x, y, step, step);
+
+        floorX += floorStepX;
+        floorY += floorStepY;
+      }
     }
   }
 

@@ -10,9 +10,13 @@ class Raycaster {
   }
 
   // Casts a single ray from (px, py) at the given angle.
-  // Returns { distance, wallType, side } where distance is in *cells*
-  // (perpendicular distance, not yet fisheye-corrected) and side is
-  // 0 for a vertical (east/west-facing) wall hit, 1 for horizontal.
+  // Returns { distance, wallType, side, wallX } where:
+  //   - distance is the perpendicular distance in *cells* (not yet
+  //     fisheye-corrected)
+  //   - side is 0 for a vertical (east/west-facing) wall hit, 1 for
+  //     horizontal
+  //   - wallX is where along the wall face the ray hit, 0..1 — used to
+  //     pick which column of the wall texture to draw
   castRay(px, py, angle) {
     const map = this.map;
     const cellSize = this.cellSize;
@@ -80,11 +84,26 @@ class Raycaster {
     }
 
     const perpDist = side === 0 ? sideDistX - deltaDistX : sideDistY - deltaDistY;
+    const dist = Math.max(perpDist, 0.0001);
+
+    // Where exactly along the wall face did we hit? Used to pick the
+    // texture column so the wall doesn't look like one flat smear.
+    let wallX;
+    if (side === 0) {
+      wallX = cellPY + dist * rayDirY;
+      wallX -= Math.floor(wallX);
+      if (rayDirX > 0) wallX = 1 - wallX;
+    } else {
+      wallX = cellPX + dist * rayDirX;
+      wallX -= Math.floor(wallX);
+      if (rayDirY < 0) wallX = 1 - wallX;
+    }
 
     return {
-      distance: Math.max(perpDist, 0.0001),
+      distance: dist,
       wallType,
       side,
+      wallX,
     };
   }
 

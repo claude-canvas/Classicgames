@@ -23,6 +23,7 @@
     width: 100vw;
     height: 100vh;
     background: #000;
+    cursor: crosshair;
   }
 
   #hud {
@@ -32,6 +33,20 @@
     color: rgba(255, 255, 255, 0.6);
     font-size: 12px;
     text-align: right;
+    pointer-events: none;
+  }
+
+  #lock-hint {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: #fff;
+    background: rgba(0, 0, 0, 0.55);
+    padding: 14px 20px;
+    border-radius: 10px;
+    font-size: 14px;
+    text-align: center;
     pointer-events: none;
   }
 
@@ -91,7 +106,8 @@
 
 <canvas id="game-canvas"></canvas>
 
-<div id="hud">WASD / arrows to move &middot; touch controls below</div>
+<div id="hud">WASD to move &middot; touch controls below</div>
+<div id="lock-hint">Click anywhere to enable mouse look<br />(Esc to release)</div>
 
 <div id="controls">
   <div class="pad" id="move-pad">
@@ -109,6 +125,7 @@
 
 <!-- Load order matters: each file depends on globals defined by the ones before it. -->
 <script src="js/config.js"></script>
+<script src="js/textures.js"></script>
 <script src="js/player.js"></script>
 <script src="js/input.js"></script>
 <script src="js/raycaster.js"></script>
