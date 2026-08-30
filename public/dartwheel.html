@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+<title>Dart Wheel</title>
+<style>
+  :root {
+    --bg-1: #0f0c29;
+    --bg-2: #302b63;
+    --bg-3: #24243e;
+    --accent: #7dd3fc;
+    --accent-2: #a78bfa;
+    --dart: #a78bfa;
+    --fletch: #f472b6;
+    --card-bg: rgba(255,255,255,0.06);
+    --card-border: rgba(255,255,255,0.14);
+    --text: #eef2ff;
+    --text-dim: #b8c0e0;
+  }
+  * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+  html, body {
+    margin: 0;
+    height: 100%;
+    overscroll-behavior: none;
+  }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Inter, Roboto, sans-serif;
+    background: linear-gradient(135deg, var(--bg-1), var(--bg-2) 50%, var(--bg-3));
+    color: var(--text);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 18px 14px 24px;
+    min-height: 100%;
+    user-select: none;
+  }
+  h1 {
+    font-size: clamp(24px, 6vw, 32px);
+    margin: 0 0 12px;
+    background: linear-gradient(90deg, #fff, var(--accent) 60%, var(--accent-2));
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+  .hud {
+    display: flex;
+    gap: 16px;
+    margin-bottom: 12px;
+  }
+  .hud .panel {
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
+    border-radius: 12px;
+    padding: 8px 16px;
+    text-align: center;
+  }
+  .hud .label {
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--text-dim);
+  }
+  .hud .value {
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--accent);
+  }
+  .board-wrap {
+    position: relative;
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
+    border-radius: 16px;
+    padding: 8px;
+    backdrop-filter: blur(6px);
+  }
+  canvas#board {
+    display: block;
+    border-radius: 8px;
+    background: rgba(0,0,0,0.35);
+    touch-action: manipulation;
+  }
+  .overlay {
+    position: absolute;
+    inset: 8px;
+    background: rgba(10, 8, 30, 0.85);
+    border-radius: 8px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    text-align: center;
+    padding: 16px;
+  }
+  .overlay.hide { display: none; }
+  .overlay h2 { margin: 0; font-size: 22px; color: var(--accent); }
+  .overlay p { margin: 0; color: var(--text-dim); font-size: 13px; max-width: 220px; }
+  button {
+    appearance: none;
+    border: 1px solid var(--card-border);
+    background: rgba(255,255,255,0.08);
+    color: var(--text);
+    padding: 9px 18px;
+    border-radius: 10px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+  }
+  button:active { transform: scale(0.96); }
+  .hint {
+    margin-top: 16px;
+    font-size: 12px;
+    color: var(--text-dim);
+    text-align: center;
+  }
+  footer { margin-top: 16px; font-size: 12px; color: var(--text-dim); }
+  footer a { color: var(--accent); text-decoration: none; }
+</style>
+</head>
+<body>
+  <h1>Dart Wheel</h1>
+
+  <div class="hud">
+    <div class="panel"><div class="label">Darts</div><div class="value" id="score">0</div></div>
+    <div class="panel"><div class="label">Best</div><div class="value" id="best">0</div></div>
+    <div class="panel"><div class="label">Time</div><div class="value" id="time">0.0</div></div>
+  </div>
+
+  <div class="board-wrap">
+    <canvas id="board" width="320" height="460"></canvas>
+    <div class="overlay" id="overlay">
+      <h2 id="overlayTitle">Dart Wheel</h2>
+      <p id="overlaySub">Tap to fire a dart into the spinning wheel. Land it on empty surface — hit another dart and it's over. Land as many as you can, as fast as you can.</p>
+      <button id="overlayBtn">Start</button>
+    </div>
+  </div>
+
+  <p class="hint">Tap the board or press Space to fire</p>
+  <footer>Served from <a href="/">mcp-info-server</a></footer>
+
+<script>
+(function () {
+  const W = 320, H = 460;
+  const cx = W / 2, cy = 170, radius = 95;
+  const launchY = H - 40;
+  const contactY = cy - radius;
+  const CONTACT_ANGLE = -Math.PI / 2; // straight up, in canvas angle convention
+  const MIN_GAP = 0.27; // radians — minimum spacing between darts on the wheel
+  const BASE_SPEED = 1.1; // radians/sec
+  const SPEED_STEP = 0.045;
+  const MAX_SPEED = 3.2;
+  const FLIGHT_MS = 150;
+
+  const canvas = document.getElementById('board');
+  const ctx = canvas.getContext('2d');
+  const scoreEl = document.getElementById('score');
+  const bestEl = document.getElementById('best');
+  const timeEl = document.getElementById('time');
+  const overlay = document.getElementById('overlay');
+  const overlayTitle = document.getElementById('overlayTitle');
+  const overlaySub = document.getElementById('overlaySub');
+  const overlayBtn = document.getElementById('overlayBtn');
+
+  const BEST_KEY = 'dartwheel_best_score';
+  let best = Number(localStorageSafeGet(BEST_KEY)) || 0;
+  bestEl.textContent = best;
+
+  function localStorageSafeGet(key) {
+    try { return localStorage.getItem(key); } catch (e) { return null; }
+  }
+  function localStorageSafeSet(key, val) {
+    try { localStorage.setItem(key, val); } catch (e) { /* ignore */ }
+  }
+
+  function normalizeAngle(a) {
+    const TWO_PI = Math.PI * 2;
+    a = a % TWO_PI;
+    if (a < 0) a += TWO_PI;
+    return a;
+  }
+  function angularDist(a, b) {
+    const d = Math.abs(a - b) % (Math.PI * 2);
+    return d > Math.PI ? Math.PI * 2 - d : d;
+  }
+  function easeOut(t) { return 1 - (1 - t) * (1 - t); }
+
+  let wheelRotation, wheelSpeed, embeddedAngles, flying, score, elapsed;
+  let running, gameOver, gameStartTime, lastFrameTime, rafId;
+
+  function reset() {
+    wheelRotation = 0;
+    wheelSpeed = BASE_SPEED;
+    embeddedAngles = [];
+    flying = null;
+    score = 0;
+    elapsed = 0;
+    gameOver = false;
+    gameStartTime = null;
+    scoreEl.textContent = score;
+    timeEl.textContent = '0.0';
+  }
+
+  function start() {
+    reset();
+    running = true;
+    overlay.classList.add('hide');
+    lastFrameTime = performance.now();
+    cancelAnimationFrame(rafId);
+    rafId = requestAnimationFrame(loop);
+  }
+
+  function fire() {
+    if (!running || gameOver || flying) return;
+    if (gameStartTime === null) gameStartTime = performance.now();
+    flying = { start: performance.now(), progress: 0 };
+  }
+
+  function resolveImpact() {
+    const contactLocalAngle = normalizeAngle(CONTACT_ANGLE - wheelRotation);
+    const collision = embeddedAngles.some(a => angularDist(a, contactLocalAngle) < MIN_GAP);
+    flying = null;
+    if (collision) {
+      endGame();
+    } else {
+      embeddedAngles.push(contactLocalAngle);
+      score++;
+      scoreEl.textContent = score;
+      wheelSpeed = Math.min(BASE_SPEED + score * SPEED_STEP, MAX_SPEED);
+    }
+  }
+
+  function endGame() {
+    gameOver = true;
+    running = false;
+    if (score > best) {
+      best = score;
+      bestEl.textContent = best;
+      localStorageSafeSet(BEST_KEY, best);
+    }
+    overlayTitle.textContent = 'Missed!';
+    overlaySub.textContent = 'Landed ' + score + ' dart' + (score === 1 ? '' : 's') + ' in ' + elapsed.toFixed(1) + 's';
+    overlayBtn.textContent = 'Play Again';
+    overlay.classList.remove('hide');
+  }
+
+  function loop(now) {
+    if (!running) return;
+    const dt = Math.min((now - lastFrameTime) / 1000, 0.05);
+    lastFrameTime = now;
+
+    wheelRotation = normalizeAngle(wheelRotation + wheelSpeed * dt);
+
+    if (gameStartTime !== null && !gameOver) {
+      elapsed = (now - gameStartTime) / 1000;
+      timeEl.textContent = elapsed.toFixed(1);
+    }
+
+    if (flying) {
+      flying.progress = Math.min((now - flying.start) / FLIGHT_MS, 1);
+      if (flying.progress >= 1) resolveImpact();
+    }
+
+    draw();
+    rafId = requestAnimationFrame(loop);
+  }
+
+  function draw() {
+    ctx.clearRect(0, 0, W, H);
+
+    // wheel pie segments for visual flair
+    const segs = 10;
+    for (let i = 0; i < segs; i++) {
+      const a0 = wheelRotation + i * (Math.PI * 2 / segs);
+      const a1 = a0 + (Math.PI * 2 / segs);
+      ctx.beginPath();
+      ctx.moveTo(cx, cy);
+      ctx.arc(cx, cy, radius, a0, a1);
+      ctx.closePath();
+      ctx.fillStyle = i % 2 === 0 ? 'rgba(125,211,252,0.16)' : 'rgba(167,139,250,0.16)';
+      ctx.fill();
+    }
+
+    // wheel outline
+    ctx.beginPath();
+    ctx.arc(cx, cy, radius, 0, Math.PI * 2);
+    ctx.lineWidth = 4;
+    ctx.strokeStyle = 'rgba(255,255,255,0.25)';
+    ctx.stroke();
+
+    // center hub
+    ctx.beginPath();
+    ctx.arc(cx, cy, 9, 0, Math.PI * 2);
+    ctx.fillStyle = '#eef2ff';
+    ctx.fill();
+
+    // embedded darts (rotate with the wheel)
+    embeddedAngles.forEach(localA => {
+      drawEmbeddedDart(localA + wheelRotation);
+    });
+
+    // flying / ready dart
+    if (flying) {
+      const y = launchY + (contactY - launchY) * easeOut(flying.progress);
+      drawLooseDart(cx, y);
+    } else if (running && !gameOver) {
+      drawLooseDart(cx, launchY);
+    }
+  }
+
+  function drawEmbeddedDart(screenA) {
+    const tipR = radius;
+    const tailR = radius + 22;
+    const dx = Math.cos(screenA), dy = Math.sin(screenA);
+    const tipX = cx + dx * tipR, tipY = cy + dy * tipR;
+    const tailX = cx + dx * tailR, tailY = cy + dy * tailR;
+
+    ctx.strokeStyle = '#a78bfa';
+    ctx.lineWidth = 4;
+    ctx.beginPath();
+    ctx.moveTo(tailX, tailY);
+    ctx.lineTo(tipX, tipY);
+    ctx.stroke();
+
+    const headLen = 8;
+    const perpX = -dy * 4, perpY = dx * 4;
+    ctx.beginPath();
+    ctx.moveTo(tipX, tipY);
+    ctx.lineTo(tipX + dx * headLen + perpX, tipY + dy * headLen + perpY);
+    ctx.lineTo(tipX + dx * headLen - perpX, tipY + dy * headLen - perpY);
+    ctx.closePath();
+    ctx.fillStyle = '#a78bfa';
+    ctx.fill();
+
+    ctx.beginPath();
+    ctx.arc(tailX, tailY, 4, 0, Math.PI * 2);
+    ctx.fillStyle = '#f472b6';
+    ctx.fill();
+  }
+
+  function drawLooseDart(x, y) {
+    const len = 26;
+    ctx.strokeStyle = '#a78bfa';
+    ctx.lineWidth = 4;
+    ctx.beginPath();
+    ctx.moveTo(x, y + len);
+    ctx.lineTo(x, y);
+    ctx.stroke();
+
+    ctx.beginPath();
+    ctx.moveTo(x, y);
+    ctx.lineTo(x - 5, y + 10);
+    ctx.lineTo(x + 5, y + 10);
+    ctx.closePath();
+    ctx.fillStyle = '#a78bfa';
+    ctx.fill();
+
+    ctx.beginPath();
+    ctx.arc(x, y + len, 4, 0, Math.PI * 2);
+    ctx.fillStyle = '#f472b6';
+    ctx.fill();
+  }
+
+  overlayBtn.addEventListener('click', start);
+  canvas.addEventListener('click', fire);
+  canvas.addEventListener('touchstart', (e) => { e.preventDefault(); fire(); }, { passive: false });
+
+  document.addEventListener('keydown', (e) => {
+    if (e.key === ' ') {
+      e.preventDefault();
+      fire();
+    }
+  });
+
+  running = false;
+  gameOver = false;
+  draw();
+})();
+</script>
+</body>
+</html>
