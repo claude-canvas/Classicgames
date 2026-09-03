@@ -130,6 +130,15 @@
     return roadLeft + laneWidth * (i + 0.5);
   }
 
+  // Movement constants expressed as real-world rates (px/sec, ms), not
+  // per-frame amounts, so speed stays constant regardless of frame pacing.
+  const DASH_SPEED_PX_S = 360;        // dash marker scroll speed at 1x
+  const TRAFFIC_SPEED_PX_S = 324;     // traffic scroll speed at 1x
+  const SPAWN_INTERVAL_MS = 1583;     // base time between spawns
+  const SPAWN_INTERVAL_MIN_MS = 633;  // fastest allowed spawn cadence
+  const SPAWN_SPEEDUP_MS = 133;       // ms shaved off per unit of `speed`
+  const STEER_RATE_PER_S = 19.7;      // exponential steer-in rate
+
   function reset() {
     player = {
       lane: 1,
@@ -144,7 +153,7 @@
     speed = 1.0;
     dashOffset = 0;
     spawnTimer = 0;
-    spawnInterval = 95; // frames-ish, decreases with speed
+    lastTime = null;
     scoreVal.textContent = '0';
     speedVal.textContent = '1.0x';
   }
@@ -234,14 +243,18 @@
            Math.abs(a.y - b.y) < (a.h + b.h) / 2 * 0.82;
   }
 
-  function update() {
-    // steer smoothly toward target lane
-    player.x += (player.targetX - player.x) * 0.28;
+  function update(dt) {
+    // dt = seconds elapsed since the previous frame
 
-    dashOffset = (dashOffset + speed * 6) % 44;
+    // steer smoothly toward target lane; exponential approach so the rate
+    // is framerate-independent instead of a fixed per-frame lerp fraction
+    const steerFactor = 1 - Math.exp(-STEER_RATE_PER_S * dt);
+    player.x += (player.targetX - player.x) * steerFactor;
 
-    spawnTimer++;
-    const currentInterval = Math.max(38, spawnInterval - speed * 8);
+    dashOffset = (dashOffset + speed * DASH_SPEED_PX_S * dt) % 44;
+
+    spawnTimer += dt * 1000;
+    const currentInterval = Math.max(SPAWN_INTERVAL_MIN_MS, SPAWN_INTERVAL_MS - speed * SPAWN_SPEEDUP_MS);
     if (spawnTimer >= currentInterval) {
       spawnTimer = 0;
       spawnCar();
@@ -249,7 +262,7 @@
 
     for (let i = traffic.length - 1; i >= 0; i--) {
       const c = traffic[i];
-      c.y += speed * 5.4;
+      c.y += speed * TRAFFIC_SPEED_PX_S * dt;
       if (c.y - c.h / 2 > H) {
         traffic.splice(i, 1);
         score += 1;
@@ -271,9 +284,15 @@
     drawCar(player.x, player.y, player.w, player.h, '#f87171');
   }
 
-  function loop() {
+  function loop(timestamp) {
     if (state !== 'playing') return;
-    update();
+    if (lastTime === null) lastTime = timestamp;
+    let dt = (timestamp - lastTime) / 1000;
+    lastTime = timestamp;
+    // clamp dt so a dropped/backgrounded frame doesn't cause a big jump
+    if (dt > 0.1) dt = 0.1;
+
+    update(dt);
     if (state !== 'playing') return; // may have ended inside update
     draw();
     rafId = requestAnimationFrame(loop);
