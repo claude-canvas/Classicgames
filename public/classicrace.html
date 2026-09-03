@@ -2,39 +2,53 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
 <title>Classic Race</title>
 <style>
   :root { --bg-1:#0f0c29; --bg-2:#302b63; --bg-3:#24243e; --accent:#7dd3fc; --accent-2:#a78bfa; --text:#eef2ff; --text-dim:#b8c0e0; }
-  * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
-  html, body { height:100%; margin:0; overflow:hidden; }
+  * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; user-select: none; }
+  html, body { height:100%; margin:0; overflow:hidden; overscroll-behavior:none; }
   body {
     font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Inter,Roboto,sans-serif;
     background:linear-gradient(135deg,var(--bg-1),var(--bg-2) 50%,var(--bg-3));
     color:var(--text);
     display:flex; flex-direction:column; align-items:center; justify-content:flex-start;
-    padding:14px 12px 20px;
+    padding:10px 10px 12px;
     min-height:100%;
+    height:100%;
+  }
+  .topbar { display:flex; align-items:center; justify-content:space-between; width:100%; max-width:520px; }
+  a.back { color:var(--text-dim); text-decoration:none; font-size:12px; }
+  #fsBtn {
+    background:rgba(255,255,255,0.08); border:1px solid rgba(255,255,255,0.18); color:var(--text);
+    border-radius:10px; padding:6px 10px; font-size:16px; line-height:1; cursor:pointer; margin:0;
   }
   h1 {
-    font-size:clamp(24px,6vw,34px); margin:2px 0 2px;
+    font-size:clamp(20px,5.5vw,30px); margin:2px 0 0;
     background:linear-gradient(90deg,#fff,var(--accent) 60%,var(--accent-2));
     -webkit-background-clip:text; background-clip:text; color:transparent;
   }
-  .sub { color:var(--text-dim); font-size:13px; margin-bottom:10px; text-align:center; }
+  .sub { color:var(--text-dim); font-size:12px; margin:0 0 8px; text-align:center; }
   .hud {
-    display:flex; gap:18px; align-items:center; justify-content:center;
-    margin-bottom:10px; font-variant-numeric: tabular-nums;
+    display:flex; gap:16px; align-items:center; justify-content:center;
+    margin-bottom:8px; font-variant-numeric: tabular-nums;
   }
   .hud .stat { text-align:center; }
   .hud .stat .label { font-size:10px; letter-spacing:0.08em; text-transform:uppercase; color:var(--text-dim); }
-  .hud .stat .value { font-size:20px; font-weight:700; color:var(--accent); }
+  .hud .stat .value { font-size:19px; font-weight:700; color:var(--accent); }
   #wrap {
     position:relative;
     border-radius:14px;
     overflow:hidden;
     border:1px solid rgba(255,255,255,0.14);
     box-shadow: 0 10px 40px rgba(0,0,0,0.45);
+    flex:1 1 auto;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    min-height:0;
+    width:100%;
+    max-width:520px;
   }
   canvas { display:block; touch-action:none; background:#3a3a3a; }
   #overlay {
@@ -47,28 +61,40 @@
   #overlay h2 { margin:0; font-size:24px; }
   #overlay p { margin:0; color:var(--text-dim); font-size:13px; max-width:280px; line-height:1.5; }
   #overlay .big { font-size:34px; font-weight:800; color:var(--accent); }
-  button {
+  button.primary {
     margin-top:8px; padding:11px 26px; border-radius:999px; border:none;
     background:linear-gradient(90deg,var(--accent),var(--accent-2));
     color:#0f0c29; font-weight:700; font-size:15px; cursor:pointer;
   }
-  button:active { transform:scale(0.97); }
-  .controls-hint { margin-top:10px; font-size:12px; color:var(--text-dim); text-align:center; }
-  .touch-btns { display:flex; gap:70px; margin-top:14px; }
+  button.primary:active { transform:scale(0.97); }
+  .touch-btns { display:flex; gap:60px; margin-top:10px; flex:0 0 auto; }
   .touch-btns button.arrow {
-    width:64px; height:64px; border-radius:16px; font-size:26px;
+    width:60px; height:60px; border-radius:16px; font-size:24px;
     background:rgba(255,255,255,0.08); color:var(--text); border:1px solid rgba(255,255,255,0.18);
-    margin-top:0;
+    touch-action:none;
   }
-  footer { margin-top:16px; text-align:center; font-size:12px; color:var(--text-dim); }
+  .touch-btns button.arrow:active,
+  .touch-btns button.arrow.held { background:rgba(125,211,252,0.28); border-color:var(--accent); }
+  footer { margin-top:8px; text-align:center; font-size:11px; color:var(--text-dim); flex:0 0 auto; }
   footer a { color:var(--accent); text-decoration:none; }
-  a.back { color:var(--text-dim); text-decoration:none; font-size:12px; }
+
+  /* Fullscreen: hide chrome, let the canvas fill the screen */
+  body.is-fullscreen { padding:6px; }
+  body.is-fullscreen .topbar,
+  body.is-fullscreen h1,
+  body.is-fullscreen .sub,
+  body.is-fullscreen footer { display:none; }
+  body.is-fullscreen .hud { margin-bottom:6px; }
+  body.is-fullscreen #wrap { max-width:100vw; }
 </style>
 </head>
 <body>
-  <a class="back" href="/games.html">&larr; back to arcade</a>
+  <div class="topbar">
+    <a class="back" href="/games.html">&larr; arcade</a>
+    <button id="fsBtn" title="Fullscreen">⛶</button>
+  </div>
   <h1>🏎️ Classic Race</h1>
-  <p class="sub">Steer left/right. Dodge the traffic. Don't crash.</p>
+  <p class="sub">Drag, hold the arrows, or use ← → to steer. Dodge the traffic.</p>
 
   <div class="hud">
     <div class="stat"><div class="label">Score</div><div class="value" id="scoreVal">0</div></div>
@@ -77,11 +103,11 @@
   </div>
 
   <div id="wrap">
-    <canvas id="game" width="360" height="560"></canvas>
+    <canvas id="game"></canvas>
     <div id="overlay">
       <h2 id="overlayTitle">Ready to Race?</h2>
-      <p id="overlayText">Use ← → arrow keys, A/D, or drag your finger to steer. Avoid the oncoming cars for as long as you can.</p>
-      <button id="startBtn">Start Race</button>
+      <p id="overlayText">Drag anywhere on the road, hold the on-screen arrows, or use ← → / A D to steer. The car moves smoothly, not in fixed lanes. Avoid the oncoming cars for as long as you can.</p>
+      <button class="primary" id="startBtn">Start Race</button>
     </div>
   </div>
 
@@ -96,17 +122,38 @@
 (function () {
   const canvas = document.getElementById('game');
   const ctx = canvas.getContext('2d');
-  const W = canvas.width, H = canvas.height;
+  const wrapEl = document.getElementById('wrap');
 
-  const LANES = 3;
-  const ROAD_MARGIN = 18;
+  // Logical game-space resolution. All gameplay math (road, lanes, cars)
+  // happens in this coordinate space; the canvas is scaled visually to
+  // whatever physical size fits the screen (see resizeCanvas()).
+  const LOGICAL_W = 380;
+  const LOGICAL_H = 640;
+  const W = LOGICAL_W, H = LOGICAL_H;
+
+  const ROAD_MARGIN = 16;
   const roadLeft = ROAD_MARGIN;
   const roadRight = W - ROAD_MARGIN;
   const roadWidth = roadRight - roadLeft;
-  const laneWidth = roadWidth / LANES;
 
-  const CAR_W = laneWidth * 0.6;
-  const CAR_H = CAR_W * 1.7;
+  // Cars are deliberately narrow relative to the road so there's real
+  // room to maneuver with continuous (non-lane-locked) steering.
+  const CAR_W = roadWidth / 8;
+  const CAR_H = CAR_W * 1.8;
+
+  const SLOT_COUNT = 4; // traffic spawn columns (player is free-roaming)
+  function slotCenter(i) {
+    return roadLeft + (roadWidth / SLOT_COUNT) * (i + 0.5);
+  }
+
+  // Movement constants as real-world rates (px/sec, ms) so speed stays
+  // constant regardless of frame pacing (delta-time driven, not per-frame).
+  const DASH_SPEED_PX_S = 360;
+  const TRAFFIC_SPEED_PX_S = 324;
+  const SPAWN_INTERVAL_MS = 1450;
+  const SPAWN_INTERVAL_MIN_MS = 600;
+  const SPAWN_SPEEDUP_MS = 120;
+  const STEER_SPEED_PX_S = 300; // constant-velocity linear steering (keys/buttons)
 
   const overlay = document.getElementById('overlay');
   const overlayTitle = document.getElementById('overlayTitle');
@@ -115,36 +162,23 @@
   const scoreVal = document.getElementById('scoreVal');
   const speedVal = document.getElementById('speedVal');
   const bestVal = document.getElementById('bestVal');
+  const fsBtn = document.getElementById('fsBtn');
 
   let best = 0;
   try { best = parseInt(localStorage.getItem('classicRaceBest') || '0', 10) || 0; } catch (e) { best = 0; }
   bestVal.textContent = best;
 
   let state = 'idle'; // idle | playing | over
-  let player, traffic, score, speed, dashOffset, spawnTimer, spawnInterval, rafId, lastTime;
+  let player, traffic, score, speed, dashOffset, spawnTimer, rafId, lastTime;
+  let steerDir = 0;     // -1, 0, 1 from keyboard/buttons (constant-velocity)
+  let dragging = false; // true while a finger/pointer is actively dragging on the canvas
 
-  const playerColors = ['#f87171'];
   const trafficPalette = ['#7dd3fc', '#a78bfa', '#fbbf24', '#4ade80', '#f472b6', '#f97316'];
-
-  function laneCenter(i) {
-    return roadLeft + laneWidth * (i + 0.5);
-  }
-
-  // Movement constants expressed as real-world rates (px/sec, ms), not
-  // per-frame amounts, so speed stays constant regardless of frame pacing.
-  const DASH_SPEED_PX_S = 360;        // dash marker scroll speed at 1x
-  const TRAFFIC_SPEED_PX_S = 324;     // traffic scroll speed at 1x
-  const SPAWN_INTERVAL_MS = 1583;     // base time between spawns
-  const SPAWN_INTERVAL_MIN_MS = 633;  // fastest allowed spawn cadence
-  const SPAWN_SPEEDUP_MS = 133;       // ms shaved off per unit of `speed`
-  const STEER_RATE_PER_S = 19.7;      // exponential steer-in rate
 
   function reset() {
     player = {
-      lane: 1,
-      x: laneCenter(1),
-      targetX: laneCenter(1),
-      y: H - CAR_H - 30,
+      x: W / 2,
+      y: H - CAR_H - 34,
       w: CAR_W,
       h: CAR_H
     };
@@ -154,21 +188,25 @@
     dashOffset = 0;
     spawnTimer = 0;
     lastTime = null;
+    steerDir = 0;
     scoreVal.textContent = '0';
     speedVal.textContent = '1.0x';
   }
 
+  function clampPlayerX() {
+    const min = roadLeft + player.w / 2 + 2;
+    const max = roadRight - player.w / 2 - 2;
+    if (player.x < min) player.x = min;
+    if (player.x > max) player.x = max;
+  }
+
   function spawnCar() {
-    const lane = Math.floor(Math.random() * LANES);
-    // avoid stacking two cars in the same lane too close together
-    const tooClose = traffic.some(c => c.lane === lane && c.y < CAR_H * 2.2);
+    const slot = Math.floor(Math.random() * SLOT_COUNT);
+    const x = slotCenter(slot);
+    const tooClose = traffic.some(c => Math.abs(c.x - x) < CAR_W * 1.4 && c.y < CAR_H * 2.4);
     if (tooClose) return;
     traffic.push({
-      lane,
-      x: laneCenter(lane),
-      y: -CAR_H,
-      w: CAR_W,
-      h: CAR_H,
+      x, y: -CAR_H, w: CAR_W, h: CAR_H,
       color: trafficPalette[Math.floor(Math.random() * trafficPalette.length)]
     });
   }
@@ -177,12 +215,10 @@
     ctx.fillStyle = '#3a3a3a';
     ctx.fillRect(0, 0, W, H);
 
-    // grass shoulders
     ctx.fillStyle = '#274d2e';
     ctx.fillRect(0, 0, roadLeft, H);
     ctx.fillRect(roadRight, 0, W - roadRight, H);
 
-    // road edge lines
     ctx.strokeStyle = 'rgba(255,255,255,0.7)';
     ctx.lineWidth = 3;
     ctx.beginPath();
@@ -190,42 +226,19 @@
     ctx.moveTo(roadRight, 0); ctx.lineTo(roadRight, H);
     ctx.stroke();
 
-    // lane dashes
-    ctx.strokeStyle = 'rgba(255,255,255,0.5)';
-    ctx.lineWidth = 3;
-    ctx.setLineDash([22, 22]);
-    for (let i = 1; i < LANES; i++) {
-      const x = roadLeft + laneWidth * i;
+    // Faint slot guides instead of hard lane lines, since the player
+    // isn't locked to lanes any more.
+    ctx.strokeStyle = 'rgba(255,255,255,0.22)';
+    ctx.lineWidth = 2;
+    ctx.setLineDash([16, 26]);
+    for (let i = 1; i < SLOT_COUNT; i++) {
+      const x = roadLeft + (roadWidth / SLOT_COUNT) * i;
       ctx.beginPath();
       ctx.lineDashOffset = -dashOffset;
       ctx.moveTo(x, 0); ctx.lineTo(x, H);
       ctx.stroke();
     }
     ctx.setLineDash([]);
-  }
-
-  function drawCar(x, y, w, h, color) {
-    ctx.save();
-    ctx.translate(x, y);
-    const r = w * 0.18;
-    ctx.fillStyle = 'rgba(0,0,0,0.35)';
-    roundRect(-w / 2 + 2, -h / 2 + 4, w, h, r);
-    ctx.fill();
-
-    ctx.fillStyle = color;
-    roundRect(-w / 2, -h / 2, w, h, r);
-    ctx.fill();
-
-    // windshield
-    ctx.fillStyle = 'rgba(15,12,41,0.55)';
-    roundRect(-w / 2 + w * 0.14, -h / 2 + h * 0.16, w * 0.72, h * 0.28, r * 0.6);
-    ctx.fill();
-
-    // headlight / taillight accents
-    ctx.fillStyle = 'rgba(255,255,255,0.85)';
-    ctx.fillRect(-w / 2 + w * 0.1, -h / 2 + h * 0.02, w * 0.18, h * 0.06);
-    ctx.fillRect(w / 2 - w * 0.28, -h / 2 + h * 0.02, w * 0.18, h * 0.06);
-    ctx.restore();
   }
 
   function roundRect(x, y, w, h, r) {
@@ -238,20 +251,102 @@
     ctx.closePath();
   }
 
+  // A proper top-down car: body, roof/cabin, windshields, mirrors and
+  // wheels are all drawn so the whole car reads clearly, not just lights.
+  function drawCar(x, y, w, h, color, isPlayer) {
+    ctx.save();
+    ctx.translate(x, y);
+
+    // ground shadow
+    ctx.fillStyle = 'rgba(0,0,0,0.35)';
+    roundRect(-w / 2 + 2, -h / 2 + 5, w, h, w * 0.22);
+    ctx.fill();
+
+    // wheels (drawn first so the body overlaps their inner edge)
+    ctx.fillStyle = '#1a1a1a';
+    const wheelW = w * 0.16, wheelH = h * 0.2;
+    const wheelInset = w * 0.06;
+    [-1, 1].forEach(side => {
+      [-1, 1].forEach(end => {
+        roundRect(side * (w / 2 - wheelInset) - wheelW / 2, end * (h * 0.27) - wheelH / 2, wheelW, wheelH, wheelW * 0.3);
+        ctx.fill();
+      });
+    });
+
+    // main body (tapered front, rounded rear) via a simple hexagon-ish path
+    ctx.fillStyle = color;
+    ctx.beginPath();
+    const bw = w / 2, bh = h / 2;
+    ctx.moveTo(-bw * 0.62, -bh);           // front-left shoulder
+    ctx.quadraticCurveTo(0, -bh * 1.14, bw * 0.62, -bh); // front nose curve
+    ctx.lineTo(bw, -bh * 0.25);            // right front fender
+    ctx.quadraticCurveTo(bw * 1.05, 0, bw, bh * 0.25);   // right side bulge
+    ctx.lineTo(bw * 0.7, bh * 0.92);       // right rear fender
+    ctx.quadraticCurveTo(0, bh * 1.08, -bw * 0.7, bh * 0.92); // rear curve
+    ctx.lineTo(-bw, bh * 0.25);
+    ctx.quadraticCurveTo(-bw * 1.05, 0, -bw, -bh * 0.25);
+    ctx.closePath();
+    ctx.fill();
+
+    // subtle body shading (darker offside edge)
+    ctx.fillStyle = 'rgba(0,0,0,0.12)';
+    roundRect(w * 0.14, -bh, w * 0.36, h, w * 0.12);
+    ctx.fill();
+
+    // cabin / roof
+    ctx.fillStyle = 'rgba(15,12,41,0.62)';
+    roundRect(-w * 0.32, -h * 0.2, w * 0.64, h * 0.5, w * 0.16);
+    ctx.fill();
+
+    // windshield (front) and rear window, slightly lighter than cabin
+    ctx.fillStyle = 'rgba(180,210,255,0.35)';
+    roundRect(-w * 0.27, -h * 0.16, w * 0.54, h * 0.14, w * 0.08);
+    ctx.fill();
+    ctx.fillStyle = 'rgba(180,210,255,0.22)';
+    roundRect(-w * 0.27, h * 0.05, w * 0.54, h * 0.12, w * 0.08);
+    ctx.fill();
+
+    // side mirrors
+    ctx.fillStyle = 'rgba(0,0,0,0.5)';
+    roundRect(-w / 2 - w * 0.05, -h * 0.06, w * 0.09, h * 0.07, 2);
+    roundRect(w / 2 - w * 0.04, -h * 0.06, w * 0.09, h * 0.07, 2);
+    ctx.fill();
+
+    // headlights (front) / taillights (rear) - small accents now that
+    // the whole body is visible, not the dominant feature
+    ctx.fillStyle = 'rgba(255,255,255,0.9)';
+    roundRect(-bw * 0.5, -bh * 0.98, w * 0.14, h * 0.05, 2);
+    roundRect(bw * 0.36, -bh * 0.98, w * 0.14, h * 0.05, 2);
+    ctx.fill();
+    ctx.fillStyle = 'rgba(239,68,68,0.9)';
+    roundRect(-bw * 0.5, bh * 0.86, w * 0.13, h * 0.045, 2);
+    roundRect(bw * 0.37, bh * 0.86, w * 0.13, h * 0.045, 2);
+    ctx.fill();
+
+    if (isPlayer) {
+      // racing stripe
+      ctx.fillStyle = 'rgba(255,255,255,0.55)';
+      ctx.fillRect(-w * 0.045, -bh * 0.95, w * 0.09, h * 0.9);
+    }
+
+    ctx.restore();
+  }
+
   function overlaps(a, b) {
-    return Math.abs(a.x - b.x) < (a.w + b.w) / 2 * 0.82 &&
-           Math.abs(a.y - b.y) < (a.h + b.h) / 2 * 0.82;
+    return Math.abs(a.x - b.x) < (a.w + b.w) / 2 * 0.8 &&
+           Math.abs(a.y - b.y) < (a.h + b.h) / 2 * 0.8;
   }
 
   function update(dt) {
-    // dt = seconds elapsed since the previous frame
+    // Linear steering: constant-velocity motion while a key/button is
+    // held (no easing toward a lane target), unless the player is
+    // actively dragging, in which case pointer position wins outright.
+    if (!dragging && steerDir !== 0) {
+      player.x += steerDir * STEER_SPEED_PX_S * dt;
+    }
+    clampPlayerX();
 
-    // steer smoothly toward target lane; exponential approach so the rate
-    // is framerate-independent instead of a fixed per-frame lerp fraction
-    const steerFactor = 1 - Math.exp(-STEER_RATE_PER_S * dt);
-    player.x += (player.targetX - player.x) * steerFactor;
-
-    dashOffset = (dashOffset + speed * DASH_SPEED_PX_S * dt) % 44;
+    dashOffset = (dashOffset + speed * DASH_SPEED_PX_S * dt) % 42;
 
     spawnTimer += dt * 1000;
     const currentInterval = Math.max(SPAWN_INTERVAL_MIN_MS, SPAWN_INTERVAL_MS - speed * SPAWN_SPEEDUP_MS);
@@ -280,8 +375,8 @@
 
   function draw() {
     drawRoad();
-    for (const c of traffic) drawCar(c.x, c.y, c.w, c.h, c.color);
-    drawCar(player.x, player.y, player.w, player.h, '#f87171');
+    for (const c of traffic) drawCar(c.x, c.y, c.w, c.h, c.color, false);
+    drawCar(player.x, player.y, player.w, player.h, '#f87171', true);
   }
 
   function loop(timestamp) {
@@ -289,11 +384,10 @@
     if (lastTime === null) lastTime = timestamp;
     let dt = (timestamp - lastTime) / 1000;
     lastTime = timestamp;
-    // clamp dt so a dropped/backgrounded frame doesn't cause a big jump
-    if (dt > 0.1) dt = 0.1;
+    if (dt > 0.1) dt = 0.1; // clamp so a dropped/backgrounded frame doesn't jump
 
     update(dt);
-    if (state !== 'playing') return; // may have ended inside update
+    if (state !== 'playing') return;
     draw();
     rafId = requestAnimationFrame(loop);
   }
@@ -307,6 +401,8 @@
 
   function endGame() {
     state = 'over';
+    dragging = false;
+    steerDir = 0;
     cancelAnimationFrame(rafId);
     draw();
     if (score > best) {
@@ -320,52 +416,94 @@
     overlay.classList.remove('hidden');
   }
 
-  function moveLane(dir) {
-    if (state !== 'playing') return;
-    const newLane = Math.min(LANES - 1, Math.max(0, player.lane + dir));
-    player.lane = newLane;
-    player.targetX = laneCenter(newLane);
+  // ---- Canvas sizing: bigger, responsive, fullscreen-aware ----
+  function resizeCanvas() {
+    const dpr = Math.min(window.devicePixelRatio || 1, 3);
+    const availW = wrapEl.clientWidth || LOGICAL_W;
+    const availH = wrapEl.clientHeight || LOGICAL_H;
+    const aspect = LOGICAL_W / LOGICAL_H;
+    let cssW = availW, cssH = availW / aspect;
+    if (cssH > availH) { cssH = availH; cssW = availH * aspect; }
+    canvas.style.width = cssW + 'px';
+    canvas.style.height = cssH + 'px';
+    canvas.width = Math.round(cssW * dpr);
+    canvas.height = Math.round(cssH * dpr);
+    ctx.setTransform(dpr * (cssW / LOGICAL_W), 0, 0, dpr * (cssH / LOGICAL_H), 0, 0);
+    if (state !== 'playing') draw();
   }
+  window.addEventListener('resize', resizeCanvas);
+  window.addEventListener('orientationchange', resizeCanvas);
 
-  // keyboard
+  // ---- Fullscreen (Android + desktop) ----
+  function requestFS(el) {
+    const fn = el.requestFullscreen || el.webkitRequestFullscreen || el.msRequestFullscreen;
+    if (fn) return fn.call(el);
+  }
+  function exitFS() {
+    const fn = document.exitFullscreen || document.webkitExitFullscreen || document.msExitFullscreen;
+    if (fn) return fn.call(document);
+  }
+  function isFS() {
+    return !!(document.fullscreenElement || document.webkitFullscreenElement || document.msFullscreenElement);
+  }
+  fsBtn.addEventListener('click', () => {
+    if (isFS()) exitFS(); else requestFS(document.documentElement);
+  });
+  ['fullscreenchange', 'webkitfullscreenchange', 'msfullscreenchange'].forEach(evt => {
+    document.addEventListener(evt, () => {
+      document.body.classList.toggle('is-fullscreen', isFS());
+      fsBtn.textContent = isFS() ? '⤡' : '⛶';
+      resizeCanvas();
+    });
+  });
+
+  // ---- Linear steering input: keyboard, hold-buttons, direct drag ----
+  function setSteer(dir) { steerDir = dir; }
+
   window.addEventListener('keydown', (e) => {
-    if (e.key === 'ArrowLeft' || e.key === 'a' || e.key === 'A') moveLane(-1);
-    else if (e.key === 'ArrowRight' || e.key === 'd' || e.key === 'D') moveLane(1);
+    if (e.key === 'ArrowLeft' || e.key === 'a' || e.key === 'A') setSteer(-1);
+    else if (e.key === 'ArrowRight' || e.key === 'd' || e.key === 'D') setSteer(1);
     else if (e.key === ' ' && state !== 'playing') startGame();
   });
-
-  // touch buttons
-  document.getElementById('btnLeft').addEventListener('click', () => moveLane(-1));
-  document.getElementById('btnRight').addEventListener('click', () => moveLane(1));
-
-  // drag / swipe steering directly on canvas
-  let dragStartX = null, dragStartLane = null;
-  canvas.addEventListener('touchstart', (e) => {
-    dragStartX = e.touches[0].clientX;
-    dragStartLane = player ? player.lane : 1;
-  }, { passive: true });
-  canvas.addEventListener('touchmove', (e) => {
-    if (dragStartX === null || state !== 'playing') return;
-    const dx = e.touches[0].clientX - dragStartX;
-    const laneShift = Math.round(dx / (laneWidth * (canvas.clientWidth / W)));
-    const newLane = Math.min(LANES - 1, Math.max(0, dragStartLane + laneShift));
-    if (newLane !== player.lane) {
-      player.lane = newLane;
-      player.targetX = laneCenter(newLane);
-    }
-  }, { passive: true });
-  canvas.addEventListener('touchend', () => { dragStartX = null; }, { passive: true });
-
-  // tap left/right half of canvas as alt control
-  canvas.addEventListener('click', (e) => {
-    if (state !== 'playing') return;
-    const rect = canvas.getBoundingClientRect();
-    const relX = e.clientX - rect.left;
-    if (relX < rect.width / 2) moveLane(-1); else moveLane(1);
+  window.addEventListener('keyup', (e) => {
+    if (['ArrowLeft', 'a', 'A', 'ArrowRight', 'd', 'D'].includes(e.key)) setSteer(0);
   });
+
+  function bindHold(btn, dir) {
+    const on = (e) => { e.preventDefault(); setSteer(dir); btn.classList.add('held'); };
+    const off = () => { if (steerDir === dir) setSteer(0); btn.classList.remove('held'); };
+    btn.addEventListener('pointerdown', on);
+    btn.addEventListener('pointerup', off);
+    btn.addEventListener('pointerleave', off);
+    btn.addEventListener('pointercancel', off);
+  }
+  bindHold(document.getElementById('btnLeft'), -1);
+  bindHold(document.getElementById('btnRight'), 1);
+
+  // Direct drag: finger position maps straight to the car's x position
+  // (linear 1:1 control), overriding the constant-velocity key/button input.
+  function clientXToLogical(clientX) {
+    const rect = canvas.getBoundingClientRect();
+    const relX = clientX - rect.left;
+    return (relX / rect.width) * LOGICAL_W;
+  }
+  canvas.addEventListener('pointerdown', (e) => {
+    if (state !== 'playing') return;
+    dragging = true;
+    player.x = clientXToLogical(e.clientX);
+    clampPlayerX();
+  });
+  canvas.addEventListener('pointermove', (e) => {
+    if (!dragging || state !== 'playing') return;
+    player.x = clientXToLogical(e.clientX);
+    clampPlayerX();
+  });
+  window.addEventListener('pointerup', () => { dragging = false; });
+  window.addEventListener('pointercancel', () => { dragging = false; });
 
   startBtn.addEventListener('click', startGame);
 
+  resizeCanvas();
   reset();
   draw();
 })();
