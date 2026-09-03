@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+<title>Classic Race</title>
+<style>
+  :root { --bg-1:#0f0c29; --bg-2:#302b63; --bg-3:#24243e; --accent:#7dd3fc; --accent-2:#a78bfa; --text:#eef2ff; --text-dim:#b8c0e0; }
+  * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+  html, body { height:100%; margin:0; overflow:hidden; }
+  body {
+    font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Inter,Roboto,sans-serif;
+    background:linear-gradient(135deg,var(--bg-1),var(--bg-2) 50%,var(--bg-3));
+    color:var(--text);
+    display:flex; flex-direction:column; align-items:center; justify-content:flex-start;
+    padding:14px 12px 20px;
+    min-height:100%;
+  }
+  h1 {
+    font-size:clamp(24px,6vw,34px); margin:2px 0 2px;
+    background:linear-gradient(90deg,#fff,var(--accent) 60%,var(--accent-2));
+    -webkit-background-clip:text; background-clip:text; color:transparent;
+  }
+  .sub { color:var(--text-dim); font-size:13px; margin-bottom:10px; text-align:center; }
+  .hud {
+    display:flex; gap:18px; align-items:center; justify-content:center;
+    margin-bottom:10px; font-variant-numeric: tabular-nums;
+  }
+  .hud .stat { text-align:center; }
+  .hud .stat .label { font-size:10px; letter-spacing:0.08em; text-transform:uppercase; color:var(--text-dim); }
+  .hud .stat .value { font-size:20px; font-weight:700; color:var(--accent); }
+  #wrap {
+    position:relative;
+    border-radius:14px;
+    overflow:hidden;
+    border:1px solid rgba(255,255,255,0.14);
+    box-shadow: 0 10px 40px rgba(0,0,0,0.45);
+  }
+  canvas { display:block; touch-action:none; background:#3a3a3a; }
+  #overlay {
+    position:absolute; inset:0;
+    background:rgba(10,8,30,0.82);
+    display:flex; flex-direction:column; align-items:center; justify-content:center;
+    text-align:center; padding:20px; gap:10px;
+  }
+  #overlay.hidden { display:none; }
+  #overlay h2 { margin:0; font-size:24px; }
+  #overlay p { margin:0; color:var(--text-dim); font-size:13px; max-width:280px; line-height:1.5; }
+  #overlay .big { font-size:34px; font-weight:800; color:var(--accent); }
+  button {
+    margin-top:8px; padding:11px 26px; border-radius:999px; border:none;
+    background:linear-gradient(90deg,var(--accent),var(--accent-2));
+    color:#0f0c29; font-weight:700; font-size:15px; cursor:pointer;
+  }
+  button:active { transform:scale(0.97); }
+  .controls-hint { margin-top:10px; font-size:12px; color:var(--text-dim); text-align:center; }
+  .touch-btns { display:flex; gap:70px; margin-top:14px; }
+  .touch-btns button.arrow {
+    width:64px; height:64px; border-radius:16px; font-size:26px;
+    background:rgba(255,255,255,0.08); color:var(--text); border:1px solid rgba(255,255,255,0.18);
+    margin-top:0;
+  }
+  footer { margin-top:16px; text-align:center; font-size:12px; color:var(--text-dim); }
+  footer a { color:var(--accent); text-decoration:none; }
+  a.back { color:var(--text-dim); text-decoration:none; font-size:12px; }
+</style>
+</head>
+<body>
+  <a class="back" href="/games.html">&larr; back to arcade</a>
+  <h1>🏎️ Classic Race</h1>
+  <p class="sub">Steer left/right. Dodge the traffic. Don't crash.</p>
+
+  <div class="hud">
+    <div class="stat"><div class="label">Score</div><div class="value" id="scoreVal">0</div></div>
+    <div class="stat"><div class="label">Speed</div><div class="value" id="speedVal">1.0x</div></div>
+    <div class="stat"><div class="label">Best</div><div class="value" id="bestVal">0</div></div>
+  </div>
+
+  <div id="wrap">
+    <canvas id="game" width="360" height="560"></canvas>
+    <div id="overlay">
+      <h2 id="overlayTitle">Ready to Race?</h2>
+      <p id="overlayText">Use ← → arrow keys, A/D, or drag your finger to steer. Avoid the oncoming cars for as long as you can.</p>
+      <button id="startBtn">Start Race</button>
+    </div>
+  </div>
+
+  <div class="touch-btns" id="touchBtns">
+    <button class="arrow" id="btnLeft">◀</button>
+    <button class="arrow" id="btnRight">▶</button>
+  </div>
+
+  <footer>Served from <a href="/games.html">the arcade</a></footer>
+
+<script>
+(function () {
+  const canvas = document.getElementById('game');
+  const ctx = canvas.getContext('2d');
+  const W = canvas.width, H = canvas.height;
+
+  const LANES = 3;
+  const ROAD_MARGIN = 18;
+  const roadLeft = ROAD_MARGIN;
+  const roadRight = W - ROAD_MARGIN;
+  const roadWidth = roadRight - roadLeft;
+  const laneWidth = roadWidth / LANES;
+
+  const CAR_W = laneWidth * 0.6;
+  const CAR_H = CAR_W * 1.7;
+
+  const overlay = document.getElementById('overlay');
+  const overlayTitle = document.getElementById('overlayTitle');
+  const overlayText = document.getElementById('overlayText');
+  const startBtn = document.getElementById('startBtn');
+  const scoreVal = document.getElementById('scoreVal');
+  const speedVal = document.getElementById('speedVal');
+  const bestVal = document.getElementById('bestVal');
+
+  let best = 0;
+  try { best = parseInt(localStorage.getItem('classicRaceBest') || '0', 10) || 0; } catch (e) { best = 0; }
+  bestVal.textContent = best;
+
+  let state = 'idle'; // idle | playing | over
+  let player, traffic, score, speed, dashOffset, spawnTimer, spawnInterval, rafId, lastTime;
+
+  const playerColors = ['#f87171'];
+  const trafficPalette = ['#7dd3fc', '#a78bfa', '#fbbf24', '#4ade80', '#f472b6', '#f97316'];
+
+  function laneCenter(i) {
+    return roadLeft + laneWidth * (i + 0.5);
+  }
+
+  function reset() {
+    player = {
+      lane: 1,
+      x: laneCenter(1),
+      targetX: laneCenter(1),
+      y: H - CAR_H - 30,
+      w: CAR_W,
+      h: CAR_H
+    };
+    traffic = [];
+    score = 0;
+    speed = 1.0;
+    dashOffset = 0;
+    spawnTimer = 0;
+    spawnInterval = 95; // frames-ish, decreases with speed
+    scoreVal.textContent = '0';
+    speedVal.textContent = '1.0x';
+  }
+
+  function spawnCar() {
+    const lane = Math.floor(Math.random() * LANES);
+    // avoid stacking two cars in the same lane too close together
+    const tooClose = traffic.some(c => c.lane === lane && c.y < CAR_H * 2.2);
+    if (tooClose) return;
+    traffic.push({
+      lane,
+      x: laneCenter(lane),
+      y: -CAR_H,
+      w: CAR_W,
+      h: CAR_H,
+      color: trafficPalette[Math.floor(Math.random() * trafficPalette.length)]
+    });
+  }
+
+  function drawRoad() {
+    ctx.fillStyle = '#3a3a3a';
+    ctx.fillRect(0, 0, W, H);
+
+    // grass shoulders
+    ctx.fillStyle = '#274d2e';
+    ctx.fillRect(0, 0, roadLeft, H);
+    ctx.fillRect(roadRight, 0, W - roadRight, H);
+
+    // road edge lines
+    ctx.strokeStyle = 'rgba(255,255,255,0.7)';
+    ctx.lineWidth = 3;
+    ctx.beginPath();
+    ctx.moveTo(roadLeft, 0); ctx.lineTo(roadLeft, H);
+    ctx.moveTo(roadRight, 0); ctx.lineTo(roadRight, H);
+    ctx.stroke();
+
+    // lane dashes
+    ctx.strokeStyle = 'rgba(255,255,255,0.5)';
+    ctx.lineWidth = 3;
+    ctx.setLineDash([22, 22]);
+    for (let i = 1; i < LANES; i++) {
+      const x = roadLeft + laneWidth * i;
+      ctx.beginPath();
+      ctx.lineDashOffset = -dashOffset;
+      ctx.moveTo(x, 0); ctx.lineTo(x, H);
+      ctx.stroke();
+    }
+    ctx.setLineDash([]);
+  }
+
+  function drawCar(x, y, w, h, color) {
+    ctx.save();
+    ctx.translate(x, y);
+    const r = w * 0.18;
+    ctx.fillStyle = 'rgba(0,0,0,0.35)';
+    roundRect(-w / 2 + 2, -h / 2 + 4, w, h, r);
+    ctx.fill();
+
+    ctx.fillStyle = color;
+    roundRect(-w / 2, -h / 2, w, h, r);
+    ctx.fill();
+
+    // windshield
+    ctx.fillStyle = 'rgba(15,12,41,0.55)';
+    roundRect(-w / 2 + w * 0.14, -h / 2 + h * 0.16, w * 0.72, h * 0.28, r * 0.6);
+    ctx.fill();
+
+    // headlight / taillight accents
+    ctx.fillStyle = 'rgba(255,255,255,0.85)';
+    ctx.fillRect(-w / 2 + w * 0.1, -h / 2 + h * 0.02, w * 0.18, h * 0.06);
+    ctx.fillRect(w / 2 - w * 0.28, -h / 2 + h * 0.02, w * 0.18, h * 0.06);
+    ctx.restore();
+  }
+
+  function roundRect(x, y, w, h, r) {
+    ctx.beginPath();
+    ctx.moveTo(x + r, y);
+    ctx.arcTo(x + w, y, x + w, y + h, r);
+    ctx.arcTo(x + w, y + h, x, y + h, r);
+    ctx.arcTo(x, y + h, x, y, r);
+    ctx.arcTo(x, y, x + w, y, r);
+    ctx.closePath();
+  }
+
+  function overlaps(a, b) {
+    return Math.abs(a.x - b.x) < (a.w + b.w) / 2 * 0.82 &&
+           Math.abs(a.y - b.y) < (a.h + b.h) / 2 * 0.82;
+  }
+
+  function update() {
+    // steer smoothly toward target lane
+    player.x += (player.targetX - player.x) * 0.28;
+
+    dashOffset = (dashOffset + speed * 6) % 44;
+
+    spawnTimer++;
+    const currentInterval = Math.max(38, spawnInterval - speed * 8);
+    if (spawnTimer >= currentInterval) {
+      spawnTimer = 0;
+      spawnCar();
+    }
+
+    for (let i = traffic.length - 1; i >= 0; i--) {
+      const c = traffic[i];
+      c.y += speed * 5.4;
+      if (c.y - c.h / 2 > H) {
+        traffic.splice(i, 1);
+        score += 1;
+      } else if (overlaps(player, c)) {
+        endGame();
+        return;
+      }
+    }
+
+    scoreVal.textContent = score;
+    speed = 1 + score * 0.045;
+    if (speed > 3.4) speed = 3.4;
+    speedVal.textContent = speed.toFixed(1) + 'x';
+  }
+
+  function draw() {
+    drawRoad();
+    for (const c of traffic) drawCar(c.x, c.y, c.w, c.h, c.color);
+    drawCar(player.x, player.y, player.w, player.h, '#f87171');
+  }
+
+  function loop() {
+    if (state !== 'playing') return;
+    update();
+    if (state !== 'playing') return; // may have ended inside update
+    draw();
+    rafId = requestAnimationFrame(loop);
+  }
+
+  function startGame() {
+    reset();
+    state = 'playing';
+    overlay.classList.add('hidden');
+    rafId = requestAnimationFrame(loop);
+  }
+
+  function endGame() {
+    state = 'over';
+    cancelAnimationFrame(rafId);
+    draw();
+    if (score > best) {
+      best = score;
+      try { localStorage.setItem('classicRaceBest', String(best)); } catch (e) {}
+    }
+    bestVal.textContent = best;
+    overlayTitle.textContent = 'Crashed!';
+    overlayText.innerHTML = 'Score: <span class="big">' + score + '</span><br>Best: ' + best;
+    startBtn.textContent = 'Race Again';
+    overlay.classList.remove('hidden');
+  }
+
+  function moveLane(dir) {
+    if (state !== 'playing') return;
+    const newLane = Math.min(LANES - 1, Math.max(0, player.lane + dir));
+    player.lane = newLane;
+    player.targetX = laneCenter(newLane);
+  }
+
+  // keyboard
+  window.addEventListener('keydown', (e) => {
+    if (e.key === 'ArrowLeft' || e.key === 'a' || e.key === 'A') moveLane(-1);
+    else if (e.key === 'ArrowRight' || e.key === 'd' || e.key === 'D') moveLane(1);
+    else if (e.key === ' ' && state !== 'playing') startGame();
+  });
+
+  // touch buttons
+  document.getElementById('btnLeft').addEventListener('click', () => moveLane(-1));
+  document.getElementById('btnRight').addEventListener('click', () => moveLane(1));
+
+  // drag / swipe steering directly on canvas
+  let dragStartX = null, dragStartLane = null;
+  canvas.addEventListener('touchstart', (e) => {
+    dragStartX = e.touches[0].clientX;
+    dragStartLane = player ? player.lane : 1;
+  }, { passive: true });
+  canvas.addEventListener('touchmove', (e) => {
+    if (dragStartX === null || state !== 'playing') return;
+    const dx = e.touches[0].clientX - dragStartX;
+    const laneShift = Math.round(dx / (laneWidth * (canvas.clientWidth / W)));
+    const newLane = Math.min(LANES - 1, Math.max(0, dragStartLane + laneShift));
+    if (newLane !== player.lane) {
+      player.lane = newLane;
+      player.targetX = laneCenter(newLane);
+    }
+  }, { passive: true });
+  canvas.addEventListener('touchend', () => { dragStartX = null; }, { passive: true });
+
+  // tap left/right half of canvas as alt control
+  canvas.addEventListener('click', (e) => {
+    if (state !== 'playing') return;
+    const rect = canvas.getBoundingClientRect();
+    const relX = e.clientX - rect.left;
+    if (relX < rect.width / 2) moveLane(-1); else moveLane(1);
+  });
+
+  startBtn.addEventListener('click', startGame);
+
+  reset();
+  draw();
+})();
+</script>
+</body>
+</html>
