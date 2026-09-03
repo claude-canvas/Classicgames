@@ -172,6 +172,7 @@
   let player, traffic, score, speed, dashOffset, spawnTimer, rafId, lastTime;
   let steerDir = 0;     // -1, 0, 1 from keyboard/buttons (constant-velocity)
   let dragging = false; // true while a finger/pointer is actively dragging on the canvas
+  let smoothDt = null;  // exponential moving average of frame dt, to damp frame-timing jitter
 
   const trafficPalette = ['#7dd3fc', '#a78bfa', '#fbbf24', '#4ade80', '#f472b6', '#f97316'];
 
@@ -188,6 +189,7 @@
     dashOffset = 0;
     spawnTimer = 0;
     lastTime = null;
+    smoothDt = null;
     steerDir = 0;
     scoreVal.textContent = '0';
     speedVal.textContent = '1.0x';
@@ -386,7 +388,15 @@
     lastTime = timestamp;
     if (dt > 0.1) dt = 0.1; // clamp so a dropped/backgrounded frame doesn't jump
 
-    update(dt);
+    // Smooth dt with a short exponential moving average. Individual frame
+    // gaps jitter slightly (16.1ms, 17.4ms, ...) even at a steady refresh
+    // rate; feeding raw dt straight into movement makes that jitter visible
+    // as tiny speed wobble. Averaging it keeps motion time-based (never a
+    // fixed per-call step) while damping that noise. Alpha is high enough
+    // that it still reacts within ~5 frames to a genuine frame-rate change.
+    smoothDt = smoothDt === null ? dt : smoothDt + (dt - smoothDt) * 0.2;
+
+    update(smoothDt);
     if (state !== 'playing') return;
     draw();
     rafId = requestAnimationFrame(loop);
