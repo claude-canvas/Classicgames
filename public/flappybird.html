@@ -2,57 +2,59 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
 <title>Flappy Bird</title>
 <style>
   :root { --bg-1:#0f0c29; --bg-2:#302b63; --bg-3:#24243e; --accent:#7dd3fc; --accent-2:#a78bfa; --card-bg:rgba(255,255,255,0.06); --card-border:rgba(255,255,255,0.14); --text:#eef2ff; --text-dim:#b8c0e0; }
   * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
   html, body { margin:0; height:100%; overscroll-behavior:none; }
-  body { font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Inter,Roboto,sans-serif; background:linear-gradient(135deg,var(--bg-1),var(--bg-2) 50%,var(--bg-3)); color:var(--text); display:flex; flex-direction:column; align-items:center; padding:18px 14px 24px; min-height:100%; user-select:none; }
-  h1 { font-size:clamp(24px,6vw,32px); margin:0 0 12px; background:linear-gradient(90deg,#fff,var(--accent) 60%,var(--accent-2)); -webkit-background-clip:text; background-clip:text; color:transparent; }
-  .hud { display:flex; gap:24px; margin-bottom:12px; }
-  .hud .panel { background:var(--card-bg); border:1px solid var(--card-border); border-radius:12px; padding:8px 18px; text-align:center; }
-  .hud .label { font-size:11px; text-transform:uppercase; letter-spacing:0.06em; color:var(--text-dim); }
-  .hud .value { font-size:20px; font-weight:700; color:var(--accent); }
-  .board-wrap { position:relative; background:var(--card-bg); border:1px solid var(--card-border); border-radius:16px; padding:8px; touch-action:none; }
-  canvas#board { display:block; border-radius:8px; background:linear-gradient(180deg,#1b1840,#0b0920 80%); }
-  .overlay { position:absolute; inset:8px; background:rgba(10,8,30,0.85); border-radius:8px; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:10px; text-align:center; padding:16px; }
+  body {
+    font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Inter,Roboto,sans-serif;
+    background:linear-gradient(135deg,var(--bg-1),var(--bg-2) 50%,var(--bg-3));
+    color:var(--text);
+    display:flex; flex-direction:column; align-items:stretch;
+    height:100dvh; width:100vw;
+    overflow:hidden; user-select:none;
+  }
+  header { text-align:center; padding:10px 10px 6px; flex-shrink:0; }
+  h1 { font-size:clamp(20px,6vw,28px); margin:0 0 8px; background:linear-gradient(90deg,#fff,var(--accent) 60%,var(--accent-2)); -webkit-background-clip:text; background-clip:text; color:transparent; }
+  .hud { display:flex; justify-content:center; gap:16px; }
+  .hud .panel { background:var(--card-bg); border:1px solid var(--card-border); border-radius:12px; padding:6px 16px; text-align:center; }
+  .hud .label { font-size:10px; text-transform:uppercase; letter-spacing:0.06em; color:var(--text-dim); }
+  .hud .value { font-size:18px; font-weight:700; color:var(--accent); }
+  .board-wrap { position:relative; flex:1 1 auto; min-height:0; touch-action:none; }
+  canvas#board { display:block; width:100%; height:100%; }
+  .overlay { position:absolute; inset:0; background:rgba(10,8,30,0.82); display:flex; flex-direction:column; align-items:center; justify-content:center; gap:10px; text-align:center; padding:16px; }
   .overlay.hide { display:none; }
-  .overlay h2 { margin:0; font-size:22px; color:var(--accent); }
-  .overlay p { margin:0; color:var(--text-dim); font-size:13px; }
-  button { appearance:none; border:1px solid var(--card-border); background:rgba(255,255,255,0.08); color:var(--text); padding:9px 18px; border-radius:10px; font-size:14px; font-weight:600; cursor:pointer; }
-  .hint { margin-top:16px; font-size:12px; color:var(--text-dim); text-align:center; max-width:300px; }
-  footer { margin-top:20px; font-size:12px; color:var(--text-dim); }
+  .overlay h2 { margin:0; font-size:24px; color:var(--accent); }
+  .overlay p { margin:0; color:var(--text-dim); font-size:13px; max-width:260px; }
+  button { appearance:none; border:1px solid var(--card-border); background:rgba(255,255,255,0.1); color:var(--text); padding:10px 22px; border-radius:12px; font-size:14px; font-weight:600; cursor:pointer; }
+  footer { text-align:center; font-size:11px; color:var(--text-dim); padding:6px 10px; flex-shrink:0; }
   footer a { color:var(--accent); text-decoration:none; }
-</style>
-<style id="fullscreen-override">
-  html, body { height: 100dvh !important; overflow: hidden !important; }
-  body { padding: 6px !important; align-items: stretch !important; }
-  .board-wrap { flex: 1 1 auto !important; width: 100% !important; max-width: none !important; min-height: 0 !important; border-radius: 0 !important; }
-  canvas#board { width: 100% !important; height: 100% !important; }
 </style>
 </head>
 <body>
-  <h1>Flappy Bird</h1>
-  <div class="hud">
-    <div class="panel"><div class="label">Score</div><div class="value" id="score">0</div></div>
-    <div class="panel"><div class="label">Best</div><div class="value" id="best">0</div></div>
-  </div>
+  <header>
+    <h1>Flappy Bird</h1>
+    <div class="hud">
+      <div class="panel"><div class="label">Score</div><div class="value" id="score">0</div></div>
+      <div class="panel"><div class="label">Best</div><div class="value" id="best">0</div></div>
+    </div>
+  </header>
   <div class="board-wrap">
-    <canvas id="board" width="300" height="420"></canvas>
+    <canvas id="board"></canvas>
     <div class="overlay" id="overlay">
       <h2 id="overlayTitle">Flappy Bird</h2>
       <p id="overlaySub">Tap or press Space to flap</p>
       <button id="overlayBtn">Start</button>
     </div>
   </div>
-  <p class="hint">Tap the board, click, or press Space to flap. Avoid the pipes and the ground.</p>
-  <footer>Served from <a href="/">mcp-info-server</a> · <a href="/games.html">All games</a></footer>
+  <footer>Tap the board or press Space to flap · Served from <a href="/">mcp-info-server</a> · <a href="/games.html">All games</a></footer>
 <script>
 (function () {
-  const W = 300, H = 420;
   const canvas = document.getElementById('board');
   const ctx = canvas.getContext('2d');
+  const wrap = document.querySelector('.board-wrap');
   const scoreEl = document.getElementById('score');
   const bestEl = document.getElementById('best');
   const overlay = document.getElementById('overlay');
@@ -63,18 +65,35 @@
   function safeGet(k) { try { return localStorage.getItem(k); } catch (e) { return null; } }
   function safeSet(k, v) { try { localStorage.setItem(k, v); } catch (e) {} }
 
-  const GRAVITY = 0.35;
-  const FLAP = -6.2;
-  const PIPE_W = 44;
-  const PIPE_GAP = 118;
-  const PIPE_SPEED = 2.1;
+  let W = 300, H = 420;
+  let dpr = Math.min(window.devicePixelRatio || 1, 2);
+
+  let GRAVITY, FLAP, PIPE_W, PIPE_GAP, PIPE_SPEED, GROUND_H, BIRD_R, BIRD_X;
   const PIPE_INTERVAL = 105;
-  const GROUND_H = 20;
-  const BIRD_R = 11;
+
+  function computeLayout() {
+    const rect = wrap.getBoundingClientRect();
+    W = Math.max(200, Math.round(rect.width));
+    H = Math.max(300, Math.round(rect.height));
+    canvas.width = Math.round(W * dpr);
+    canvas.height = Math.round(H * dpr);
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+
+    const s = H / 420;
+    GRAVITY = 0.35 * s;
+    FLAP = -6.2 * s;
+    PIPE_SPEED = 2.1 * s;
+    PIPE_W = 44 * s;
+    PIPE_GAP = 118 * s;
+    GROUND_H = 20 * s;
+    BIRD_R = 11 * s;
+    BIRD_X = W * 0.2;
+  }
 
   let birdY, birdVY, pipes, frame, score, best, running, gameOver, started;
 
   function reset() {
+    computeLayout();
     birdY = H / 2 - 40;
     birdVY = 0;
     pipes = [];
@@ -100,7 +119,7 @@
   }
 
   function spawnPipe() {
-    const margin = 40;
+    const margin = H * 0.1;
     const gapCenter = margin + Math.random() * (H - GROUND_H - margin * 2 - PIPE_GAP) + PIPE_GAP / 2;
     pipes.push({ x: W, gapCenter, passed: false });
   }
@@ -149,6 +168,12 @@
   function draw() {
     ctx.clearRect(0, 0, W, H);
 
+    const sky = ctx.createLinearGradient(0, 0, 0, H);
+    sky.addColorStop(0, '#1b1840');
+    sky.addColorStop(0.8, '#0b0920');
+    ctx.fillStyle = sky;
+    ctx.fillRect(0, 0, W, H);
+
     pipes.forEach(drawPipe);
 
     ctx.fillStyle = '#3f3d6d';
@@ -158,7 +183,7 @@
       ctx.fillRect(x, H - GROUND_H, 8, 4);
     }
 
-    drawBird(60, birdY, birdVY);
+    drawBird(BIRD_X, birdY, birdVY);
   }
 
   function loop() {
@@ -174,12 +199,12 @@
     pipes = pipes.filter(p => p.x > -PIPE_W - 10);
 
     for (const p of pipes) {
-      if (!p.passed && p.x + PIPE_W < 60 - BIRD_R) {
+      if (!p.passed && p.x + PIPE_W < BIRD_X - BIRD_R) {
         p.passed = true;
         score++;
         scoreEl.textContent = score;
       }
-      const withinX = 60 + BIRD_R > p.x && 60 - BIRD_R < p.x + PIPE_W;
+      const withinX = BIRD_X + BIRD_R > p.x && BIRD_X - BIRD_R < p.x + PIPE_W;
       const topH = p.gapCenter - PIPE_GAP / 2;
       const bottomY = p.gapCenter + PIPE_GAP / 2;
       const hitsTop = birdY - BIRD_R < topH;
@@ -215,9 +240,11 @@
   canvas.addEventListener('mousedown', flap);
   document.addEventListener('keydown', (e) => { if (e.key === ' ') { e.preventDefault(); flap(); } });
   overlayBtn.addEventListener('click', startGame);
+  window.addEventListener('resize', () => { computeLayout(); if (!running) draw(); });
 
   best = Number(safeGet('flappy_best')) || 0;
   bestEl.textContent = best;
+  computeLayout();
   reset();
   draw();
 })();
