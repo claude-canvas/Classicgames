@@ -25,6 +25,12 @@
   footer { margin-top:20px; font-size:12px; color:var(--text-dim); }
   footer a { color:var(--accent); text-decoration:none; }
 </style>
+<style id="fullscreen-override">
+  html, body { height: 100dvh !important; overflow: hidden !important; }
+  body { padding: 6px !important; align-items: stretch !important; }
+  .board-wrap { flex: 1 1 auto !important; width: 100% !important; max-width: none !important; min-height: 0 !important; border-radius: 0 !important; }
+  canvas#board { width: 100% !important; height: 100% !important; }
+</style>
 </head>
 <body>
   <h1>Dino Run</h1>
