@@ -2,41 +2,53 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
 <title>Space Invaders</title>
 <style>
-  :root { --bg-1:#0f0c29; --bg-2:#302b63; --bg-3:#24243e; --accent:#7dd3fc; --accent-2:#a78bfa; --card-bg:rgba(255,255,255,0.06); --card-border:rgba(255,255,255,0.14); --text:#eef2ff; --text-dim:#b8c0e0; }
+  :root { --accent:#7dd3fc; --accent-2:#a78bfa; --card-bg:rgba(10,8,30,0.45); --card-border:rgba(255,255,255,0.16); --text:#eef2ff; --text-dim:#cdd3ee; }
   * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
   html, body { margin:0; height:100%; overscroll-behavior:none; }
-  body { font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Inter,Roboto,sans-serif; background:linear-gradient(135deg,var(--bg-1),var(--bg-2) 50%,var(--bg-3)); color:var(--text); display:flex; flex-direction:column; align-items:center; padding:18px 14px 24px; min-height:100%; user-select:none; }
-  h1 { font-size:clamp(24px,6vw,32px); margin:0 0 12px; background:linear-gradient(90deg,#fff,var(--accent) 60%,var(--accent-2)); -webkit-background-clip:text; background-clip:text; color:transparent; }
-  .hud { display:flex; gap:24px; margin-bottom:12px; }
-  .hud .panel { background:var(--card-bg); border:1px solid var(--card-border); border-radius:12px; padding:8px 18px; text-align:center; }
-  .hud .label { font-size:11px; text-transform:uppercase; letter-spacing:0.06em; color:var(--text-dim); }
-  .hud .value { font-size:20px; font-weight:700; color:var(--accent); }
-  .board-wrap { position:relative; background:var(--card-bg); border:1px solid var(--card-border); border-radius:16px; padding:8px; touch-action:none; }
-  canvas#board { display:block; border-radius:8px; background:rgba(0,0,0,0.35); }
-  .overlay { position:absolute; inset:8px; background:rgba(10,8,30,0.85); border-radius:8px; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:10px; text-align:center; padding:16px; }
+  body {
+    font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Inter,Roboto,sans-serif;
+    color:var(--text);
+    display:flex; flex-direction:column; align-items:stretch;
+    height:100dvh; width:100vw;
+    overflow:hidden; user-select:none;
+    background-image: linear-gradient(rgba(8,6,24,0.55), rgba(15,12,41,0.72)), url('https://images.unsplash.com/photo-1462331940025-496dfbfc7564?fm=jpg&q=80&w=1600&auto=format&fit=crop');
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+  }
+  header { text-align:center; padding:10px 10px 6px; flex-shrink:0; }
+  h1 { font-size:clamp(20px,6vw,28px); margin:0 0 8px; background:linear-gradient(90deg,#fff,var(--accent) 60%,var(--accent-2)); -webkit-background-clip:text; background-clip:text; color:transparent; text-shadow:0 0 24px rgba(125,211,252,0.25); }
+  .hud { display:flex; justify-content:center; gap:16px; }
+  .hud .panel { background:var(--card-bg); backdrop-filter: blur(6px); border:1px solid var(--card-border); border-radius:12px; padding:6px 16px; text-align:center; }
+  .hud .label { font-size:10px; text-transform:uppercase; letter-spacing:0.06em; color:var(--text-dim); }
+  .hud .value { font-size:18px; font-weight:700; color:var(--accent); }
+  .board-wrap { position:relative; flex:1 1 auto; min-height:0; margin:4px 0; touch-action:none; }
+  canvas#board { display:block; width:100%; height:100%; }
+  .overlay { position:absolute; inset:0; background:rgba(8,6,24,0.72); backdrop-filter: blur(3px); display:flex; flex-direction:column; align-items:center; justify-content:center; gap:12px; text-align:center; padding:16px; }
   .overlay.hide { display:none; }
-  .overlay h2 { margin:0; font-size:22px; color:var(--accent); }
-  .overlay p { margin:0; color:var(--text-dim); font-size:13px; }
-  button { appearance:none; border:1px solid var(--card-border); background:rgba(255,255,255,0.08); color:var(--text); padding:9px 18px; border-radius:10px; font-size:14px; font-weight:600; cursor:pointer; }
-  .controls { display:flex; gap:14px; margin-top:16px; }
-  .ctrl-btn { width:56px; height:56px; border-radius:14px; font-size:22px; display:flex; align-items:center; justify-content:center; }
-  .hint { margin-top:14px; font-size:12px; color:var(--text-dim); text-align:center; max-width:300px; }
-  footer { margin-top:20px; font-size:12px; color:var(--text-dim); }
+  .overlay h2 { margin:0; font-size:24px; color:var(--accent); text-shadow:0 0 20px rgba(125,211,252,0.4); }
+  .overlay p { margin:0; color:var(--text-dim); font-size:13px; max-width:260px; }
+  button { appearance:none; border:1px solid var(--card-border); background:rgba(255,255,255,0.1); color:var(--text); padding:10px 22px; border-radius:12px; font-size:14px; font-weight:600; cursor:pointer; }
+  .controls { display:flex; justify-content:center; align-items:center; gap:18px; padding:8px 10px 12px; flex-shrink:0; }
+  .ctrl-btn { width:58px; height:58px; border-radius:16px; font-size:24px; display:flex; align-items:center; justify-content:center; background:var(--card-bg); backdrop-filter: blur(6px); }
+  footer { text-align:center; font-size:11px; color:var(--text-dim); padding-bottom:4px; flex-shrink:0; }
   footer a { color:var(--accent); text-decoration:none; }
 </style>
 </head>
 <body>
-  <h1>Space Invaders</h1>
-  <div class="hud">
-    <div class="panel"><div class="label">Score</div><div class="value" id="score">0</div></div>
-    <div class="panel"><div class="label">Best</div><div class="value" id="best">0</div></div>
-    <div class="panel"><div class="label">Lives</div><div class="value" id="lives">3</div></div>
-  </div>
+  <header>
+    <h1>Space Invaders</h1>
+    <div class="hud">
+      <div class="panel"><div class="label">Score</div><div class="value" id="score">0</div></div>
+      <div class="panel"><div class="label">Best</div><div class="value" id="best">0</div></div>
+      <div class="panel"><div class="label">Lives</div><div class="value" id="lives">3</div></div>
+    </div>
+  </header>
   <div class="board-wrap">
-    <canvas id="board" width="300" height="340"></canvas>
+    <canvas id="board"></canvas>
     <div class="overlay" id="overlay">
       <h2 id="overlayTitle">Space Invaders</h2>
       <p id="overlaySub">Move and blast the fleet before it lands</p>
@@ -48,13 +60,12 @@
     <button class="ctrl-btn" id="fireBtn">🔫</button>
     <button class="ctrl-btn" id="rightBtn">▶</button>
   </div>
-  <p class="hint">Arrow keys / A / D to move, Space to fire — or use the on-screen buttons. Clear a wave for the next, tougher one.</p>
-  <footer>Served from <a href="/">mcp-info-server</a> · <a href="/games.html">All games</a></footer>
+  <footer>Served from <a href="/">mcp-info-server</a> · <a href="/games.html">All games</a> · nebula photo by NASA / Unsplash</footer>
 <script>
 (function () {
-  const W = 300, H = 340;
   const canvas = document.getElementById('board');
   const ctx = canvas.getContext('2d');
+  const wrap = document.querySelector('.board-wrap');
   const scoreEl = document.getElementById('score');
   const bestEl = document.getElementById('best');
   const livesEl = document.getElementById('lives');
@@ -66,20 +77,39 @@
   const rightBtn = document.getElementById('rightBtn');
   const fireBtn = document.getElementById('fireBtn');
 
-  const PLAYER_W = 24, PLAYER_H = 12, PLAYER_Y = H - 26;
-  const PLAYER_SPEED = 3.4;
-  const BULLET_SPEED = 5.5;
-  const ENEMY_BULLET_SPEED = 3;
-  const ROWS = 4, COLS = 7;
-  const ENEMY_W = 20, ENEMY_H = 14, GAP_X = 10, GAP_Y = 14;
-  const GRID_LEFT = (W - (COLS * (ENEMY_W + GAP_X) - GAP_X)) / 2;
-  const GRID_TOP = 40;
+  let W = 320, H = 600;
+  let dpr = Math.min(window.devicePixelRatio || 1, 2);
+
+  const ROWS = 5, COLS = 6;
+  let ENEMY_W, ENEMY_H, GAP_X, GAP_Y, GRID_LEFT, GRID_TOP;
+  let PLAYER_W, PLAYER_H, PLAYER_Y, PLAYER_SPEED, BULLET_SPEED, ENEMY_BULLET_SPEED;
+
+  function computeLayout() {
+    const rect = wrap.getBoundingClientRect();
+    W = Math.max(200, Math.round(rect.width));
+    H = Math.max(300, Math.round(rect.height));
+    canvas.width = Math.round(W * dpr);
+    canvas.height = Math.round(H * dpr);
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+
+    ENEMY_W = W * 0.09; ENEMY_H = ENEMY_W * 0.65;
+    GAP_X = W * 0.04; GAP_Y = H * 0.028;
+    GRID_LEFT = (W - (COLS * (ENEMY_W + GAP_X) - GAP_X)) / 2;
+    GRID_TOP = H * 0.10;
+
+    PLAYER_W = W * 0.11; PLAYER_H = PLAYER_W * 0.5; PLAYER_Y = H - H * 0.09;
+    PLAYER_SPEED = W * 0.017;
+    BULLET_SPEED = H * 0.011;
+    ENEMY_BULLET_SPEED = H * 0.006;
+
+    if (typeof playerX === 'number') playerX = Math.min(playerX, W - PLAYER_W - 2);
+  }
 
   let best = parseInt(localStorage.getItem('spaceinvadersBest') || '0', 10) || 0;
   bestEl.textContent = best;
 
   let playerX, bullets, enemies, enemyBullets, enemyDir, enemyStepTimer, enemyStepInterval,
-      score, lives, wave, running, moveLeft, moveRight, fireCooldown, dropFlag;
+      score, lives, wave, running, moveLeft, moveRight, fireCooldown;
 
   function buildWave() {
     enemies = [];
@@ -97,6 +127,7 @@
   }
 
   function reset() {
+    computeLayout();
     playerX = W / 2 - PLAYER_W / 2;
     bullets = [];
     enemyBullets = [];
@@ -109,7 +140,6 @@
     moveLeft = false;
     moveRight = false;
     fireCooldown = 0;
-    dropFlag = false;
     buildWave();
     scoreEl.textContent = score;
     livesEl.textContent = lives;
@@ -133,7 +163,7 @@
 
   function fire() {
     if (!running || fireCooldown > 0) return;
-    bullets.push({ x: playerX + PLAYER_W / 2 - 1.5, y: PLAYER_Y - 6, w: 3, h: 8 });
+    bullets.push({ x: playerX + PLAYER_W / 2 - 2, y: PLAYER_Y - 8, w: 4, h: 12 });
     fireCooldown = 14;
   }
 
@@ -145,28 +175,36 @@
     ctx.clearRect(0, 0, W, H);
 
     ctx.fillStyle = '#a7f3d0';
+    ctx.shadowColor = 'rgba(167,243,208,0.6)'; ctx.shadowBlur = 8;
     ctx.fillRect(playerX, PLAYER_Y, PLAYER_W, PLAYER_H);
-    ctx.fillRect(playerX + PLAYER_W / 2 - 2, PLAYER_Y - 5, 4, 5);
+    ctx.fillRect(playerX + PLAYER_W / 2 - PLAYER_W * 0.08, PLAYER_Y - PLAYER_H * 0.45, PLAYER_W * 0.16, PLAYER_H * 0.45);
+    ctx.shadowBlur = 0;
 
     ctx.fillStyle = '#fef08a';
+    ctx.shadowColor = 'rgba(254,240,138,0.7)'; ctx.shadowBlur = 6;
     bullets.forEach(b => ctx.fillRect(b.x, b.y, b.w, b.h));
+    ctx.shadowBlur = 0;
 
     ctx.fillStyle = '#fb7185';
+    ctx.shadowColor = 'rgba(251,113,133,0.7)'; ctx.shadowBlur = 6;
     enemyBullets.forEach(b => ctx.fillRect(b.x, b.y, b.w, b.h));
+    ctx.shadowBlur = 0;
 
     enemies.forEach(e => {
       if (!e.alive) return;
       ctx.fillStyle = enemyColor(e.tier);
+      ctx.shadowColor = enemyColor(e.tier); ctx.shadowBlur = 7;
       ctx.fillRect(e.x, e.y, e.w, e.h);
-      ctx.fillStyle = 'rgba(15,12,41,0.55)';
-      ctx.fillRect(e.x + 4, e.y + 4, 3, 3);
-      ctx.fillRect(e.x + e.w - 7, e.y + 4, 3, 3);
+      ctx.shadowBlur = 0;
+      ctx.fillStyle = 'rgba(8,6,24,0.55)';
+      ctx.fillRect(e.x + e.w * 0.2, e.y + e.h * 0.25, e.w * 0.15, e.h * 0.2);
+      ctx.fillRect(e.x + e.w * 0.65, e.y + e.h * 0.25, e.w * 0.15, e.h * 0.2);
     });
 
-    ctx.strokeStyle = 'rgba(184,192,224,0.35)';
+    ctx.strokeStyle = 'rgba(238,242,255,0.25)';
     ctx.beginPath();
-    ctx.moveTo(0, PLAYER_Y + PLAYER_H + 6.5);
-    ctx.lineTo(W, PLAYER_Y + PLAYER_H + 6.5);
+    ctx.moveTo(0, PLAYER_Y + PLAYER_H + H * 0.02);
+    ctx.lineTo(W, PLAYER_Y + PLAYER_H + H * 0.02);
     ctx.stroke();
   }
 
@@ -203,20 +241,21 @@
     if (enemyStepTimer <= 0) {
       enemyStepTimer = enemyStepInterval;
       let hitEdge = false;
+      const stepX = W * 0.025;
       const aliveEnemies = enemies.filter(e => e.alive);
       for (const e of aliveEnemies) {
-        const nextX = e.x + enemyDir * 8;
+        const nextX = e.x + enemyDir * stepX;
         if (nextX < 2 || nextX + e.w > W - 2) { hitEdge = true; break; }
       }
       if (hitEdge) {
         enemyDir *= -1;
-        aliveEnemies.forEach(e => e.y += 10);
+        aliveEnemies.forEach(e => e.y += H * 0.02);
       } else {
-        aliveEnemies.forEach(e => e.x += enemyDir * 8);
+        aliveEnemies.forEach(e => e.x += enemyDir * stepX);
       }
       if (Math.random() < 0.35 && aliveEnemies.length) {
         const shooter = aliveEnemies[Math.floor(Math.random() * aliveEnemies.length)];
-        enemyBullets.push({ x: shooter.x + shooter.w / 2 - 1.5, y: shooter.y + shooter.h, w: 3, h: 8 });
+        enemyBullets.push({ x: shooter.x + shooter.w / 2 - 2, y: shooter.y + shooter.h, w: 4, h: 12 });
       }
     }
 
@@ -279,6 +318,9 @@
 
   overlayBtn.addEventListener('click', startGame);
 
+  window.addEventListener('resize', () => { computeLayout(); if (!running) draw(); });
+
+  computeLayout();
   reset();
   draw();
 })();
