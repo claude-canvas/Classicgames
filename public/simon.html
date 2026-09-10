@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+<title>Simon</title>
+<style>
+  :root { --bg-1:#0f0c29; --bg-2:#302b63; --bg-3:#24243e; --accent:#7dd3fc; --accent-2:#a78bfa; --card-bg:rgba(255,255,255,0.06); --card-border:rgba(255,255,255,0.14); --text:#eef2ff; --text-dim:#b8c0e0; }
+  * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+  html, body { margin:0; height:100%; overscroll-behavior:none; }
+  body { font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Inter,Roboto,sans-serif; background:linear-gradient(135deg,var(--bg-1),var(--bg-2) 50%,var(--bg-3)); color:var(--text); display:flex; flex-direction:column; align-items:center; padding:18px 14px 24px; min-height:100%; user-select:none; }
+  h1 { font-size:clamp(24px,6vw,32px); margin:0 0 4px; background:linear-gradient(90deg,#fff,var(--accent) 60%,var(--accent-2)); -webkit-background-clip:text; background-clip:text; color:transparent; }
+  .sub { font-size:13px; color:var(--text-dim); margin-bottom:12px; }
+  .hud { display:flex; gap:32px; margin-bottom:14px; font-size:22px; font-weight:700; }
+  .hud .lbl { font-size:11px; font-weight:500; color:var(--text-dim); display:block; text-align:center; }
+  .board-wrap { position:relative; background:var(--card-bg); border:1px solid var(--card-border); border-radius:20px; padding:14px; backdrop-filter:blur(6px); }
+  .pad-grid { display:grid; grid-template-columns:1fr 1fr; grid-template-rows:1fr 1fr; gap:10px; width:min(72vw,300px); height:min(72vw,300px); }
+  .pad { border-radius:16px; border:none; cursor:pointer; opacity:0.55; transition:opacity 0.08s, transform 0.08s; touch-action:none; }
+  .pad:active { transform:scale(0.97); }
+  .pad.lit { opacity:1; box-shadow:0 0 30px 6px var(--glow); }
+  #padGreen { background:#22c55e; --glow:#22c55e; border-radius:16px 4px 4px 4px; }
+  #padRed { background:#ef4444; --glow:#ef4444; border-radius:4px 16px 4px 4px; }
+  #padYellow { background:#eab308; --glow:#eab308; border-radius:4px 4px 4px 16px; }
+  #padBlue { background:#3b82f6; --glow:#3b82f6; border-radius:4px 4px 16px 4px; }
+  .center-hole { position:absolute; top:50%; left:50%; transform:translate(-50%,-50%); width:min(26vw,110px); height:min(26vw,110px); background:var(--bg-1); border-radius:50%; border:1px solid var(--card-border); display:flex; align-items:center; justify-content:center; font-size:26px; font-weight:800; color:var(--accent); pointer-events:none; }
+  .overlay { position:absolute; inset:0; background:rgba(10,8,30,0.9); border-radius:20px; display:none; flex-direction:column; align-items:center; justify-content:center; gap:10px; text-align:center; padding:16px; }
+  .overlay.show { display:flex; }
+  .overlay h2 { margin:0; font-size:22px; color:var(--accent); }
+  .overlay p { margin:0; color:var(--text-dim); font-size:13px; }
+  button.action { appearance:none; border:1px solid var(--card-border); background:rgba(255,255,255,0.08); color:var(--text); padding:9px 18px; border-radius:10px; font-size:14px; font-weight:600; cursor:pointer; }
+  button.action:active { transform:scale(0.96); }
+  .hint { margin-top:16px; font-size:12px; color:var(--text-dim); text-align:center; max-width:300px; }
+  footer { margin-top:20px; font-size:12px; color:var(--text-dim); }
+  footer a { color:var(--accent); text-decoration:none; }
+</style>
+<style id="fullscreen-override">
+  html, body { height: 100dvh !important; overflow: hidden !important; }
+  body { padding: 6px !important; align-items: stretch !important; justify-content:center !important; }
+</style>
+</head>
+<body>
+  <h1>Simon</h1>
+  <div class="sub">Watch the sequence, then repeat it.</div>
+  <div class="hud">
+    <div><span class="lbl">ROUND</span><span id="round">0</span></div>
+    <div><span class="lbl">BEST</span><span id="best">0</span></div>
+  </div>
+  <div class="board-wrap">
+    <div class="pad-grid">
+      <button class="pad" id="padGreen" data-idx="0"></button>
+      <button class="pad" id="padRed" data-idx="1"></button>
+      <button class="pad" id="padYellow" data-idx="2"></button>
+      <button class="pad" id="padBlue" data-idx="3"></button>
+    </div>
+    <div class="center-hole" id="centerLabel">GO</div>
+    <div class="overlay show" id="overlay">
+      <h2 id="overlayTitle">Simon</h2>
+      <p id="overlaySub">Tap Start, then repeat the flashing pattern.</p>
+      <button class="action" id="overlayBtn">Start</button>
+    </div>
+  </div>
+  <p class="hint">Each round adds one more step. Miss a step and the game ends.</p>
+  <footer>Served from <a href="/">mcp-info-server</a> &middot; <a href="/games.html">All games</a></footer>
+<script>
+(function () {
+  const pads = [document.getElementById('padGreen'), document.getElementById('padRed'), document.getElementById('padYellow'), document.getElementById('padBlue')];
+  const roundEl = document.getElementById('round');
+  const bestEl = document.getElementById('best');
+  const overlay = document.getElementById('overlay');
+  const overlayTitle = document.getElementById('overlayTitle');
+  const overlaySub = document.getElementById('overlaySub');
+  const overlayBtn = document.getElementById('overlayBtn');
+  const centerLabel = document.getElementById('centerLabel');
+
+  const freqs = [329.63, 261.63, 220.0, 164.81];
+  let audioCtx = null;
+  function beep(i, dur) {
+    try {
+      audioCtx = audioCtx || new (window.AudioContext || window.webkitAudioContext)();
+      const osc = audioCtx.createOscillator();
+      const gain = audioCtx.createGain();
+      osc.type = 'sine';
+      osc.frequency.value = freqs[i];
+      gain.gain.setValueAtTime(0.18, audioCtx.currentTime);
+      gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + dur / 1000);
+      osc.connect(gain).connect(audioCtx.destination);
+      osc.start();
+      osc.stop(audioCtx.currentTime + dur / 1000);
+    } catch (e) {}
+  }
+
+  let sequence = [], playerStep = 0, best = 0, playing = false, acceptInput = false;
+
+  function lightPad(i, dur) {
+    return new Promise((resolve) => {
+      pads[i].classList.add('lit');
+      beep(i, dur);
+      setTimeout(() => {
+        pads[i].classList.remove('lit');
+        setTimeout(resolve, 100);
+      }, dur);
+    });
+  }
+
+  async function playSequence() {
+    acceptInput = false;
+    centerLabel.textContent = '...';
+    await new Promise(r => setTimeout(r, 400));
+    const dur = Math.max(260, 500 - sequence.length * 12);
+    for (const i of sequence) {
+      await lightPad(i, dur);
+    }
+    playerStep = 0;
+    acceptInput = true;
+    centerLabel.textContent = 'GO';
+  }
+
+  function nextRound() {
+    sequence.push(Math.floor(Math.random() * 4));
+    roundEl.textContent = sequence.length;
+    playSequence();
+  }
+
+  function startGame() {
+    sequence = [];
+    playerStep = 0;
+    roundEl.textContent = 0;
+    playing = true;
+    overlay.classList.remove('show');
+    setTimeout(nextRound, 400);
+  }
+
+  function endGame() {
+    playing = false;
+    acceptInput = false;
+    if (sequence.length - 1 > best) {
+      best = sequence.length - 1;
+      bestEl.textContent = best;
+    }
+    overlayTitle.textContent = 'Game Over';
+    overlaySub.textContent = 'You reached round ' + (sequence.length) + '. Best: ' + best;
+    overlayBtn.textContent = 'Play Again';
+    overlay.classList.add('show');
+  }
+
+  async function handlePad(i) {
+    if (!playing || !acceptInput) return;
+    acceptInput = false;
+    await lightPad(i, 220);
+    acceptInput = true;
+    if (sequence[playerStep] !== i) {
+      return endGame();
+    }
+    playerStep++;
+    if (playerStep === sequence.length) {
+      acceptInput = false;
+      setTimeout(nextRound, 550);
+    }
+  }
+
+  pads.forEach((pad, i) => {
+    pad.addEventListener('pointerdown', (e) => { e.preventDefault(); handlePad(i); });
+  });
+
+  overlayBtn.addEventListener('click', startGame);
+})();
+</script>
+</body>
+</html>
