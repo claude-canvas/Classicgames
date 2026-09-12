@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+<title>Whack-a-Mole</title>
+<style>
+  * { margin:0; padding:0; box-sizing:border-box; -webkit-tap-highlight-color: transparent; user-select:none; }
+  html, body { width:100%; height:100%; overflow:hidden; touch-action:none; background:#2d6a4f; font-family:'Segoe UI', Verdana, sans-serif; }
+  #game { position:fixed; inset:0; display:flex; flex-direction:column; background:linear-gradient(#7cc576,#2d6a4f 40%); }
+  #hud { display:flex; justify-content:space-between; align-items:center; padding:12px 18px; color:#fff; text-shadow:0 2px 4px rgba(0,0,0,.4); font-weight:bold; font-size:5vw; z-index:5; }
+  #hud span#timeVal.low { color:#ff6b6b; }
+  #board { flex:1; display:grid; grid-template-columns:repeat(3,1fr); grid-template-rows:repeat(3,1fr); gap:2vw; padding:3vw; }
+  .hole { position:relative; display:flex; align-items:center; justify-content:center; }
+  .dirt { position:absolute; bottom:6%; width:88%; height:38%; background:radial-gradient(ellipse at center, #6b4423 0%, #4a2f18 70%, #2f1c0d 100%); border-radius:50%; box-shadow: inset 0 6px 10px rgba(0,0,0,.5), 0 4px 6px rgba(0,0,0,.3); }
+  .mole { position:absolute; bottom:8%; width:60%; height:60%; transform: translateY(100%) scale(0.7); transition: transform .12s ease-out; cursor:pointer; }
+  .mole.up { transform: translateY(15%) scale(1); }
+  .mole.hit { transform: translateY(60%) scale(0.8) rotate(15deg) !important; transition: transform .15s ease-in; filter: brightness(0.7); }
+  .moleBody { width:100%; height:100%; position:relative; }
+  .moleBody::before { content:''; position:absolute; left:8%; top:20%; width:84%; height:75%; background:#8b5a2b; border-radius:50% 50% 45% 45%; box-shadow: inset -6px -8px 12px rgba(0,0,0,.25); }
+  .moleBody::after { content:''; position:absolute; left:20%; top:0; width:60%; height:45%; background:#a56a35; border-radius:50% 50% 40% 40%; }
+  .eye { position:absolute; width:9%; height:9%; background:#1a1a1a; border-radius:50%; top:32%; z-index:2; }
+  .eyeL { left:28%; } .eyeR { left:58%; }
+  .nose { position:absolute; width:14%; height:10%; background:#3a2416; border-radius:50%; top:45%; left:43%; z-index:2; }
+  .cheek { position:absolute; width:16%; height:12%; background:#c98a4b; border-radius:50%; top:44%; opacity:.7; }
+  .cheekL{ left:8%; } .cheekR{ left:76%; }
+  #startScreen, #endScreen { position:fixed; inset:0; background:rgba(0,0,0,.75); color:#fff; display:flex; flex-direction:column; align-items:center; justify-content:center; text-align:center; z-index:20; padding:6vw; }
+  #startScreen h1, #endScreen h1 { font-size:9vw; margin-bottom:4vw; text-shadow:0 3px 6px rgba(0,0,0,.5); }
+  #endScreen p { font-size:6vw; margin-bottom:6vw; }
+  button.bigBtn { font-size:6vw; padding:3vw 8vw; border:none; border-radius:3vw; background:#ffb703; color:#3a2416; font-weight:bold; box-shadow:0 6px 0 #c98a13; }
+  button.bigBtn:active { transform:translateY(4px); box-shadow:0 2px 0 #c98a13; }
+  .hidden { display:none !important; }
+  #popText { position:absolute; font-weight:bold; color:#fff700; text-shadow:0 2px 3px #000; font-size:6vw; pointer-events:none; animation:floatUp .6s ease-out forwards; z-index:10; }
+  @keyframes floatUp { from{opacity:1; transform:translateY(0);} to{opacity:0; transform:translateY(-15vh);} }
+</style>
+</head>
+<body>
+<div id="game">
+  <div id="hud">
+    <div>Score: <span id="scoreVal">0</span></div>
+    <div>Time: <span id="timeVal">30</span>s</div>
+  </div>
+  <div id="board"></div>
+</div>
+
+<div id="startScreen">
+  <h1>Whack-a-Mole</h1>
+  <p style="font-size:5vw; margin-bottom:6vw;">Tap the moles before they hide!</p>
+  <button class="bigBtn" id="startBtn">Start Game</button>
+</div>
+
+<div id="endScreen" class="hidden">
+  <h1>Time's Up!</h1>
+  <p>Final Score: <span id="finalScore">0</span></p>
+  <button class="bigBtn" id="restartBtn">Play Again</button>
+</div>
+
+<script>
+const board = document.getElementById('board');
+const scoreVal = document.getElementById('scoreVal');
+const timeVal = document.getElementById('timeVal');
+const startScreen = document.getElementById('startScreen');
+const endScreen = document.getElementById('endScreen');
+const finalScore = document.getElementById('finalScore');
+
+let holes = [];
+let score = 0;
+let timeLeft = 30;
+let gameTimer = null;
+let spawnTimer = null;
+let activeMole = -1;
+let running = false;
+
+for (let i = 0; i < 9; i++) {
+  const hole = document.createElement('div');
+  hole.className = 'hole';
+  hole.innerHTML = '<div class="dirt"></div><div class="mole"><div class="moleBody"><div class="eye eyeL"></div><div class="eye eyeR"></div><div class="nose"></div><div class="cheek cheekL"></div><div class="cheek cheekR"></div></div></div>';
+  board.appendChild(hole);
+  holes.push(hole);
+  const mole = hole.querySelector('.mole');
+  mole.addEventListener('pointerdown', (e) => {
+    e.preventDefault();
+    if (!running) return;
+    if (mole.classList.contains('up') && !mole.classList.contains('hit')) {
+      hitMole(hole, mole, e);
+    }
+  });
+}
+
+function hitMole(hole, mole, e) {
+  score++;
+  scoreVal.textContent = score;
+  mole.classList.add('hit');
+  const rect = hole.getBoundingClientRect();
+  const pop = document.createElement('div');
+  pop.id = 'popText';
+  pop.textContent = '+1';
+  pop.style.left = (rect.left + rect.width/2 - 20) + 'px';
+  pop.style.top = (rect.top + rect.height/2) + 'px';
+  document.body.appendChild(pop);
+  setTimeout(() => pop.remove(), 650);
+  setTimeout(() => {
+    mole.classList.remove('up', 'hit');
+  }, 150);
+  if (activeMole === holes.indexOf(hole)) activeMole = -1;
+}
+
+function popRandomMole() {
+  if (!running) return;
+  if (activeMole !== -1) {
+    const prevMole = holes[activeMole].querySelector('.mole');
+    prevMole.classList.remove('up');
+  }
+  let idx = Math.floor(Math.random() * holes.length);
+  activeMole = idx;
+  const mole = holes[idx].querySelector('.mole');
+  mole.classList.remove('hit');
+  mole.classList.add('up');
+  const upDuration = Math.max(500, 1300 - score * 15);
+  setTimeout(() => {
+    if (mole.classList.contains('up')) mole.classList.remove('up');
+    if (activeMole === idx) activeMole = -1;
+  }, upDuration);
+}
+
+function scheduleSpawn() {
+  if (!running) return;
+  const delay = Math.max(450, 1100 - score * 10) + Math.random() * 400;
+  spawnTimer = setTimeout(() => {
+    popRandomMole();
+    scheduleSpawn();
+  }, delay);
+}
+
+function startGame() {
+  score = 0;
+  timeLeft = 30;
+  scoreVal.textContent = '0';
+  timeVal.textContent = '30';
+  timeVal.classList.remove('low');
+  startScreen.classList.add('hidden');
+  endScreen.classList.add('hidden');
+  running = true;
+  holes.forEach(h => h.querySelector('.mole').classList.remove('up','hit'));
+  activeMole = -1;
+  scheduleSpawn();
+  gameTimer = setInterval(() => {
+    timeLeft--;
+    timeVal.textContent = timeLeft;
+    if (timeLeft <= 10) timeVal.classList.add('low');
+    if (timeLeft <= 0) endGame();
+  }, 1000);
+}
+
+function endGame() {
+  running = false;
+  clearInterval(gameTimer);
+  clearTimeout(spawnTimer);
+  holes.forEach(h => h.querySelector('.mole').classList.remove('up'));
+  finalScore.textContent = score;
+  endScreen.classList.remove('hidden');
+}
+
+document.getElementById('startBtn').addEventListener('click', startGame);
+document.getElementById('restartBtn').addEventListener('click', startGame);
+
+// Prevent double-tap zoom / scrolling on mobile
+document.addEventListener('touchmove', (e) => e.preventDefault(), { passive: false });
+</script>
+</body>
+</html>
