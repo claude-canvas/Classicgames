@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#070B1E">
+<meta name="mobile-web-app-capable" content="yes">
+<title>Borealis</title>
+<style>
+    :root {
+        --night: #070B1E;
+        --glacier: #7FD8E8;
+        --aurora: #5CFFB0;
+        --violet: #9B7BFF;
+        --ember: #FFB347;
+        --snow: #EEF4FF;
+        --ui: "Avenir Next", "Segoe UI Variable Display", "Segoe UI", Roboto, system-ui, sans-serif;
+    }
+    * { box-sizing: border-box; margin: 0; }
+    html, body {
+        height: 100%;
+        background: var(--night);
+        color: var(--snow);
+        font-family: var(--ui);
+        overflow: hidden;
+        overscroll-behavior: none;
+        -webkit-user-select: none;
+        user-select: none;
+        -webkit-tap-highlight-color: transparent;
+    }
+    #view { position: fixed; inset: 0; width: 100%; height: 100%; display: block; touch-action: none; outline: none; }
+
+    /* ---------------------------------------------------------------- in-game HUD */
+    #hud {
+        position: fixed; inset: 0 0 auto 0;
+        display: flex; justify-content: space-between; align-items: flex-start;
+        padding: max(14px, env(safe-area-inset-top)) max(18px, env(safe-area-inset-right)) 0 max(18px, env(safe-area-inset-left));
+        pointer-events: none;
+        opacity: 0;
+        transition: opacity .4s;
+        text-shadow: 0 2px 16px rgba(7, 11, 30, .7);
+    }
+    #hud.on { opacity: 1; }
+    .score { font-weight: 200; font-size: clamp(30px, 6vh + 1vw, 54px); line-height: 1; font-variant-numeric: tabular-nums; }
+    .mult { font-size: .4em; font-weight: 600; color: var(--aurora); margin-left: .45em; vertical-align: 1em; display: inline-block; }
+    .mult.bump { animation: bump .35s ease-out; }
+    @keyframes bump { 40% { transform: scale(1.5); } }
+    .right { display: flex; align-items: center; gap: 14px; }
+    .embers { display: flex; align-items: center; gap: 8px; font-size: 20px; color: var(--ember); font-variant-numeric: tabular-nums; }
+    .embers i { width: 10px; height: 10px; background: var(--ember); transform: rotate(45deg); box-shadow: 0 0 12px var(--ember); }
+    #lives { display: flex; gap: 5px; }
+    #lives b { width: 10px; height: 18px; background: var(--glacier); clip-path: polygon(50% 0, 100% 38%, 50% 100%, 0 38%); }
+    #lives b.lost { background: rgba(127, 216, 232, .18); }
+    #lives b.shield { background: var(--aurora); margin-left: 4px; }
+    .icon-btn {
+        pointer-events: auto;
+        width: 42px; height: 42px; border-radius: 50%;
+        border: 1px solid rgba(238, 244, 255, .28);
+        background: rgba(7, 11, 30, .35);
+        color: var(--snow); font: inherit; font-size: 14px; line-height: 1;
+        display: grid; place-items: center; cursor: pointer;
+    }
+    .icon-btn[aria-pressed="true"] { color: rgba(238, 244, 255, .35); text-decoration: line-through; }
+    .icon-btn:focus-visible, .cta:focus-visible { outline: 2px solid var(--aurora); outline-offset: 3px; }
+
+    #pops { position: fixed; inset: 0; pointer-events: none; overflow: hidden; }
+    .pop {
+        position: absolute; transform: translate(-50%, -50%); white-space: nowrap;
+        font-weight: 600; font-size: 17px; color: var(--ember);
+        text-shadow: 0 0 10px rgba(255, 179, 71, .55), 0 1px 3px rgba(7, 11, 30, .8);
+        animation: rise .95s ease-out forwards;
+    }
+    .pop.cool { color: var(--glacier); text-shadow: 0 0 10px rgba(127, 216, 232, .55), 0 1px 3px rgba(7, 11, 30, .8); }
+    .pop.aurora { color: var(--aurora); text-shadow: 0 0 10px rgba(92, 255, 176, .55), 0 1px 3px rgba(7, 11, 30, .8); }
+    @keyframes rise { to { opacity: 0; transform: translate(-50%, -170%); } }
+    #flash { position: fixed; inset: 0; pointer-events: none; opacity: 0; background: radial-gradient(ellipse at center, transparent 40%, rgba(150, 215, 255, .6)); }
+    #flash.go { animation: flash .55s ease-out; }
+    @keyframes flash { from { opacity: 1; } to { opacity: 0; } }
+
+    /* ---------------------------------------------------------------- title / pause / game over */
+    .screen {
+        position: fixed; inset: 0;
+        display: flex; flex-direction: column; justify-content: center; align-items: flex-start;
+        padding: max(24px, env(safe-area-inset-top)) 24px max(24px, env(safe-area-inset-bottom)) max(7vw, env(safe-area-inset-left));
+        background: linear-gradient(90deg, rgba(7, 11, 30, .8) 0%, rgba(7, 11, 30, .4) 42%, transparent 70%);
+        transition: opacity .45s;
+    }
+    .screen.hidden { opacity: 0; pointer-events: none; }
+    h1 {
+        font-weight: 200; font-size: clamp(54px, 17vh, 150px); letter-spacing: .05em; line-height: 1;
+        background: linear-gradient(100deg, #5CFFB0 0%, #7FD8E8 30%, #9B7BFF 60%, #5CFFB0 100%);
+        background-size: 300% 100%;
+        -webkit-background-clip: text; background-clip: text; color: transparent;
+        animation: drift 16s linear infinite;
+        padding-bottom: .08em;
+    }
+    @keyframes drift { to { background-position: 300% 0; } }
+    h2 { font-weight: 200; font-size: clamp(46px, 13vh, 110px); line-height: 1; font-variant-numeric: tabular-nums; }
+    h2 small { font-size: .28em; font-weight: 400; color: rgba(238, 244, 255, .6); margin-left: .3em; }
+    .tag { max-width: 34ch; margin: 1.6vh 0 3.4vh; font-size: clamp(15px, 2.7vh, 19px); line-height: 1.5; color: rgba(238, 244, 255, .85); }
+    .cta {
+        pointer-events: auto; cursor: pointer;
+        font: inherit; font-size: 18px; font-weight: 500;
+        color: var(--night); background: var(--snow);
+        border: 0; border-radius: 999px; padding: 14px 30px;
+        box-shadow: 0 0 34px rgba(92, 255, 176, .28);
+        transition: transform .15s;
+    }
+    .cta:active { transform: scale(.97); }
+    .how { margin-top: 2.8vh; max-width: 44ch; font-size: 14px; line-height: 1.6; color: rgba(238, 244, 255, .62); }
+    .best { margin-top: 1.2vh; font-size: 15px; color: var(--ember); }
+    .note { margin: 1.4vh 0 0; font-size: 17px; color: var(--ember); }
+    .stats { display: grid; grid-template-columns: auto auto; gap: 6px 28px; margin: 2.4vh 0 3.4vh; font-size: 16px; }
+    .stats dt { color: rgba(238, 244, 255, .6); }
+    .stats dd { font-variant-numeric: tabular-nums; font-weight: 500; }
+    .rotate { display: none; margin-top: 2vh; font-size: 14px; color: var(--glacier); }
+    #pause h2 { margin-bottom: 3.4vh; }
+    @media (orientation: portrait) {
+        .rotate { display: block; }
+        .screen { background: linear-gradient(180deg, rgba(7, 11, 30, .15) 0%, rgba(7, 11, 30, .82) 60%); justify-content: flex-end; padding-bottom: 12vh; }
+    }
+    @media (pointer: coarse) { .keys { display: none; } }
+    @media (prefers-reduced-motion: reduce) { h1 { animation: none; } .pop { animation-duration: .01s; } }
+
+    #err {
+        position: fixed; inset: 0; margin: 0; padding: 24px;
+        background: var(--night); color: var(--snow);
+        font: 14px/1.5 ui-monospace, monospace; white-space: pre-wrap; overflow: auto; z-index: 10;
+    }
+</style>
+</head>
+<body>
+    <canvas id="view" tabindex="-1" aria-label="Borealis game"></canvas>
+    <div id="pops" aria-hidden="true"></div>
+    <div id="flash" aria-hidden="true"></div>
+
+    <div id="hud">
+        <div class="score"><span id="score">0</span><span id="mult" class="mult"></span></div>
+        <div class="right">
+            <span class="embers" aria-label="Embers collected"><i></i><span id="embers">0</span></span>
+            <span id="lives" role="img" aria-label="3 lives left"></span>
+            <button id="muteBtn" class="icon-btn" aria-pressed="false" aria-label="Mute sound">&#9834;</button>
+            <button id="pauseBtn" class="icon-btn" aria-label="Pause">&#10074;&#10074;</button>
+        </div>
+    </div>
+
+    <section id="title" class="screen">
+        <h1>Borealis</h1>
+        <p class="tag">Glide down the frozen river under the northern lights. Catch the embers and keep clear of the ice.</p>
+        <button id="playBtn" class="cta">Start gliding</button>
+        <p class="how">Drag left or right to steer. Swipe up to jump over frost walls.<span class="keys"><br>Keyboard: arrows or A and D to steer, space to jump, Esc to pause.</span></p>
+        <p class="best" id="bestLine" hidden></p>
+        <p class="rotate">Turn your phone sideways for the widest view.</p>
+    </section>
+
+    <section id="over" class="screen hidden" inert>
+        <h2><span id="finalScore">0</span><small>points</small></h2>
+        <p class="note" id="finalNote"></p>
+        <dl class="stats">
+            <dt>Distance</dt><dd id="statDist">0 m</dd>
+            <dt>Embers</dt><dd id="statEmbers">0</dd>
+        </dl>
+        <button id="againBtn" class="cta">Glide again</button>
+    </section>
+
+    <section id="pause" class="screen hidden" inert>
+        <h2>Paused</h2>
+        <button id="resumeBtn" class="cta">Resume</button>
+    </section>
+
+    <pre id="err" hidden></pre>
+    <script type="module" src="./borealis/game.js"></script>
+</body>
+</html>
