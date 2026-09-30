@@ -947,6 +947,8 @@ function render() {
         gl.depthMask(true);
         gl.disable(gl.BLEND);
     }
+    // Space.js redraws on every keypress; leave it nothing to draw between our frames
+    space.totalVert = 0;
     drawOverlay();
 }
 
