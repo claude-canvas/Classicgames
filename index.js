@@ -1,5 +1,6 @@
 const express = require('express');
 const path = require('path');
+const { registerMinecraftAI } = require('./server/minecraftAI');
 
 const app = express();
 
@@ -8,6 +9,10 @@ const HOST = process.env.HOST || '0.0.0.0';
 const NODE_ENV = process.env.NODE_ENV || 'development';
 
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.json({ limit: '64kb' }));
+
+// AI companion (Nova) for /minecraft - needs the groq_api env var
+registerMinecraftAI(app);
 
 app.get('/health', (req, res) => {
   res.json({ status: 'ok', uptime: process.uptime() });
