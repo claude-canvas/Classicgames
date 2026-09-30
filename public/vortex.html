@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#05040F">
+<meta name="mobile-web-app-capable" content="yes">
+<title>Vortex</title>
+<style>
+    :root {
+        --void: #05040F;
+        --cyan: #1AE5FF;
+        --magenta: #FF38C0;
+        --gold: #FFD95A;
+        --mint: #66FFB3;
+        --ink: #EEF2FF;
+        --ui: "Avenir Next", "Segoe UI Variable Display", "Segoe UI", Roboto, system-ui, sans-serif;
+    }
+    * { box-sizing: border-box; margin: 0; }
+    html, body {
+        height: 100%;
+        background: var(--void);
+        color: var(--ink);
+        font-family: var(--ui);
+        overflow: hidden;
+        overscroll-behavior: none;
+        -webkit-user-select: none;
+        user-select: none;
+        -webkit-tap-highlight-color: transparent;
+    }
+    #view { position: fixed; inset: 0; width: 100%; height: 100%; display: block; touch-action: none; outline: none; }
+
+    /* ---------------------------------------------------------------- HUD */
+    #hud {
+        position: fixed; inset: 0 0 auto 0;
+        display: flex; justify-content: space-between; align-items: flex-start;
+        padding: max(14px, env(safe-area-inset-top)) max(18px, env(safe-area-inset-right)) 0 max(18px, env(safe-area-inset-left));
+        pointer-events: none;
+        opacity: 0;
+        transition: opacity .4s;
+        text-shadow: 0 2px 16px rgba(5, 4, 15, .8);
+    }
+    #hud.on { opacity: 1; }
+    .score { font-weight: 200; font-size: clamp(30px, 6vh + 1vw, 54px); line-height: 1; font-variant-numeric: tabular-nums; }
+    .mult { font-size: .4em; font-weight: 700; color: var(--gold); margin-left: .45em; vertical-align: 1em; display: inline-block; }
+    .mult.bump { animation: bump .35s ease-out; }
+    @keyframes bump { 40% { transform: scale(1.6); } }
+    .dist { display: block; margin-top: 6px; font-size: 13px; letter-spacing: .08em; color: rgba(238, 242, 255, .6); font-variant-numeric: tabular-nums; }
+    .right { display: flex; align-items: center; gap: 14px; }
+    #hull { display: flex; gap: 5px; }
+    #hull b { width: 16px; height: 8px; background: var(--cyan); transform: skewX(-20deg); box-shadow: 0 0 10px rgba(26, 229, 255, .6); }
+    #hull b.lost { background: rgba(26, 229, 255, .15); box-shadow: none; }
+    #hull b.shield { background: var(--mint); margin-left: 4px; box-shadow: 0 0 10px rgba(102, 255, 179, .7); }
+    .icon-btn {
+        pointer-events: auto;
+        width: 42px; height: 42px; border-radius: 50%;
+        border: 1px solid rgba(238, 242, 255, .28);
+        background: rgba(5, 4, 15, .4);
+        color: var(--ink); font: inherit; font-size: 14px; line-height: 1;
+        display: grid; place-items: center; cursor: pointer;
+    }
+    .icon-btn[aria-pressed="true"] { color: rgba(238, 242, 255, .35); text-decoration: line-through; }
+    .icon-btn:focus-visible, .cta:focus-visible { outline: 2px solid var(--cyan); outline-offset: 3px; }
+
+    #pops { position: fixed; inset: 0; pointer-events: none; overflow: hidden; }
+    .pop {
+        position: absolute; transform: translate(-50%, -50%); white-space: nowrap;
+        font-weight: 700; font-size: 16px; letter-spacing: .06em; color: var(--gold);
+        text-shadow: 0 0 10px rgba(255, 217, 90, .6), 0 1px 3px rgba(5, 4, 15, .9);
+        animation: rise .95s ease-out forwards;
+    }
+    .pop.cool { color: var(--cyan); text-shadow: 0 0 10px rgba(26, 229, 255, .6), 0 1px 3px rgba(5, 4, 15, .9); }
+    .pop.green { color: var(--mint); text-shadow: 0 0 10px rgba(102, 255, 179, .6), 0 1px 3px rgba(5, 4, 15, .9); }
+    @keyframes rise { to { opacity: 0; transform: translate(-50%, -180%); } }
+
+    #banner {
+        position: fixed; left: 0; right: 0; top: 22vh; text-align: center; pointer-events: none; opacity: 0;
+        text-shadow: 0 0 24px rgba(5, 4, 15, .9);
+    }
+    #banner strong { display: block; font-size: 13px; font-weight: 600; letter-spacing: .4em; text-transform: uppercase; color: var(--gold); }
+    #banner span { display: block; margin-top: 6px; font-size: clamp(28px, 6vh, 46px); font-weight: 200; letter-spacing: .06em; }
+    #banner.go { animation: bannerIn 2.6s ease-out; }
+    @keyframes bannerIn { 0% { opacity: 0; transform: scale(1.15); } 15% { opacity: 1; transform: scale(1); } 75% { opacity: 1; } 100% { opacity: 0; } }
+
+    #flash { position: fixed; inset: 0; pointer-events: none; opacity: 0; background: radial-gradient(ellipse at center, transparent 35%, rgba(255, 50, 80, .55)); }
+    #flash.go { animation: flash .5s ease-out; }
+    @keyframes flash { from { opacity: 1; } to { opacity: 0; } }
+
+    /* ---------------------------------------------------------------- title / pause / game over */
+    .screen {
+        position: fixed; inset: 0;
+        display: flex; flex-direction: column; justify-content: center; align-items: flex-start;
+        padding: max(24px, env(safe-area-inset-top)) 24px max(24px, env(safe-area-inset-bottom)) max(7vw, env(safe-area-inset-left));
+        background: linear-gradient(90deg, rgba(5, 4, 15, .82) 0%, rgba(5, 4, 15, .45) 42%, transparent 72%);
+        transition: opacity .45s;
+    }
+    .screen.hidden { opacity: 0; pointer-events: none; }
+    h1 {
+        font-weight: 200; font-size: clamp(48px, min(17vh, 21vw), 150px); letter-spacing: .08em; line-height: 1;
+        background: linear-gradient(100deg, #1AE5FF 0%, #FF38C0 35%, #FFD95A 65%, #1AE5FF 100%);
+        background-size: 300% 100%;
+        -webkit-background-clip: text; background-clip: text; color: transparent;
+        animation: drift 12s linear infinite;
+        padding-bottom: .08em;
+    }
+    @keyframes drift { to { background-position: 300% 0; } }
+    h2 { font-weight: 200; font-size: clamp(46px, 13vh, 110px); line-height: 1; font-variant-numeric: tabular-nums; }
+    h2 small { font-size: .28em; font-weight: 400; color: rgba(238, 242, 255, .6); margin-left: .3em; }
+    .tag { max-width: 34ch; margin: 1.6vh 0 3.4vh; font-size: clamp(15px, 2.7vh, 19px); line-height: 1.5; color: rgba(238, 242, 255, .85); }
+    .cta {
+        pointer-events: auto; cursor: pointer;
+        font: inherit; font-size: 18px; font-weight: 600;
+        color: var(--void); background: var(--ink);
+        border: 0; border-radius: 999px; padding: 14px 30px;
+        box-shadow: 0 0 34px rgba(26, 229, 255, .35);
+        transition: transform .15s;
+    }
+    .cta:active { transform: scale(.97); }
+    .how { margin-top: 2.8vh; max-width: 44ch; font-size: 14px; line-height: 1.6; color: rgba(238, 242, 255, .62); }
+    .best { margin-top: 1.2vh; font-size: 15px; color: var(--gold); }
+    .note { margin: 1.4vh 0 0; font-size: 17px; color: var(--gold); }
+    .stats { display: grid; grid-template-columns: auto auto; gap: 6px 28px; margin: 2.4vh 0 3.4vh; font-size: 16px; }
+    .stats dt { color: rgba(238, 242, 255, .6); }
+    .stats dd { font-variant-numeric: tabular-nums; font-weight: 500; }
+    .back { margin-top: 2.2vh; font-size: 14px; color: rgba(238, 242, 255, .6); pointer-events: auto; }
+    .back a { color: var(--cyan); }
+    #pause h2 { margin-bottom: 3.4vh; }
+    @media (orientation: portrait) {
+        .screen { background: linear-gradient(180deg, rgba(5, 4, 15, .15) 0%, rgba(5, 4, 15, .85) 58%); justify-content: flex-end; padding-bottom: 10vh; }
+    }
+    @media (pointer: coarse) { .keys { display: none; } }
+    @media (pointer: fine) { .touch { display: none; } }
+    @media (prefers-reduced-motion: reduce) { h1 { animation: none; } .pop { animation-duration: .01s; } }
+
+    #err {
+        position: fixed; inset: 0; margin: 0; padding: 24px;
+        background: var(--void); color: var(--ink);
+        font: 14px/1.5 ui-monospace, monospace; white-space: pre-wrap; overflow: auto; z-index: 10;
+    }
+</style>
+</head>
+<body>
+    <canvas id="view" tabindex="-1" aria-label="Vortex game"></canvas>
+    <div id="pops" aria-hidden="true"></div>
+    <div id="flash" aria-hidden="true"></div>
+    <div id="banner" aria-live="polite"></div>
+
+    <div id="hud">
+        <div class="score"><span id="score">0</span><span id="mult" class="mult"></span><span id="dist" class="dist">0 m</span></div>
+        <div class="right">
+            <span id="hull" role="img" aria-label="3 hull left"></span>
+            <button id="muteBtn" class="icon-btn" aria-pressed="false" aria-label="Mute sound">&#9834;</button>
+            <button id="pauseBtn" class="icon-btn" aria-label="Pause">&#10074;&#10074;</button>
+        </div>
+    </div>
+
+    <section id="title" class="screen">
+        <h1>Vortex</h1>
+        <p class="tag">Skim the floor of a spinning neon tunnel. Roll the world around you to slip through the gaps and chain the gold.</p>
+        <button id="playBtn" class="cta">Enter the vortex</button>
+        <p class="how"><span class="touch">Hold the left or right side of the screen to roll.</span><span class="keys">Arrows or A and D to roll, Esc to pause.</span> Five gold in a row raises your multiplier; brushing past a wall scores a close call.</p>
+        <p class="best" id="bestLine" hidden></p>
+        <p class="back"><a href="/games.html">&larr; Back to the arcade</a></p>
+    </section>
+
+    <section id="over" class="screen hidden" inert>
+        <h2><span id="finalScore">0</span><small>points</small></h2>
+        <p class="note" id="finalNote"></p>
+        <dl class="stats">
+            <dt>Distance</dt><dd id="statDist">0 m</dd>
+            <dt>Gold</dt><dd id="statOrbs">0</dd>
+            <dt>Sector</dt><dd id="statSector">1</dd>
+        </dl>
+        <button id="againBtn" class="cta">Fly again</button>
+        <p class="back"><a href="/games.html">&larr; Back to the arcade</a></p>
+    </section>
+
+    <section id="pause" class="screen hidden" inert>
+        <h2>Paused</h2>
+        <button id="resumeBtn" class="cta">Resume</button>
+    </section>
+
+    <pre id="err" hidden></pre>
+    <script type="module" src="./vortex/game.js"></script>
+</body>
+</html>
