@@ -189,7 +189,21 @@
     #mapBox { top:180px; width:130px; padding:8px; } #minimap { height:84px; } #status { max-width:calc(100% - 180px); }
   }
 </style>
-<script src="space.js"></script>
+<script>
+  // space.js is resolved relative to this page, so "/rewind-heist" (no trailing slash) would look for
+  // "/space.js". Hosts that don't redirect to the slash form leave the menu empty and unresponsive.
+  if (location.protocol !== 'file:' && !/(\/|\.html?)$/.test(location.pathname)) {
+    location.replace(location.pathname + '/' + location.search + location.hash);
+  }
+  // If the game never starts, say so instead of showing a menu that ignores every click.
+  function rewindHeistFailed() {
+    if (window.RH) return;
+    document.getElementById('menu').classList.add('hidden');
+    document.getElementById('noload').classList.remove('hidden');
+  }
+  addEventListener('load', () => setTimeout(rewindHeistFailed, 1500));
+</script>
+<script src="space.js" onerror="addEventListener('DOMContentLoaded', rewindHeistFailed)"></script>
 </head>
 <body>
 <div id="hud" class="hidden">
@@ -220,6 +234,10 @@
   <div id="prompt" class="hidden"></div>
   <div id="marker" class="hidden"></div>
   <div id="replayTag" class="glass hidden">REPLAY · ENTER TO SKIP</div>
+</div>
+
+<div id="noload" class="overlay hidden">
+  <div class="card glass" style="padding:24px">Rewind Heist failed to load its game scripts. Check the browser console and reload.</div>
 </div>
 
 <div id="menu" class="overlay">
