@@ -349,8 +349,26 @@
     </div>
 
     <div id="nogl" class="overlay hidden"><div class="card glass">WebGL isn't available in this browser.</div></div>
+    <div id="noload" class="overlay hidden"><div class="card glass" id="noloadMsg"></div></div>
 
-    <script type="module" src="runner/game.js"></script>
+    <script>
+        // runner/game.js is resolved relative to this page, so "/neon-rush" (no trailing slash) would look for
+        // "/runner/game.js". Hosts that don't redirect to the slash form leave the menu visible but dead.
+        if (location.protocol !== "file:" && !/(\/|\.html?)$/.test(location.pathname)) {
+            location.replace(location.pathname + "/" + location.search + location.hash);
+        }
+        // If the game module never starts, say so instead of showing a menu that ignores every click.
+        function neonRushFailed() {
+            if (window.neonRush || !document.getElementById("nogl").classList.contains("hidden")) return;
+            document.getElementById("noloadMsg").innerHTML = location.protocol === "file:"
+                ? "Neon Rush can't run from a file opened directly (browsers block ES modules on file://).<br>Run <code>npm start</code> and open <code>http://localhost:4000/neon-rush/</code>."
+                : "Neon Rush failed to load its game scripts. Check the browser console and reload.";
+            document.getElementById("menu").classList.add("hidden");
+            document.getElementById("noload").classList.remove("hidden");
+        }
+        addEventListener("load", () => setTimeout(neonRushFailed, 1500));
+    </script>
+    <script type="module" src="runner/game.js" onerror="neonRushFailed()"></script>
 </body>
 
 </html>
