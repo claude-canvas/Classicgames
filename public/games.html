@@ -2,57 +2,12 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>Game Arcade</title>
-<style>
-  :root { --bg-1:#0f0c29; --bg-2:#302b63; --bg-3:#24243e; --accent:#7dd3fc; --accent-2:#a78bfa; --card-bg:rgba(255,255,255,0.06); --card-border:rgba(255,255,255,0.14); --text:#eef2ff; --text-dim:#b8c0e0; }
-  * { box-sizing: border-box; }
-  body { margin:0; min-height:100vh; font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Inter,Roboto,sans-serif; background:linear-gradient(135deg,var(--bg-1),var(--bg-2) 50%,var(--bg-3)); color:var(--text); padding:40px 18px 60px; }
-  .wrap { max-width:640px; margin:0 auto; }
-  h1 { font-size:clamp(30px,6vw,44px); margin:0 0 6px; background:linear-gradient(90deg,#fff,var(--accent) 60%,var(--accent-2)); -webkit-background-clip:text; background-clip:text; color:transparent; }
-  .sub { color:var(--text-dim); font-size:15px; margin-bottom:30px; }
-  .grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(150px,1fr)); gap:14px; }
-  a.card { text-decoration:none; color:var(--text); background:var(--card-bg); border:1px solid var(--card-border); border-radius:16px; padding:20px 16px; display:flex; flex-direction:column; align-items:center; gap:8px; text-align:center; transition:transform 0.15s ease, border-color 0.15s ease; }
-  a.card:hover { transform:translateY(-3px); border-color:rgba(125,211,252,0.4); }
-  a.card .emoji { font-size:34px; }
-  a.card .name { font-weight:700; font-size:15px; }
-  a.card .desc { font-size:12px; color:var(--text-dim); }
-  footer { margin-top:40px; text-align:center; font-size:12px; color:var(--text-dim); }
-  footer a { color:var(--accent); text-decoration:none; }
-</style>
+<meta http-equiv="refresh" content="0; url=/" />
+<link rel="canonical" href="/" />
+<script>location.replace('/' + location.search + location.hash);</script>
 </head>
-<body>
-  <div class="wrap">
-    <h1>Game Arcade</h1>
-    <p class="sub">Twelve classics, served straight off this Termux MCP server.</p>
-    <div class="grid">
-      <a class="card" href="/tictactoe.html"><span class="emoji">⭕</span><span class="name">Tic Tac Toe</span><span class="desc">2-player, local</span></a>
-      <a class="card" href="/tetris.html"><span class="emoji">🧩</span><span class="name">Tetris</span><span class="desc">Line clearing</span></a>
-      <a class="card" href="/snake.html"><span class="emoji">🐍</span><span class="name">Snake</span><span class="desc">Grow, don't crash</span></a>
-      <a class="card" href="/pong.html"><span class="emoji">🏓</span><span class="name">Pong</span><span class="desc">You vs CPU</span></a>
-      <a class="card" href="/2048.html"><span class="emoji">🔢</span><span class="name">2048</span><span class="desc">Merge to win</span></a>
-      <a class="card" href="/breakout.html"><span class="emoji">🧱</span><span class="name">Breakout</span><span class="desc">Clear the bricks</span></a>
-      <a class="card" href="/memory.html"><span class="emoji">🧠</span><span class="name">Memory Match</span><span class="desc">Find the pairs</span></a>
-      <a class="card" href="/minesweeper.html"><span class="emoji">💣</span><span class="name">Minesweeper</span><span class="desc">Flag the mines</span></a>
-      <a class="card" href="/flappybird.html"><span class="emoji">🐦</span><span class="name">Flappy Bird</span><span class="desc">Tap to flap</span></a>
-      <a class="card" href="/dartwheel.html"><span class="emoji">🎯</span><span class="name">Dart Wheel</span><span class="desc">Land it, don't hit one</span></a>
-      <a class="card" href="/dartthrow.html"><span class="emoji">🏹</span><span class="name">Dart Throw</span><span class="desc">Aim, tap, bullseye</span></a>
-      <a class="card" href="/dinorun.html"><span class="emoji">🦖</span><span class="name">Dino Run</span><span class="desc">Jump the cacti</span></a>
-      <a class="card" href="/classicrace.html"><span class="emoji">🏎️</span><span class="name">Classic Race</span><span class="desc">Dodge the traffic</span></a>
-      <a class="card" href="/spaceinvaders.html"><span class="emoji">👾</span><span class="name">Space Invaders</span><span class="desc">Blast the fleet</span></a>
-      <a class="card" href="/ludo.html"><span class="emoji">🎲</span><span class="name">Ludo</span><span class="desc">Roll, race, capture</span></a>
-      <a class="card" href="/raycaster/index.html"><span class="emoji">🌀</span><span class="name">Raycaster</span><span class="desc">3D maze crawler</span></a>
-      <a class="card" href="/simon.html"><span class="emoji">🔴</span><span class="name">Simon</span><span class="desc">Repeat the pattern</span></a>
-      <a class="card" href="/borealis.html"><span class="emoji">🌌</span><span class="name">Borealis</span><span class="desc">3D glide under the aurora</span></a>
-      <a class="card" href="/meadow.html"><span class="emoji">🐰</span><span class="name">Meadowhop</span><span class="desc">3D bunny meadow adventure</span></a>
-      <a class="card" href="/minecraft/index.html"><span class="emoji">⛏️</span><span class="name">Minecraft</span><span class="desc">3D voxel world with redstone</span></a>
-      <a class="card" href="/grass.html"><span class="emoji">🌿</span><span class="name">Grass in the Wind</span><span class="desc">3D windswept grass field</span></a>
-      <a class="card" href="/grasswallpaper.html"><span class="emoji">🌾</span><span class="name">Grass Wallpaper</span><span class="desc">Live grass wallpaper</span></a>
-      <a class="card" href="/vortex.html"><span class="emoji">💫</span><span class="name">Vortex</span><span class="desc">3D neon tunnel runner</span></a>
-      <a class="card" href="/aegis.html"><span class="emoji">🌍</span><span class="name">Aegis</span><span class="desc">Guard a 3D planet from meteors</span></a>
-      <a class="card" href="/neon-rush/"><span class="emoji">🌆</span><span class="name">Neon Rush</span><span class="desc">Synthwave lane runner</span></a>
-    </div>
-    <footer>Served from <a href="/">mcp-info-server</a></footer>
-  </div>
+<body style="background:#0b0a14;color:#f3f1ff;font-family:sans-serif">
+  <p>The arcade has moved to the <a href="/" style="color:#3ad6ff">home page</a>.</p>
 </body>
 </html>

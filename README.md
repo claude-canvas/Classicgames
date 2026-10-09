@@ -34,7 +34,7 @@ npm install
 npm start
 ```
 
-By default the server listens on port `4000`. Open `http://localhost:4000` to see the landing page, or `http://localhost:4000/games.html` for the full arcade index.
+By default the server listens on port `4000`. Open `http://localhost:4000` to see the arcade: a gallery of every game with a live gameplay thumbnail.
 
 ## Configuration
 
@@ -70,8 +70,9 @@ No database or external services are required — it's fully static content serv
 ├── index.js          # Express server
 ├── package.json
 └── public/           # All game files (static)
-    ├── index.html    # Landing page
-    ├── games.html    # Arcade index / navigation
+    ├── index.html    # Home page: game gallery
+    ├── games.html    # Redirects to / (old arcade URL)
+    ├── thumbs/       # Gameplay screenshots used by the gallery
     └── *.html        # Individual games
 ```
 
