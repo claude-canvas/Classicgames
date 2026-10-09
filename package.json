@@ -5,7 +5,8 @@
   "private": true,
   "main": "index.js",
   "scripts": {
-    "start": "node index.js"
+    "start": "node index.js",
+    "seo": "node seo/build.js"
   },
   "engines": {
     "node": ">=18.0.0"

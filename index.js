@@ -8,6 +8,9 @@ const PORT = process.env.PORT || 4000;
 const HOST = process.env.HOST || '0.0.0.0';
 const NODE_ENV = process.env.NODE_ENV || 'development';
 
+// The arcade used to live at /games.html; send old links (and search engines) to the home page
+app.get('/games.html', (req, res) => res.redirect(301, '/'));
+
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.json({ limit: '64kb' }));
 

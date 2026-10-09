@@ -1,0 +1,15 @@
+{
+  "name": "Classic Games Arcade",
+  "short_name": "Games",
+  "description": "Free online games you can play in your browser. No download, no sign-up.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#0b0a14",
+  "theme_color": "#0b0a14",
+  "icons": [
+    { "src": "/icon.svg", "type": "image/svg+xml", "sizes": "any" },
+    { "src": "/icon-192.png", "type": "image/png", "sizes": "192x192" },
+    { "src": "/icon-512.png", "type": "image/png", "sizes": "512x512" },
+    { "src": "/icon-512.png", "type": "image/png", "sizes": "512x512", "purpose": "maskable" }
+  ]
+}
