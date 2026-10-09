@@ -63,6 +63,21 @@ This app is ready to deploy on any Node-friendly host (Render, Railway, Heroku, 
 
 No database or external services are required — it's fully static content served by Express.
 
+## SEO
+
+Page titles, descriptions, social preview tags, structured data (JSON-LD), the home page gallery tiles, `sitemap.xml` and `robots.txt` are generated from two files:
+
+- `seo/games.json`: one entry per game (name, URL, tile shape, search description, thumbnail size)
+- `seo/config.json`: site URL, site name, and optional Google/Bing verification codes
+
+After adding a game or editing either file, run:
+
+```bash
+npm run seo
+```
+
+To add a game: put its page in `public/`, add a gameplay screenshot as `public/thumbs/<id>.webp` and a 1200×630 social image as `public/og/<id>.jpg`, add an entry to `seo/games.json`, then run `npm run seo`. If the site moves to a new domain, change `siteUrl` in `seo/config.json` and re-run.
+
 ## Project structure
 
 ```

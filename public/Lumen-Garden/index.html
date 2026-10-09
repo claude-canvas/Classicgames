@@ -1,4 +1,77 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Lumen Garden • A little light goes a long way</title><link rel="stylesheet" href="style.css"></head><body>
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Lumen Garden – Play Free Online | Classic Games Arcade</title>
+<!-- seo:head -->
+<meta name="description" content="Rotate floating garden tiles to carry light from the golden spring to every bloom. A calm, hand-crafted 3D path puzzle. Free to play online." />
+<link rel="canonical" href="https://classicgames-flame.vercel.app/Lumen-Garden/" />
+<meta name="robots" content="index, follow, max-image-preview:large" />
+<meta name="theme-color" content="#0b0a14" />
+<link rel="icon" href="/favicon.ico" sizes="32x32" />
+<link rel="icon" href="/icon.svg" type="image/svg+xml" />
+<link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+<link rel="manifest" href="/manifest.webmanifest" />
+<meta property="og:site_name" content="Classic Games Arcade" />
+<meta property="og:type" content="website" />
+<meta property="og:title" content="Lumen Garden – Play Free Online | Classic Games Arcade" />
+<meta property="og:description" content="Rotate floating garden tiles to carry light from the golden spring to every bloom. A calm, hand-crafted 3D path puzzle. Free to play online." />
+<meta property="og:url" content="https://classicgames-flame.vercel.app/Lumen-Garden/" />
+<meta property="og:image" content="https://classicgames-flame.vercel.app/og/lumen-garden.jpg" />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+<meta property="og:image:alt" content="Lumen Garden gameplay" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="Lumen Garden – Play Free Online | Classic Games Arcade" />
+<meta name="twitter:description" content="Rotate floating garden tiles to carry light from the golden spring to every bloom. A calm, hand-crafted 3D path puzzle. Free to play online." />
+<meta name="twitter:image" content="https://classicgames-flame.vercel.app/og/lumen-garden.jpg" />
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "VideoGame",
+      "name": "Lumen Garden",
+      "description": "Rotate floating garden tiles to carry light from the golden spring to every bloom. A calm, hand-crafted 3D path puzzle. Free to play online.",
+      "url": "https://classicgames-flame.vercel.app/Lumen-Garden/",
+      "image": "https://classicgames-flame.vercel.app/thumbs/lumen-garden.webp",
+      "genre": [
+        "Puzzle"
+      ],
+      "gamePlatform": "Web browser",
+      "applicationCategory": "Game",
+      "operatingSystem": "Any",
+      "playMode": "SinglePlayer",
+      "isAccessibleForFree": true,
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "USD",
+        "availability": "https://schema.org/InStock"
+      },
+      "isPartOf": {
+        "@type": "WebSite",
+        "name": "Classic Games Arcade",
+        "url": "https://classicgames-flame.vercel.app/"
+      }
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Games",
+          "item": "https://classicgames-flame.vercel.app/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Lumen Garden",
+          "item": "https://classicgames-flame.vercel.app/Lumen-Garden/"
+        }
+      ]
+    }
+  ]
+}
+</script>
+<!-- /seo:head --><link rel="stylesheet" href="style.css"></head><body>
 <canvas id="world" aria-label="3D puzzle garden"></canvas><div class="vignette"></div>
 <header><a class="brand" href="./"><span class="mark">✧</span><span>LUMEN <b>GARDEN</b><small>A LITTLE LIGHT GOES A LONG WAY</small></span></a><div class="top-actions"><button id="sound" title="Toggle synthesized sound">Sound off</button><button id="help">How to play <span>?</span></button></div></header>
 <main><aside><div class="eyebrow">THE FLOATING ARCHIPELAGO</div><h1>Let there<br>be <em>light.</em></h1><p class="intro">A quiet world. A broken connection.<br>Bring the garden back to life.</p><div class="level-label"><span id="chapter">01 / FIRST LIGHT</span><span class="dot"></span></div><h2 id="levelName">The awakening</h2><div class="stats"><div><strong id="crystals">0 / 3</strong><span>CRYSTALS LIT</span></div><div><strong id="moves">00</strong><span>ROTATIONS</span></div></div><div class="progress"><i id="progress"></i></div><p id="objective">Connect the golden spring to every crystal and the portal.</p><div class="actions"><button id="undo">↶ Undo</button><button id="hint">✧ Hint <small id="hints">3</small></button><button id="reset" title="Restart this puzzle">↻</button></div><div class="legend"><span><i class="gold"></i>Light source</span><span><i class="mint"></i>Awakened</span><span><i class="pink"></i>Portal</span></div></aside></main>

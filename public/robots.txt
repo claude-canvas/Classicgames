@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+Disallow: /health
+
+Sitemap: https://classicgames-flame.vercel.app/sitemap.xml
