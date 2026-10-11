@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <title>Ludo 3D – Play Free Online | Classic Games Arcade</title>
+<!-- seo:head -->
+<meta name="description" content="Play Ludo in 3D on a polished wooden board: roll the die, race your four pawns home and knock rivals back to their yard. Play the computer or friends, free." />
+<link rel="canonical" href="https://classicgames-flame.vercel.app/ludo3d/" />
+<meta name="robots" content="index, follow, max-image-preview:large" />
+<meta name="theme-color" content="#0b0a14" />
+<link rel="icon" href="/favicon.ico" sizes="32x32" />
+<link rel="icon" href="/icon.svg" type="image/svg+xml" />
+<link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+<link rel="manifest" href="/manifest.webmanifest" />
+<meta property="og:site_name" content="Classic Games Arcade" />
+<meta property="og:type" content="website" />
+<meta property="og:title" content="Ludo 3D – Play Free Online | Classic Games Arcade" />
+<meta property="og:description" content="Play Ludo in 3D on a polished wooden board: roll the die, race your four pawns home and knock rivals back to their yard. Play the computer or friends, free." />
+<meta property="og:url" content="https://classicgames-flame.vercel.app/ludo3d/" />
+<meta property="og:image" content="https://classicgames-flame.vercel.app/og/ludo3d.jpg" />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+<meta property="og:image:alt" content="Ludo 3D gameplay" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="Ludo 3D – Play Free Online | Classic Games Arcade" />
+<meta name="twitter:description" content="Play Ludo in 3D on a polished wooden board: roll the die, race your four pawns home and knock rivals back to their yard. Play the computer or friends, free." />
+<meta name="twitter:image" content="https://classicgames-flame.vercel.app/og/ludo3d.jpg" />
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "VideoGame",
+      "name": "Ludo 3D",
+      "description": "Play Ludo in 3D on a polished wooden board: roll the die, race your four pawns home and knock rivals back to their yard. Play the computer or friends, free.",
+      "url": "https://classicgames-flame.vercel.app/ludo3d/",
+      "image": "https://classicgames-flame.vercel.app/thumbs/ludo3d.webp",
+      "genre": [
+        "Board",
+        "Strategy"
+      ],
+      "gamePlatform": "Web browser",
+      "applicationCategory": "Game",
+      "operatingSystem": "Any",
+      "playMode": "SinglePlayer",
+      "isAccessibleForFree": true,
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "USD",
+        "availability": "https://schema.org/InStock"
+      },
+      "isPartOf": {
+        "@type": "WebSite",
+        "name": "Classic Games Arcade",
+        "url": "https://classicgames-flame.vercel.app/"
+      }
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Games",
+          "item": "https://classicgames-flame.vercel.app/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Ludo 3D",
+          "item": "https://classicgames-flame.vercel.app/ludo3d/"
+        }
+      ]
+    }
+  ]
+}
+</script>
+<!-- /seo:head -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+        html, body { margin: 0; height: 100%; overflow: hidden; background: #1c120f; color: #fff; font-family: Fredoka, "Segoe UI", system-ui, sans-serif; user-select: none; -webkit-user-select: none; -webkit-touch-callout: none; touch-action: none; overscroll-behavior: none; }
+        #view { position: fixed; inset: 0; width: 100%; height: 100%; display: block; }
+        .hidden { display: none !important; }
+        .shadow { text-shadow: 0 2px 0 rgba(0, 0, 0, 0.25), 0 4px 16px rgba(0, 0, 0, 0.45); }
+        button { font: inherit; color: inherit; cursor: pointer; border: 0; background: none; }
+        :focus-visible { outline: 3px solid #fff; outline-offset: 3px; }
+
+        .corner { position: fixed; top: calc(12px + env(safe-area-inset-top)); z-index: 6; width: 46px; height: 46px; border-radius: 15px; display: grid; place-items: center; background: rgba(255, 255, 255, 0.14); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); transition: transform .1s; }
+        .corner:active { transform: scale(0.92); }
+        .corner svg { width: 21px; height: 21px; fill: #fff; }
+        #pause { left: calc(12px + env(safe-area-inset-left)); }
+        #mute { right: calc(12px + env(safe-area-inset-right)); }
+        #mute[aria-pressed="true"] .on, #mute[aria-pressed="false"] .off { display: none; }
+        body[data-state="title"] #pause, body[data-state="win"] #pause { display: none; }
+        .home { position: fixed; top: calc(12px + env(safe-area-inset-top)); left: calc(12px + env(safe-area-inset-left)); z-index: 7; height: 46px; padding: 0 16px; border-radius: 15px; display: flex; align-items: center; color: #fff; text-decoration: none; font-weight: 600; font-size: 15px; background: rgba(255, 255, 255, 0.14); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); }
+
+        /* HUD */
+        #hud { position: fixed; inset: 0; pointer-events: none; }
+        body[data-state="title"] #hud { display: none; }
+        #chips { position: absolute; top: calc(12px + env(safe-area-inset-top)); left: 70px; right: 70px; display: flex; justify-content: center; gap: 6px; flex-wrap: wrap; }
+        .chip { --c: #fff; display: flex; align-items: center; gap: 7px; padding: 7px 12px 7px 9px; border-radius: 30px; font-size: 14px; font-weight: 600; background: rgba(20, 12, 10, 0.5); border: 2px solid transparent; backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px); transition: transform .25s, border-color .25s, background .25s; }
+        .chip i { width: 14px; height: 14px; border-radius: 50%; background: var(--c); box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.5); }
+        .chip b { font-size: 12px; color: #ffd76a; letter-spacing: 1px; }
+        .chip b em { font-style: normal; color: rgba(255, 255, 255, 0.35); }
+        .chip.on { border-color: var(--c); background: color-mix(in srgb, var(--c) 35%, rgba(20, 12, 10, 0.6)); transform: translateY(2px) scale(1.06); }
+        #msg { --c: #fff; position: absolute; top: calc(66px + env(safe-area-inset-top)); left: 0; right: 0; text-align: center; font-size: clamp(17px, 2.4vw, 22px); font-weight: 600; }
+        #msg::before { content: ""; display: inline-block; width: 10px; height: 10px; border-radius: 50%; background: var(--c); margin-right: 8px; vertical-align: middle; box-shadow: 0 0 10px var(--c); }
+        #msg.pop { animation: pop .35s cubic-bezier(.3, 1.6, .5, 1); }
+        @keyframes pop { from { transform: scale(0.85); opacity: 0.3; } }
+        #banner { --c: #fff; position: absolute; top: 40%; left: 0; right: 0; text-align: center; font-size: clamp(28px, 5vw, 48px); font-weight: 700; opacity: 0; color: #fff; -webkit-text-stroke: 1.5px var(--c); }
+        #banner.show { animation: band 2s ease-out forwards; }
+        @keyframes band { 0% { opacity: 0; transform: scale(0.5) rotate(-5deg); } 15% { opacity: 1; transform: scale(1.12) rotate(2deg); } 25% { transform: scale(1) rotate(0); } 78% { opacity: 1; } 100% { opacity: 0; transform: translateY(-16px); } }
+        #pickhint { position: absolute; bottom: calc(110px + env(safe-area-inset-bottom)); left: 0; right: 0; text-align: center; font-size: 15px; opacity: 0; transition: opacity .2s; }
+        #pickhint.show { opacity: 0.95; }
+        @media (pointer: coarse) { .keys-only { display: none; } }
+        #roll { --c: #ef4444; pointer-events: auto; position: absolute; left: 50%; bottom: calc(24px + env(safe-area-inset-bottom)); transform: translateX(-50%); height: 64px; min-width: 190px; padding: 0 30px; border-radius: 22px; display: flex; align-items: center; justify-content: center; gap: 12px; font-size: 22px; font-weight: 700; letter-spacing: 0.04em; color: #fff; background: var(--c); box-shadow: 0 6px 0 color-mix(in srgb, var(--c) 60%, #000), 0 14px 30px rgba(0, 0, 0, 0.4); transition: opacity .2s, transform .1s, filter .2s; }
+        #roll svg { width: 30px; height: 30px; }
+        #roll:disabled { opacity: 0.32; filter: saturate(0.4); cursor: default; }
+        #roll.ready { animation: nudge 1.4s ease-in-out infinite; }
+        #roll:active:not(:disabled) { transform: translateX(-50%) translateY(4px); }
+        @keyframes nudge { 0%, 100% { transform: translateX(-50%) scale(1); } 50% { transform: translateX(-50%) scale(1.06); } }
+        #toast { position: fixed; bottom: calc(104px + env(safe-area-inset-bottom)); left: 50%; transform: translateX(-50%); padding: 8px 18px; border-radius: 30px; background: rgba(20, 12, 10, 0.7); font-size: 15px; font-weight: 600; opacity: 0; transition: opacity 0.25s; pointer-events: none; z-index: 8; }
+        #toast.show { opacity: 1; }
+
+        /* panels */
+        .overlay { position: fixed; inset: 0; display: grid; place-items: center; z-index: 7; padding: 16px; }
+        .panel { width: min(420px, 100%); max-width: calc(100vw - 32px); max-height: calc(100vh - 32px); overflow-y: auto; text-align: center; padding: 24px 22px 20px; border-radius: 28px; background: linear-gradient(180deg, rgba(48, 30, 24, 0.92), rgba(28, 18, 15, 0.94)); border: 1px solid rgba(255, 220, 180, 0.18); box-shadow: 0 30px 80px rgba(0, 0, 0, 0.55); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); animation: rise .45s cubic-bezier(.2, 1.4, .4, 1) both; }
+        @keyframes rise { from { transform: translateY(40px) scale(0.94); opacity: 0; } }
+        #title { background: radial-gradient(ellipse at 50% 40%, rgba(20, 12, 10, 0.05), rgba(20, 12, 10, 0.55)); }
+        .logo { margin: 0 0 4px; font-size: clamp(54px, 12vw, 84px); line-height: 0.95; font-weight: 700; letter-spacing: 0.02em; }
+        .logo span:nth-child(1) { color: #ef4444; } .logo span:nth-child(2) { color: #22c55e; } .logo span:nth-child(3) { color: #eab308; } .logo span:nth-child(4) { color: #3b82f6; }
+        .logo small { display: inline-block; margin-left: 10px; font-size: 0.55em; color: #ffe2b8; vertical-align: 0.35em; }
+        .sub { margin: 0 0 18px; font-size: 15px; color: #e8cfb4; }
+        .label { margin: 14px 0 8px; font-size: 12px; font-weight: 600; letter-spacing: 0.14em; color: #c9a888; text-transform: uppercase; }
+        #setup { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; }
+        .seat { --c: #fff; min-width: 0; display: flex; align-items: center; gap: 10px; padding: 11px 12px; border-radius: 16px; background: rgba(255, 255, 255, 0.06); border: 2px solid rgba(255, 255, 255, 0.08); text-align: left; transition: background .15s, border-color .15s; }
+        .seat i { width: 18px; height: 18px; border-radius: 50%; background: var(--c); flex: none; }
+        .seat span { font-weight: 600; font-size: 16px; flex: 1; }
+        .seat b { font-size: 12px; font-weight: 600; padding: 3px 9px; border-radius: 20px; background: rgba(255, 255, 255, 0.1); color: #d8c4ae; }
+        .seat.you { border-color: var(--c); background: color-mix(in srgb, var(--c) 22%, transparent); }
+        .seat.you b { background: var(--c); color: #fff; }
+        .speeds { display: flex; gap: 6px; padding: 4px; border-radius: 16px; background: rgba(255, 255, 255, 0.06); }
+        .speeds button { flex: 1; padding: 9px 0; border-radius: 12px; font-weight: 600; font-size: 14px; color: #d8c4ae; }
+        .speeds button.on { background: #ffe2b8; color: #3a2416; }
+        .big { width: 100%; height: 58px; margin-top: 18px; border-radius: 18px; font-size: 21px; font-weight: 700; color: #3a2416; background: linear-gradient(180deg, #ffe7b3, #ffc265); box-shadow: 0 5px 0 #c98a2e; transition: transform .1s; }
+        .big:active { transform: translateY(3px); }
+        .row { display: flex; gap: 8px; margin-top: 10px; }
+        .row button, .row a { flex: 1; height: 48px; border-radius: 15px; display: grid; place-items: center; font-weight: 600; font-size: 16px; color: #ffe2b8; text-decoration: none; background: rgba(255, 255, 255, 0.08); }
+        .hint { margin-top: 12px; font-size: 13px; color: #b89a7c; line-height: 1.5; }
+        kbd { display: inline-block; padding: 1px 6px; border-radius: 6px; background: rgba(255, 255, 255, 0.14); font: inherit; font-weight: 600; }
+        #w-title { margin: 0 0 12px; font-size: 40px; font-weight: 700; }
+        #w-list { list-style: none; margin: 0; padding: 0; text-align: left; }
+        #w-list li { --c: #fff; display: flex; align-items: center; gap: 10px; padding: 10px 12px; margin-top: 6px; border-radius: 14px; background: rgba(255, 255, 255, 0.06); font-weight: 600; }
+        #w-list li:first-child { background: color-mix(in srgb, var(--c) 30%, transparent); }
+        #w-list span { width: 22px; color: #c9a888; }
+        #w-list i { width: 14px; height: 14px; border-radius: 50%; background: var(--c); }
+        #w-list b { margin-left: auto; font-size: 13px; color: #d8c4ae; }
+        #w-stats { margin-top: 12px; font-size: 13px; color: #b89a7c; }
+        @media (max-width: 520px) {
+            .chip span { display: none; } .chip { padding: 6px 9px 6px 7px; gap: 5px; } .chip b { font-size: 10px; letter-spacing: 0; }
+            #chips { top: calc(66px + env(safe-area-inset-top)); left: 8px; right: 8px; flex-wrap: nowrap; }
+            #msg { top: calc(110px + env(safe-area-inset-top)); }
+            #roll { min-width: 170px; height: 60px; }
+            .seat { padding: 10px; gap: 8px; } .seat span { font-size: 15px; } .seat b { font-size: 11px; padding: 3px 7px; }
+            .panel { padding: 20px 16px 16px; }
+        }
+        @media (max-height: 560px) { .logo { font-size: 46px; } .sub { margin-bottom: 8px; } .big { margin-top: 10px; height: 50px; } }
+    </style>
+</head>
+
+<body data-state="title">
+    <canvas id="view" aria-label="Ludo 3D game board"></canvas>
+
+    <div id="hud">
+        <div id="chips"></div>
+        <div id="msg" class="shadow" aria-live="polite"></div>
+        <div id="banner" class="shadow"></div>
+        <div id="pickhint" class="shadow">Tap a glowing pawn<span class="keys-only"> · or use <kbd>←</kbd><kbd>→</kbd> and <kbd>Enter</kbd></span></div>
+        <button id="roll" disabled><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="4.5" fill="#fff"/><circle cx="8" cy="8" r="1.7" fill="#222"/><circle cx="16" cy="8" r="1.7" fill="#222"/><circle cx="12" cy="12" r="1.7" fill="#222"/><circle cx="8" cy="16" r="1.7" fill="#222"/><circle cx="16" cy="16" r="1.7" fill="#222"/></svg>ROLL</button>
+    </div>
+    <div id="toast"></div>
+
+    <button id="pause" class="corner" title="Pause (P)" aria-label="Pause"><svg viewBox="0 0 24 24"><path d="M7 5h3.5v14H7zM13.5 5H17v14h-3.5z"/></svg></button>
+    <button id="mute" class="corner" aria-label="Sound" aria-pressed="false"><svg class="on" viewBox="0 0 24 24"><path d="M4 9h4l5-4v14l-5-4H4zM16 8.5a5 5 0 0 1 0 7l-1.4-1.4a3 3 0 0 0 0-4.2zM18.5 6a8.5 8.5 0 0 1 0 12l-1.4-1.4a6.5 6.5 0 0 0 0-9.2z"/></svg><svg class="off" viewBox="0 0 24 24"><path d="M4 9h4l5-4v14l-5-4H4zM15.5 9.9l1.4-1.4 2.1 2.1 2.1-2.1 1.4 1.4-2.1 2.1 2.1 2.1-1.4 1.4-2.1-2.1-2.1 2.1-1.4-1.4 2.1-2.1z"/></svg></button>
+
+    <div id="title" class="overlay">
+        <a class="home" href="/" aria-label="All games">← Games</a>
+        <div class="panel">
+            <h1 class="logo"><span>L</span><span>U</span><span>D</span><span>O</span><small>3D</small></h1>
+            <p class="sub">Roll, race your four pawns home, and knock your rivals back to the start.</p>
+            <div class="label">Who's playing? (tap to switch)</div>
+            <div id="setup"></div>
+            <div class="label">Computer speed</div>
+            <div class="speeds"><button data-pace="relaxed">Relaxed</button><button data-pace="normal">Normal</button><button data-pace="fast">Fast</button></div>
+            <button id="play" class="big">Play</button>
+            <div class="hint">Roll a 6 to bring a pawn out · land on a rival to send it home · stars are safe<br><kbd>Space</kbd> roll · <kbd>←</kbd><kbd>→</kbd> pick · <kbd>P</kbd> pause · <kbd>M</kbd> sound</div>
+        </div>
+    </div>
+
+    <div id="paused" class="overlay hidden">
+        <div class="panel">
+            <h2 class="logo" style="font-size:44px;color:#ffe2b8">Paused</h2>
+            <button id="resume" class="big">Resume</button>
+            <div class="row"><button id="restart">Restart</button><button id="menu">Players &amp; speed</button></div>
+        </div>
+    </div>
+
+    <div id="win" class="overlay hidden">
+        <a class="home" href="/" aria-label="All games">← Games</a>
+        <div class="panel">
+            <h2 id="w-title">You win!</h2>
+            <ol id="w-list"></ol>
+            <div id="w-stats"></div>
+            <button id="again" class="big">Play again</button>
+            <div class="row"><button id="w-menu">Players &amp; speed</button><button id="share">Share</button></div>
+        </div>
+    </div>
+
+    <script type="module" src="main.js"></script>
+</body>
+
+</html>
