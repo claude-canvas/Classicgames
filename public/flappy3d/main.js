@@ -97,7 +97,7 @@ function blob(out, cx, cy, cz, rx, ry, rz, seg, rings, colFn, mat = 0) {
 
 const canvas = document.getElementById("view");
 /** @type {WebGLRenderingContext} */
-const gl = canvas.getContext("webgl", { antialias: true, alpha: false, preserveDrawingBuffer: AUTO });
+const gl = canvas.getContext("webgl", { antialias: true, alpha: false, preserveDrawingBuffer: params.has("shot") });
 function sizeCanvas() {
     const dpr = Math.min(2, window.devicePixelRatio || 1);
     canvas.width = Math.round(innerWidth * dpr); canvas.height = Math.round(innerHeight * dpr);

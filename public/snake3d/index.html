@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <title>Snake 3D – Play Free Online | Classic Games Arcade</title>
+<!-- seo:head -->
+<meta name="description" content="Play Snake in 3D: steer a glossy snake around a grassy island in a sparkling lake, eat apples and golden fruit, and grow as long as you can. Free online." />
+<link rel="canonical" href="https://classicgames-flame.vercel.app/snake3d/" />
+<meta name="robots" content="index, follow, max-image-preview:large" />
+<meta name="theme-color" content="#0b0a14" />
+<link rel="icon" href="/favicon.ico" sizes="32x32" />
+<link rel="icon" href="/icon.svg" type="image/svg+xml" />
+<link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+<link rel="manifest" href="/manifest.webmanifest" />
+<meta property="og:site_name" content="Classic Games Arcade" />
+<meta property="og:type" content="website" />
+<meta property="og:title" content="Snake 3D – Play Free Online | Classic Games Arcade" />
+<meta property="og:description" content="Play Snake in 3D: steer a glossy snake around a grassy island in a sparkling lake, eat apples and golden fruit, and grow as long as you can. Free online." />
+<meta property="og:url" content="https://classicgames-flame.vercel.app/snake3d/" />
+<meta property="og:image" content="https://classicgames-flame.vercel.app/og/snake3d.jpg" />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+<meta property="og:image:alt" content="Snake 3D gameplay" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="Snake 3D – Play Free Online | Classic Games Arcade" />
+<meta name="twitter:description" content="Play Snake in 3D: steer a glossy snake around a grassy island in a sparkling lake, eat apples and golden fruit, and grow as long as you can. Free online." />
+<meta name="twitter:image" content="https://classicgames-flame.vercel.app/og/snake3d.jpg" />
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "VideoGame",
+      "name": "Snake 3D",
+      "description": "Play Snake in 3D: steer a glossy snake around a grassy island in a sparkling lake, eat apples and golden fruit, and grow as long as you can. Free online.",
+      "url": "https://classicgames-flame.vercel.app/snake3d/",
+      "image": "https://classicgames-flame.vercel.app/thumbs/snake3d.webp",
+      "genre": [
+        "Arcade"
+      ],
+      "gamePlatform": "Web browser",
+      "applicationCategory": "Game",
+      "operatingSystem": "Any",
+      "playMode": "SinglePlayer",
+      "isAccessibleForFree": true,
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "USD",
+        "availability": "https://schema.org/InStock"
+      },
+      "isPartOf": {
+        "@type": "WebSite",
+        "name": "Classic Games Arcade",
+        "url": "https://classicgames-flame.vercel.app/"
+      }
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Games",
+          "item": "https://classicgames-flame.vercel.app/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Snake 3D",
+          "item": "https://classicgames-flame.vercel.app/snake3d/"
+        }
+      ]
+    }
+  ]
+}
+</script>
+<!-- /seo:head -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+        html, body { margin: 0; height: 100%; overflow: hidden; background: #8cc4f5; color: #fff; font-family: Fredoka, "Segoe UI", system-ui, sans-serif; user-select: none; -webkit-user-select: none; -webkit-touch-callout: none; touch-action: none; overscroll-behavior: none; }
+        #view { position: fixed; inset: 0; width: 100%; height: 100%; display: block; }
+        .hidden { display: none !important; }
+        .shadow { text-shadow: 0 2px 0 rgba(0, 0, 0, 0.18), 0 4px 18px rgba(10, 40, 30, 0.35); }
+        button { font: inherit; color: inherit; cursor: pointer; border: 0; }
+        :focus-visible { outline: 3px solid #fff; outline-offset: 3px; }
+
+        .corner { position: fixed; top: calc(14px + env(safe-area-inset-top)); z-index: 5; width: 48px; height: 48px; border-radius: 16px; display: grid; place-items: center; background: rgba(255, 255, 255, 0.22); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); box-shadow: 0 4px 14px rgba(10, 40, 30, 0.2); transition: transform .12s; }
+        .corner:active { transform: scale(0.92); }
+        .corner svg { width: 22px; height: 22px; fill: #fff; }
+        #pause { left: calc(14px + env(safe-area-inset-left)); }
+        #mute { right: calc(14px + env(safe-area-inset-right)); }
+        #mute[aria-pressed="true"] .on, #mute[aria-pressed="false"] .off { display: none; }
+        body[data-state="title"] #pause, body[data-state="over"] #pause { display: none; }
+        .home { position: fixed; top: calc(14px + env(safe-area-inset-top)); left: calc(14px + env(safe-area-inset-left)); z-index: 6; height: 48px; padding: 0 18px; border-radius: 16px; display: flex; align-items: center; color: #fff; text-decoration: none; font-weight: 600; font-size: 15px; background: rgba(255, 255, 255, 0.22); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); }
+        .home:active { transform: scale(0.95); }
+        #title .home { pointer-events: auto; }
+
+        /* HUD */
+        #score { position: fixed; top: calc(14px + env(safe-area-inset-top)); left: 0; right: 0; text-align: center; font-weight: 700; font-size: clamp(48px, 8vw, 72px); line-height: 1; pointer-events: none; -webkit-text-stroke: 2px rgba(10, 50, 30, 0.25); }
+        #score.bump { animation: bump 0.28s cubic-bezier(.3, 1.8, .5, 1); }
+        @keyframes bump { 0% { transform: scale(1.3); } 100% { transform: scale(1); } }
+        body[data-state="title"] #score, body[data-state="over"] #score { display: none; }
+        #plus { position: fixed; top: calc(70px + env(safe-area-inset-top)); left: 0; right: 0; text-align: center; font-size: 26px; font-weight: 700; color: #ffe27a; opacity: 0; pointer-events: none; }
+        #plus.show { animation: plus 0.9s ease-out forwards; }
+        @keyframes plus { 0% { opacity: 0; transform: translateY(10px) scale(0.6); } 20% { opacity: 1; transform: translateY(0) scale(1.15); } 70% { opacity: 1; } 100% { opacity: 0; transform: translateY(-16px); } }
+        #banner { position: fixed; top: 30%; left: 0; right: 0; text-align: center; font-weight: 700; font-size: clamp(32px, 6vw, 56px); letter-spacing: 0.04em; opacity: 0; pointer-events: none; color: #ffe27a; }
+        #banner.show { animation: band 1.6s ease-out forwards; }
+        @keyframes band { 0% { opacity: 0; transform: scale(0.5) rotate(-6deg); } 18% { opacity: 1; transform: scale(1.12) rotate(2deg); } 30% { transform: scale(1) rotate(0); } 75% { opacity: 1; } 100% { opacity: 0; transform: translateY(-20px); } }
+        #ready { position: fixed; left: 0; right: 0; top: 46%; text-align: center; pointer-events: none; opacity: 0; transition: opacity .2s; }
+        #ready.show { opacity: 1; }
+        #toast { position: fixed; top: calc(84px + env(safe-area-inset-top)); left: 50%; transform: translateX(-50%); padding: 8px 18px; border-radius: 30px; background: rgba(10, 40, 30, 0.45); font-size: 16px; font-weight: 600; opacity: 0; transition: opacity 0.25s; pointer-events: none; }
+        #toast.show { opacity: 1; }
+
+        .pill { display: inline-flex; align-items: center; gap: 12px; padding: 14px 28px; border-radius: 40px; font-size: 20px; font-weight: 700; letter-spacing: 0.03em; color: #fff; background: linear-gradient(180deg, #6ee06a, #2fae43); box-shadow: 0 6px 0 #1f7f30, 0 14px 30px rgba(10, 60, 20, 0.35); }
+        .arrows { display: inline-grid; grid-template-columns: repeat(3, 14px); grid-template-rows: repeat(2, 14px); gap: 2px; }
+        .arrows i { display: block; border-radius: 3px; background: rgba(255, 255, 255, 0.9); }
+        .arrows i:nth-child(1) { grid-column: 2; grid-row: 1; animation: k 1.6s infinite; }
+        .arrows i:nth-child(2) { grid-column: 1; grid-row: 2; animation: k 1.6s 0.4s infinite; }
+        .arrows i:nth-child(3) { grid-column: 2; grid-row: 2; animation: k 1.6s 0.8s infinite; }
+        .arrows i:nth-child(4) { grid-column: 3; grid-row: 2; animation: k 1.6s 1.2s infinite; }
+        @keyframes k { 0%, 20%, 100% { opacity: 0.55; transform: scale(1); } 10% { opacity: 1; transform: scale(0.8); } }
+
+        /* title */
+        #title { position: fixed; inset: 0; display: grid; place-items: center; text-align: center; pointer-events: none; background: radial-gradient(ellipse at 50% 45%, rgba(255, 255, 255, 0) 35%, rgba(10, 50, 40, 0.3) 100%); }
+        .logo { margin: 0; font-weight: 700; font-size: clamp(60px, 13vw, 150px); line-height: 0.9; color: #fff; text-shadow: 0 3px 0 #9df07a, 0 6px 0 #4cc65a, 0 9px 0 #2f9a46, 0 12px 0 #1f6e34, 0 22px 30px rgba(0, 40, 20, 0.45); animation: bob 2.4s ease-in-out infinite; }
+        .logo span { color: #d9ffb0; }
+        @keyframes bob { 50% { transform: translateY(-8px) rotate(-1deg); } }
+        .tag { font-size: clamp(16px, 2.2vw, 22px); font-weight: 600; margin: 22px 0 30px; }
+        .tmeta { margin-top: 26px; font-size: 16px; font-weight: 600; }
+        .tmeta b { font-size: 22px; margin-left: 6px; }
+        .keys { margin-top: 10px; font-size: 14px; opacity: 0.92; }
+        kbd { display: inline-block; min-width: 26px; padding: 2px 7px; border-radius: 7px; background: rgba(255, 255, 255, 0.25); font: inherit; font-weight: 600; }
+        .touch-only { display: none; }
+        @media (pointer: coarse) { .keys { display: none; } .touch-only { display: block; } }
+
+        /* on-screen pad (touch, portrait) */
+        #pad { position: fixed; left: 50%; bottom: calc(22px + env(safe-area-inset-bottom)); transform: translateX(-50%); display: none; grid-template-columns: repeat(3, 66px); grid-template-rows: repeat(3, 62px); gap: 6px; z-index: 4; }
+        body.pad-on #pad { display: grid; }
+        body.pad-on[data-state="title"] #pad, body.pad-on[data-state="over"] #pad { opacity: 0.35; }
+        #pad button { border-radius: 20px; background: rgba(255, 255, 255, 0.28); backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px); box-shadow: 0 4px 12px rgba(10, 40, 30, 0.25), inset 0 -3px 0 rgba(0, 0, 0, 0.12); display: grid; place-items: center; touch-action: none; transition: transform .06s, background .1s; }
+        #pad button:active { transform: scale(0.9); background: rgba(255, 255, 255, 0.45); }
+        #pad svg { width: 28px; height: 28px; fill: #fff; }
+        #pad [data-dir="up"] { grid-column: 2; grid-row: 1; }
+        #pad [data-dir="left"] { grid-column: 1; grid-row: 2; }
+        #pad [data-dir="right"] { grid-column: 3; grid-row: 2; }
+        #pad [data-dir="down"] { grid-column: 2; grid-row: 3; }
+
+        #paused { position: fixed; inset: 0; display: grid; place-items: center; text-align: center; background: rgba(10, 40, 30, 0.4); backdrop-filter: blur(3px); -webkit-backdrop-filter: blur(3px); z-index: 7; }
+        #paused h2 { margin: 0 0 22px; font-size: clamp(40px, 8vw, 64px); font-weight: 700; }
+
+        /* game over */
+        #over { position: fixed; inset: 0; display: grid; place-items: center; background: radial-gradient(ellipse at 50% 50%, rgba(10, 40, 30, 0.08), rgba(10, 40, 30, 0.45)); z-index: 7; }
+        .card { width: min(360px, calc(100vw - 32px)); text-align: center; padding: 22px 22px 20px; border-radius: 28px; color: #213b1e; background: linear-gradient(180deg, #f6fff0, #dff7cf); box-shadow: 0 8px 0 #8cc46e, 0 30px 70px rgba(10, 40, 30, 0.45); animation: rise 0.5s cubic-bezier(.2, 1.5, .4, 1) both; }
+        @keyframes rise { from { transform: translateY(60px) scale(0.9); opacity: 0; } }
+        .card h2 { margin: 0 0 12px; font-size: 34px; font-weight: 700; color: #2fae43; text-shadow: 0 2px 0 #fff; }
+        .row { display: flex; align-items: center; justify-content: space-between; gap: 14px; padding: 14px 16px; border-radius: 20px; background: rgba(255, 255, 255, 0.75); }
+        .stat { text-align: right; }
+        .stat small { display: block; font-size: 13px; font-weight: 600; letter-spacing: 0.08em; color: #5f8a50; }
+        .stat b { display: block; font-size: 40px; line-height: 1.05; }
+        .stat b.best { font-size: 28px; }
+        #o-new { display: inline-block; margin-left: 6px; padding: 1px 8px; border-radius: 10px; font-size: 11px; color: #fff; background: #ff4f6d; vertical-align: middle; animation: pulse 0.8s ease-in-out infinite; }
+        @keyframes pulse { 50% { transform: scale(1.12); } }
+        .lenline { margin-top: 10px; font-size: 14px; font-weight: 600; color: #5f8a50; }
+        .medalbox { display: grid; justify-items: center; gap: 6px; min-width: 104px; }
+        .medal { width: 74px; height: 74px; border-radius: 50%; position: relative; box-shadow: inset 0 -6px 0 rgba(0, 0, 0, 0.15), 0 4px 10px rgba(0, 0, 0, 0.2); }
+        .medal::after { content: ""; position: absolute; inset: 14px; border-radius: 50%; border: 3px solid rgba(255, 255, 255, 0.55); }
+        .medal.bronze { background: radial-gradient(circle at 35% 30%, #f3c49a, #b8743f 70%); }
+        .medal.silver { background: radial-gradient(circle at 35% 30%, #ffffff, #a9b4c2 70%); }
+        .medal.gold { background: radial-gradient(circle at 35% 30%, #fff3a6, #e2a514 70%); animation: shine 1.4s ease-in-out infinite; }
+        .medal.platinum { background: radial-gradient(circle at 35% 30%, #ffffff, #8fd8ee 55%, #b49bff 90%); animation: shine 1.2s ease-in-out infinite; }
+        .medal.none { background: rgba(95, 138, 80, 0.15); box-shadow: inset 0 0 0 3px rgba(95, 138, 80, 0.3); }
+        .medal.none::after { display: none; }
+        @keyframes shine { 50% { filter: brightness(1.25); } }
+        #medal-label { font-size: 12px; font-weight: 600; letter-spacing: 0.06em; color: #5f8a50; max-width: 110px; }
+        .actions { display: flex; gap: 10px; margin-top: 16px; }
+        .btn { flex: 1; height: 56px; border-radius: 18px; font-size: 19px; font-weight: 700; display: flex; align-items: center; justify-content: center; gap: 8px; transition: transform .1s; }
+        .btn:active { transform: translateY(3px); }
+        .btn svg { width: 20px; height: 20px; fill: currentColor; }
+        .primary { position: relative; overflow: hidden; color: #fff; background: linear-gradient(180deg, #ffb53d, #ff7a1a); box-shadow: 0 5px 0 #c4520b; }
+        .primary.arm::before { content: ""; position: absolute; inset: 0; background: rgba(255, 255, 255, 0.35); transform-origin: left; animation: arm 0.6s linear forwards; }
+        @keyframes arm { from { transform: scaleX(1); } to { transform: scaleX(0); } }
+        .secondary { flex: 0 0 56px; color: #fff; background: linear-gradient(180deg, #4fb4ff, #2b84e0); box-shadow: 0 5px 0 #1b5ea8; }
+        .hint2 { margin-top: 8px; font-size: 12px; color: #5f8a50; }
+
+        @media (max-height: 520px) { .tag { margin: 12px 0 18px; } .tmeta { margin-top: 14px; } .logo { font-size: clamp(48px, 10vw, 100px); } }
+        @media (prefers-reduced-motion: reduce) { .logo, .medal, #o-new, .arrows i { animation: none; } }
+    </style>
+</head>
+
+<body data-state="title">
+    <canvas id="view" aria-label="Snake 3D game"></canvas>
+
+    <div id="score" class="shadow" aria-live="polite">0</div>
+    <div id="plus" class="shadow"></div>
+    <div id="banner" class="shadow"></div>
+    <div id="ready"><span class="pill"><span class="arrows" aria-hidden="true"><i></i><i></i><i></i><i></i></span>SWIPE OR PRESS AN ARROW</span></div>
+    <div id="toast"></div>
+
+    <button id="pause" class="corner" title="Pause (P)" aria-label="Pause"><svg viewBox="0 0 24 24"><path d="M7 5h3.5v14H7zM13.5 5H17v14h-3.5z"/></svg></button>
+    <button id="mute" class="corner" aria-label="Sound" aria-pressed="false"><svg class="on" viewBox="0 0 24 24"><path d="M4 9h4l5-4v14l-5-4H4zM16 8.5a5 5 0 0 1 0 7l-1.4-1.4a3 3 0 0 0 0-4.2zM18.5 6a8.5 8.5 0 0 1 0 12l-1.4-1.4a6.5 6.5 0 0 0 0-9.2z"/></svg><svg class="off" viewBox="0 0 24 24"><path d="M4 9h4l5-4v14l-5-4H4zM15.5 9.9l1.4-1.4 2.1 2.1 2.1-2.1 1.4 1.4-2.1 2.1 2.1 2.1-1.4 1.4-2.1-2.1-2.1 2.1-1.4-1.4 2.1-2.1z"/></svg></button>
+
+    <div id="pad" aria-label="Direction pad">
+        <button data-dir="up" aria-label="Up"><svg viewBox="0 0 24 24"><path d="M12 6l7 9H5z"/></svg></button>
+        <button data-dir="left" aria-label="Left"><svg viewBox="0 0 24 24"><path d="M6 12l9-7v14z"/></svg></button>
+        <button data-dir="right" aria-label="Right"><svg viewBox="0 0 24 24"><path d="M18 12l-9 7V5z"/></svg></button>
+        <button data-dir="down" aria-label="Down"><svg viewBox="0 0 24 24"><path d="M12 18l-7-9h14z"/></svg></button>
+    </div>
+
+    <div id="title" class="shadow">
+        <a class="home" href="/" aria-label="All games">← Games</a>
+        <div>
+            <h1 class="logo">SNAKE <span>3D</span></h1>
+            <div class="tag">Eat, grow, and don't bite your tail.</div>
+            <span class="pill"><span class="arrows" aria-hidden="true"><i></i><i></i><i></i><i></i></span>SWIPE OR PRESS AN ARROW</span>
+            <div class="tmeta">BEST<b id="t-best">0</b></div>
+            <div class="keys"><kbd>←</kbd><kbd>↑</kbd><kbd>↓</kbd><kbd>→</kbd> or <kbd>WASD</kbd> to steer · <kbd>P</kbd> pause · <kbd>M</kbd> sound</div>
+            <div class="keys touch-only">Swipe anywhere or use the pad to steer</div>
+        </div>
+    </div>
+
+    <div id="paused" class="hidden shadow">
+        <div>
+            <h2>Paused</h2>
+            <button id="resume" class="pill">TAP TO CONTINUE</button>
+        </div>
+    </div>
+
+    <div id="over" class="hidden">
+        <a class="home" href="/" aria-label="All games">← Games</a>
+        <div class="card" role="dialog" aria-labelledby="o-title">
+            <h2 id="o-title">Game Over</h2>
+            <div class="row">
+                <div class="medalbox"><div id="medal" class="medal none"></div><div id="medal-label"></div></div>
+                <div class="stat">
+                    <small>SCORE</small><b id="o-score">0</b>
+                    <small>BEST <span id="o-new">NEW</span></small><b id="o-best" class="best">0</b>
+                </div>
+            </div>
+            <div class="lenline">Your snake grew to <b id="o-len">0</b> segments</div>
+            <div class="actions">
+                <button id="again" class="btn primary"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>Play again</button>
+                <button id="share" class="btn secondary" aria-label="Share your score" title="Share"><svg viewBox="0 0 24 24"><path d="M18 16a3 3 0 0 0-2.2 1l-7-4a3 3 0 0 0 0-2l7-4A3 3 0 1 0 15 5l-7 4a3 3 0 1 0 0 6l7 4a3 3 0 1 0 3-3z"/></svg></button>
+            </div>
+            <div class="hint2">or press an arrow / tap anywhere</div>
+        </div>
+    </div>
+
+    <script type="module" src="main.js"></script>
+</body>
+
+</html>

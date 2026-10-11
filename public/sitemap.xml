@@ -9,8 +9,7 @@
     <image:image><image:loc>https://classicgames-flame.vercel.app/thumbs/tetris.webp</image:loc></image:image>
     <image:image><image:loc>https://classicgames-flame.vercel.app/thumbs/2048.webp</image:loc></image:image>
     <image:image><image:loc>https://classicgames-flame.vercel.app/thumbs/night-market.webp</image:loc></image:image>
-    <image:image><image:loc>https://classicgames-flame.vercel.app/thumbs/snake.webp</image:loc></image:image>
-    <image:image><image:loc>https://classicgames-flame.vercel.app/thumbs/flappybird.webp</image:loc></image:image>
+    <image:image><image:loc>https://classicgames-flame.vercel.app/thumbs/snake3d.webp</image:loc></image:image>
     <image:image><image:loc>https://classicgames-flame.vercel.app/thumbs/chroma-drop.webp</image:loc></image:image>
     <image:image><image:loc>https://classicgames-flame.vercel.app/thumbs/neon-rush.webp</image:loc></image:image>
     <image:image><image:loc>https://classicgames-flame.vercel.app/thumbs/umbra.webp</image:loc></image:image>
@@ -76,16 +75,10 @@
     <image:image><image:loc>https://classicgames-flame.vercel.app/thumbs/night-market.webp</image:loc></image:image>
   </url>
   <url>
-    <loc>https://classicgames-flame.vercel.app/snake.html</loc>
+    <loc>https://classicgames-flame.vercel.app/snake3d/</loc>
     <lastmod>2026-10-11</lastmod>
-    <priority>0.8</priority>
-    <image:image><image:loc>https://classicgames-flame.vercel.app/thumbs/snake.webp</image:loc></image:image>
-  </url>
-  <url>
-    <loc>https://classicgames-flame.vercel.app/flappybird.html</loc>
-    <lastmod>2026-10-11</lastmod>
-    <priority>0.8</priority>
-    <image:image><image:loc>https://classicgames-flame.vercel.app/thumbs/flappybird.webp</image:loc></image:image>
+    <priority>0.9</priority>
+    <image:image><image:loc>https://classicgames-flame.vercel.app/thumbs/snake3d.webp</image:loc></image:image>
   </url>
   <url>
     <loc>https://classicgames-flame.vercel.app/chroma-drop/</loc>
