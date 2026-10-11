@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
 <title>Whack-a-Mole – Play Free Online | Classic Games Arcade</title>
 <!-- seo:head -->
-<meta name="description" content="Play Whack-a-Mole free online. Tap the moles as they pop up and score as many as you can before time runs out. Great on phones." />
+<meta name="description" content="Play Whack-a-Mole free online in a living 3D meadow. Bonk moles, grab golden ones for +5, dodge the bombs and build combos before time runs out." />
 <link rel="canonical" href="https://classicgames-flame.vercel.app/whackamole.html" />
 <meta name="robots" content="index, follow, max-image-preview:large" />
 <meta name="theme-color" content="#0b0a14" />
@@ -16,7 +16,7 @@
 <meta property="og:site_name" content="Classic Games Arcade" />
 <meta property="og:type" content="website" />
 <meta property="og:title" content="Whack-a-Mole – Play Free Online | Classic Games Arcade" />
-<meta property="og:description" content="Play Whack-a-Mole free online. Tap the moles as they pop up and score as many as you can before time runs out. Great on phones." />
+<meta property="og:description" content="Play Whack-a-Mole free online in a living 3D meadow. Bonk moles, grab golden ones for +5, dodge the bombs and build combos before time runs out." />
 <meta property="og:url" content="https://classicgames-flame.vercel.app/whackamole.html" />
 <meta property="og:image" content="https://classicgames-flame.vercel.app/og/whackamole.jpg" />
 <meta property="og:image:width" content="1200" />
@@ -24,7 +24,7 @@
 <meta property="og:image:alt" content="Whack-a-Mole gameplay" />
 <meta name="twitter:card" content="summary_large_image" />
 <meta name="twitter:title" content="Whack-a-Mole – Play Free Online | Classic Games Arcade" />
-<meta name="twitter:description" content="Play Whack-a-Mole free online. Tap the moles as they pop up and score as many as you can before time runs out. Great on phones." />
+<meta name="twitter:description" content="Play Whack-a-Mole free online in a living 3D meadow. Bonk moles, grab golden ones for +5, dodge the bombs and build combos before time runs out." />
 <meta name="twitter:image" content="https://classicgames-flame.vercel.app/og/whackamole.jpg" />
 <script type="application/ld+json">
 {
@@ -33,7 +33,7 @@
     {
       "@type": "VideoGame",
       "name": "Whack-a-Mole",
-      "description": "Play Whack-a-Mole free online. Tap the moles as they pop up and score as many as you can before time runs out. Great on phones.",
+      "description": "Play Whack-a-Mole free online in a living 3D meadow. Bonk moles, grab golden ones for +5, dodge the bombs and build combos before time runs out.",
       "url": "https://classicgames-flame.vercel.app/whackamole.html",
       "image": "https://classicgames-flame.vercel.app/thumbs/whackamole.webp",
       "genre": [
@@ -77,168 +77,554 @@
 }
 </script>
 <!-- /seo:head -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600;700&display=swap" rel="stylesheet">
 <style>
-  * { margin:0; padding:0; box-sizing:border-box; -webkit-tap-highlight-color: transparent; user-select:none; }
-  html, body { width:100%; height:100%; overflow:hidden; touch-action:none; background:#2d6a4f; font-family:'Segoe UI', Verdana, sans-serif; }
-  #game { position:fixed; inset:0; display:flex; flex-direction:column; background:linear-gradient(#7cc576,#2d6a4f 40%); }
-  #hud { display:flex; justify-content:space-between; align-items:center; padding:12px 18px; color:#fff; text-shadow:0 2px 4px rgba(0,0,0,.4); font-weight:bold; font-size:5vw; z-index:5; }
-  #hud span#timeVal.low { color:#ff6b6b; }
-  #board { flex:1; display:grid; grid-template-columns:repeat(3,1fr); grid-template-rows:repeat(3,1fr); gap:2vw; padding:3vw; }
-  .hole { position:relative; display:flex; align-items:center; justify-content:center; overflow:hidden; }
-  .dirt { position:absolute; bottom:6%; width:88%; height:38%; background:radial-gradient(ellipse at center, #6b4423 0%, #4a2f18 70%, #2f1c0d 100%); border-radius:50%; box-shadow: inset 0 6px 10px rgba(0,0,0,.5), 0 4px 6px rgba(0,0,0,.3); z-index:3; pointer-events:none; }
-  .mole { position:absolute; bottom:8%; width:60%; height:60%; transform: translateY(100%) scale(0.7); transition: transform .12s ease-out; cursor:pointer; z-index:2; }
-  .mole.up { transform: translateY(15%) scale(1); }
-  .mole.hit { transform: translateY(60%) scale(0.8) rotate(15deg) !important; transition: transform .15s ease-in; filter: brightness(0.7); }
-  .moleBody { width:100%; height:100%; position:relative; }
-  .moleBody::before { content:''; position:absolute; left:8%; top:20%; width:84%; height:75%; background:#8b5a2b; border-radius:50% 50% 45% 45%; box-shadow: inset -6px -8px 12px rgba(0,0,0,.25); }
-  .moleBody::after { content:''; position:absolute; left:20%; top:0; width:60%; height:45%; background:#a56a35; border-radius:50% 50% 40% 40%; }
-  .eye { position:absolute; width:9%; height:9%; background:#1a1a1a; border-radius:50%; top:32%; z-index:2; }
-  .eyeL { left:28%; } .eyeR { left:58%; }
-  .nose { position:absolute; width:14%; height:10%; background:#3a2416; border-radius:50%; top:45%; left:43%; z-index:2; }
-  .cheek { position:absolute; width:16%; height:12%; background:#c98a4b; border-radius:50%; top:44%; opacity:.7; }
-  .cheekL{ left:8%; } .cheekR{ left:76%; }
-  #startScreen, #endScreen { position:fixed; inset:0; background:rgba(0,0,0,.75); color:#fff; display:flex; flex-direction:column; align-items:center; justify-content:center; text-align:center; z-index:20; padding:6vw; }
-  #startScreen h1, #endScreen h1 { font-size:9vw; margin-bottom:4vw; text-shadow:0 3px 6px rgba(0,0,0,.5); }
-  #endScreen p { font-size:6vw; margin-bottom:6vw; }
-  button.bigBtn { font-size:6vw; padding:3vw 8vw; border:none; border-radius:3vw; background:#ffb703; color:#3a2416; font-weight:bold; box-shadow:0 6px 0 #c98a13; }
-  button.bigBtn:active { transform:translateY(4px); box-shadow:0 2px 0 #c98a13; }
-  .hidden { display:none !important; }
-  #popText { position:absolute; font-weight:bold; color:#fff700; text-shadow:0 2px 3px #000; font-size:6vw; pointer-events:none; animation:floatUp .6s ease-out forwards; z-index:10; }
-  @keyframes floatUp { from{opacity:1; transform:translateY(0);} to{opacity:0; transform:translateY(-15vh);} }
+  * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+  html, body { width: 100%; height: 100%; overflow: hidden; touch-action: none; overscroll-behavior: none; user-select: none; -webkit-user-select: none; -webkit-touch-callout: none; color: #fff; font-family: Fredoka, "Segoe UI", system-ui, sans-serif;
+    background: linear-gradient(180deg, #8fd0ff 0%, #c9ecff 38%, #7cc26a 39%, #3f8f3c 100%); }
+  button { font: inherit; color: inherit; border: 0; background: none; cursor: pointer; }
+  :focus-visible { outline: 3px solid #fff; outline-offset: 3px; }
+  .hidden { display: none !important; }
+
+  /* live 3D grass from the Grass Wallpaper page, behind everything */
+  /* the meadow: a snapshot of the 3D Grass Wallpaper, gently breathing */
+  #meadow { position: fixed; inset: -3%; background: url(/img/meadow-wide.webp) center 70% / cover no-repeat; animation: breathe 24s ease-in-out infinite alternate; will-change: transform; }
+  @media (max-aspect-ratio: 4/5) { #meadow { background-image: url(/img/meadow-tall.webp); } }
+  @keyframes breathe { from { transform: scale(1); } to { transform: scale(1.05) translateY(-0.6%); } }
+  /* swaying grass in the foreground and drifting pollen: transforms only, so they cost almost nothing */
+  #sway { position: fixed; left: -2%; right: -2%; bottom: -1vh; height: 12vh; pointer-events: none; z-index: 4; }
+  #sway svg { position: absolute; inset: 0; width: 100%; height: 100%; display: block; overflow: visible; transform-origin: 50% 100%; will-change: transform; animation: sway var(--d, 3s) ease-in-out var(--delay, 0s) infinite alternate; }
+  @keyframes sway { from { transform: skewX(calc(var(--a, 6deg) * -1)); } to { transform: skewX(var(--a, 6deg)); } }
+  .pollen { will-change: transform, opacity; position: fixed; width: 6px; height: 6px; border-radius: 50%; background: radial-gradient(circle, #fff9c4, rgba(255, 249, 196, 0)); pointer-events: none; z-index: 2; animation: drift var(--d, 14s) linear var(--delay, 0s) infinite; }
+  @keyframes drift { 0% { transform: translate(0, 0); opacity: 0; } 10% { opacity: 0.9; } 90% { opacity: 0.9; } 100% { transform: translate(var(--dx, 120px), var(--dy, -160px)); opacity: 0; } }
+  #live[aria-pressed="true"] { background: rgba(120, 220, 90, 0.55); }
+  /* the optional live 3D meadow: half size scaled up (4x fewer pixels), capped at ~30 fps */
+  #bg { position: fixed; left: 0; top: 0; width: 50vw; height: 50vh; transform: scale(2); transform-origin: 0 0; border: 0; pointer-events: none; opacity: 0; transition: opacity 1.2s; }
+  #bg.on { opacity: 1; }
+  #shade { position: fixed; inset: 0; pointer-events: none; background: radial-gradient(ellipse at 50% 62%, rgba(20, 40, 10, 0) 30%, rgba(10, 25, 5, 0.38) 100%), linear-gradient(180deg, rgba(0, 0, 0, 0.18), rgba(0, 0, 0, 0) 22%); }
+
+  /* top bar */
+  #top { position: fixed; top: calc(10px + env(safe-area-inset-top)); left: 10px; right: 10px; display: flex; align-items: center; justify-content: space-between; gap: 8px; z-index: 6; }
+  .icon { width: 46px; height: 46px; border-radius: 15px; display: grid; place-items: center; flex: none; background: rgba(255, 255, 255, 0.22); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); box-shadow: 0 4px 14px rgba(0, 40, 0, 0.18); transition: transform .1s; }
+  .icon:active { transform: scale(0.92); }
+  .icon svg { width: 21px; height: 21px; fill: #fff; }
+  #mute[aria-pressed="true"] .on, #mute[aria-pressed="false"] .off { display: none; }
+  .home { height: 46px; padding: 0 16px; border-radius: 15px; display: flex; align-items: center; color: #fff; text-decoration: none; font-weight: 600; font-size: 15px; background: rgba(255, 255, 255, 0.22); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); }
+  #stats { display: flex; align-items: center; gap: 10px; }
+  body[data-state="title"] #stats, body[data-state="over"] #stats { visibility: hidden; }
+  body[data-state="title"] #pause, body[data-state="over"] #pause { display: none; }
+  body:not([data-state="title"]):not([data-state="over"]) .home { display: none; }
+  .pill { min-width: 92px; padding: 6px 14px 7px; border-radius: 20px; text-align: center; background: rgba(40, 24, 10, 0.42); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.18); }
+  .pill small { display: block; font-size: 11px; font-weight: 600; letter-spacing: 0.14em; opacity: 0.8; }
+  .pill b { display: block; font-size: 28px; line-height: 1; font-weight: 700; }
+  #scoreVal.bump { animation: bump .28s cubic-bezier(.3, 1.8, .5, 1); }
+  @keyframes bump { from { transform: scale(1.35); } }
+  #combo b { color: #ffe27a; }
+  #combo .bar { height: 5px; margin-top: 5px; border-radius: 4px; background: rgba(255, 255, 255, 0.2); overflow: hidden; }
+  #combo .bar i { display: block; height: 100%; width: 0; background: linear-gradient(90deg, #ffd34d, #ff8a3d); transition: width .15s; }
+  #combo.hot { box-shadow: 0 0 0 2px #ffd34d, 0 0 22px rgba(255, 200, 60, 0.6); }
+  #timer { position: relative; width: 62px; height: 62px; flex: none; }
+  #timer svg { width: 100%; height: 100%; transform: rotate(-90deg); }
+  #timer circle { fill: none; stroke-width: 7; }
+  #timer .track { stroke: rgba(0, 0, 0, 0.25); }
+  #timer .left { stroke: #fff; stroke-linecap: round; stroke-dasharray: 163.4; transition: stroke .3s; }
+  #timer span { position: absolute; inset: 0; display: grid; place-items: center; font-size: 22px; font-weight: 700; }
+  #timer.low .left { stroke: #ff5a5a; }
+  #timer.low span { color: #ffdede; animation: tick 1s ease-in-out infinite; }
+  @keyframes tick { 50% { transform: scale(1.15); } }
+
+  /* the lawn of holes */
+  #board { position: fixed; left: 50%; bottom: calc(7vh + env(safe-area-inset-bottom)); transform: translateX(-50%); width: min(96vw, 680px, 74vh); display: grid; grid-template-rows: repeat(3, auto); z-index: 3; }
+  .row { display: grid; grid-template-columns: repeat(3, 1fr); margin-top: -9%; }
+  .row:first-child { margin-top: 0; }
+  .row.r0 { transform: scale(0.8); margin-left: 4%; margin-right: 4%; }
+  .row.r1 { transform: scale(0.9); }
+  .hole { position: relative; width: 100%; aspect-ratio: 1; cursor: none; touch-action: none; }
+  .hole svg { position: absolute; left: 0; width: 100%; display: block; overflow: visible; }
+  .hole .pit { top: 58%; }
+  .hole .lip { top: 63%; z-index: 3; pointer-events: none; }
+  .clip { position: absolute; left: 12%; right: 12%; top: -30%; height: 98%; overflow: hidden; z-index: 2; pointer-events: none; }
+  .mole { position: absolute; left: 0; right: 0; bottom: 0; height: 76%; transform: translateY(105%); transition: transform .14s cubic-bezier(.3, 1.4, .5, 1); }
+  .mole svg { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; }
+  .hole.up .mole { transform: translateY(14%); }
+  .hole.hit .mole { transform: translateY(46%) rotate(-6deg); transition: transform .1s ease-out; }
+  .hole.leave .mole { transform: translateY(105%); transition: transform .2s ease-in; }
+  .ko, .dizzy { display: none; }
+  .hit .ko, .hit .dizzy { display: inline; }
+  .hit .eyes { display: none; }
+  .dizzy { transform-origin: 50px 20px; animation: spin 0.7s linear infinite; }
+  @keyframes spin { to { transform: rotate(360deg); } }
+  .kind-gold .fur { fill: url(#gGold); } .kind-gold .shine { display: inline; }
+  .shine { display: none; animation: twinkle 0.8s ease-in-out infinite; transform-origin: center; }
+  @keyframes twinkle { 50% { opacity: 0.2; transform: scale(0.6); } }
+  .bomb { display: none; }
+  .kind-bomb .critter { display: none; } .kind-bomb .bomb { display: inline; }
+  .spark { animation: flick 0.18s steps(2) infinite; }
+  @keyframes flick { 50% { opacity: 0.4; } }
+
+  /* hammer */
+  #hammer { position: fixed; left: 0; top: 0; width: 92px; height: 92px; pointer-events: none; z-index: 9; transform-origin: 78% 82%; opacity: 0; transition: opacity .15s; }
+  #hammer.show { opacity: 1; }
+  #hammer svg { width: 100%; height: 100%; transform-origin: 78% 82%; transform: rotate(-28deg); transition: transform .14s ease-out; }
+  #hammer.swing svg { transform: rotate(18deg); transition: transform .06s ease-in; }
+
+  /* effects */
+  .fx { position: fixed; pointer-events: none; z-index: 8; }
+  .pop { font-weight: 700; font-size: clamp(24px, 5vw, 38px); color: #fff; -webkit-text-stroke: 2px #6b3d12; text-shadow: 0 3px 0 #6b3d12; white-space: nowrap; transform: translate(-50%, -50%); }
+  .pop.gold { color: #ffe27a; } .pop.bad { color: #ff7070; -webkit-text-stroke-color: #5a0f0f; text-shadow: 0 3px 0 #5a0f0f; }
+  .star { width: 20px; height: 20px; margin: -10px 0 0 -10px; }
+  .dust { width: 16px; height: 16px; margin: -8px 0 0 -8px; border-radius: 50%; background: rgba(120, 82, 45, 0.75); }
+  .boom { width: 40px; height: 40px; margin: -20px 0 0 -20px; border-radius: 50%; border: 6px solid #ffb347; }
+  #flash { position: fixed; inset: 0; pointer-events: none; z-index: 7; background: rgba(255, 60, 40, 0.0); transition: background .25s; }
+  #flash.on { background: rgba(255, 60, 40, 0.28); transition: none; }
+  .shake { animation: shake .35s; }
+  @keyframes shake { 20% { transform: translate(-50%, 0) translate(-8px, 3px); } 40% { transform: translate(-50%, 0) translate(7px, -4px); } 60% { transform: translate(-50%, 0) translate(-5px, 2px); } 80% { transform: translate(-50%, 0) translate(3px, -1px); } }
+  #count { position: fixed; inset: 0; display: grid; place-items: center; pointer-events: none; z-index: 8; font-size: clamp(90px, 22vw, 180px); font-weight: 700; color: #fff; -webkit-text-stroke: 4px #6b3d12; text-shadow: 0 8px 0 #6b3d12, 0 20px 40px rgba(0, 0, 0, 0.3); }
+  #count.go { animation: count .7s ease-out forwards; }
+  @keyframes count { 0% { opacity: 0; transform: scale(2); } 25% { opacity: 1; transform: scale(1); } 80% { opacity: 1; } 100% { opacity: 0; transform: scale(0.7); } }
+
+  /* cards */
+  .overlay { position: fixed; inset: 0; display: grid; place-items: center; z-index: 10; padding: 16px; background: radial-gradient(ellipse at 50% 50%, rgba(20, 40, 10, 0.1), rgba(10, 25, 5, 0.5)); }
+  .card { width: min(380px, 100%); max-height: calc(100vh - 32px); overflow-y: auto; text-align: center; padding: 24px 22px 20px; border-radius: 30px; color: #4a2c12; background: linear-gradient(180deg, #fffaf0, #ffe9c4); box-shadow: 0 8px 0 #d39a4c, 0 30px 70px rgba(10, 30, 0, 0.45); animation: rise .5s cubic-bezier(.2, 1.5, .4, 1) both; }
+  @keyframes rise { from { transform: translateY(50px) scale(0.92); opacity: 0; } }
+  .logo { font-size: clamp(42px, 11vw, 58px); line-height: 0.95; font-weight: 700; color: #fff; -webkit-text-stroke: 3px #7a4519; text-shadow: 0 5px 0 #7a4519, 0 12px 20px rgba(90, 50, 10, 0.3); margin-bottom: 4px; }
+  .logo span { color: #ffd34d; }
+  .card .mascot { width: 120px; height: 104px; margin: 4px auto -6px; }
+  .card .mascot svg { width: 100%; height: 100%; overflow: visible; }
+  .card p { font-size: 15px; color: #7a5532; }
+  .legend { display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; margin: 14px 0 4px; }
+  .legend div { padding: 8px 4px; border-radius: 14px; background: rgba(255, 255, 255, 0.7); font-size: 12px; font-weight: 600; color: #7a5532; }
+  .legend i { display: block; width: 38px; height: 38px; margin: 0 auto 2px; }
+  .legend svg { width: 100%; height: 100%; display: block; overflow: visible; }
+  .legend b { display: block; font-size: 15px; color: #4a2c12; }
+  .best { margin-top: 10px; font-size: 14px; font-weight: 600; color: #a0703a; }
+  .best b { color: #4a2c12; font-size: 18px; }
+  .btn { width: 100%; height: 58px; margin-top: 14px; border-radius: 18px; font-size: 21px; font-weight: 700; color: #fff; background: linear-gradient(180deg, #6ee06a, #2fae43); box-shadow: 0 5px 0 #1f7f30; transition: transform .1s; }
+  .btn:active { transform: translateY(3px); box-shadow: 0 2px 0 #1f7f30; }
+  .btn.arm { position: relative; overflow: hidden; }
+  .btn.arm::before { content: ""; position: absolute; inset: 0; background: rgba(255, 255, 255, 0.35); transform-origin: left; animation: arm .7s linear forwards; }
+  @keyframes arm { from { transform: scaleX(1); } to { transform: scaleX(0); } }
+  .row2 { display: flex; gap: 8px; margin-top: 10px; }
+  .row2 button, .row2 a { flex: 1; height: 46px; border-radius: 15px; display: grid; place-items: center; font-weight: 600; font-size: 16px; color: #7a4519; text-decoration: none; background: rgba(255, 255, 255, 0.75); }
+  .keys { margin-top: 10px; font-size: 12px; color: #a0703a; }
+  #o-score { font-size: 72px; font-weight: 700; line-height: 1; color: #4a2c12; }
+  .stars { font-size: 34px; letter-spacing: 4px; color: #e2b04a; margin: 4px 0 2px; }
+  .stars em { font-style: normal; color: rgba(160, 112, 58, 0.3); }
+  .grid3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; margin-top: 12px; }
+  .grid3 div { padding: 8px 4px; border-radius: 14px; background: rgba(255, 255, 255, 0.7); font-size: 11px; font-weight: 600; letter-spacing: 0.06em; color: #a0703a; }
+  .grid3 b { display: block; font-size: 20px; color: #4a2c12; letter-spacing: 0; }
+  #o-new { display: inline-block; margin-top: 6px; padding: 2px 10px; border-radius: 10px; font-size: 13px; font-weight: 700; color: #fff; background: #ff4f6d; animation: pulse .8s ease-in-out infinite; }
+  @keyframes pulse { 50% { transform: scale(1.1); } }
+  @media (pointer: coarse) { .keys { display: none; } .hole { cursor: default; } #live { display: none; } }
+  @media (max-aspect-ratio: 4/5) { #board { bottom: calc(10vh + env(safe-area-inset-bottom)); width: min(98vw, 70vh); } }
+  @media (max-width: 420px) { .pill { min-width: 76px; padding: 5px 10px 6px; } .pill b { font-size: 24px; } #timer { width: 56px; height: 56px; } }
+  @media (prefers-reduced-motion: reduce) { .dizzy, .shine, .spark, #o-new, #meadow, .blade, .pollen { animation: none; } }
 </style>
 </head>
-<body>
-<div id="game">
-  <div id="hud">
-    <div>Score: <span id="scoreVal">0</span></div>
-    <div>Time: <span id="timeVal">30</span>s</div>
+<body data-state="title">
+<div id="meadow"></div>
+<div id="shade"></div>
+<div id="sway" aria-hidden="true"></div>
+<div id="flash"></div>
+
+<!-- shared gradients for every mole -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <radialGradient id="gFur" cx="40%" cy="30%" r="75%"><stop offset="0" stop-color="#b07a4e"/><stop offset="0.7" stop-color="#7d4f2c"/><stop offset="1" stop-color="#5a361b"/></radialGradient>
+    <radialGradient id="gGold" cx="40%" cy="30%" r="75%"><stop offset="0" stop-color="#fff2a8"/><stop offset="0.55" stop-color="#f4c033"/><stop offset="1" stop-color="#b9820f"/></radialGradient>
+    <radialGradient id="gBomb" cx="35%" cy="30%" r="70%"><stop offset="0" stop-color="#6b6b7a"/><stop offset="0.6" stop-color="#2b2b35"/><stop offset="1" stop-color="#121218"/></radialGradient>
+    <radialGradient id="gPit" cx="50%" cy="40%" r="60%"><stop offset="0" stop-color="#1f1208"/><stop offset="1" stop-color="#3d2511"/></radialGradient>
+    <linearGradient id="gLip" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#9a6a3e"/><stop offset="1" stop-color="#5e3a1c"/></linearGradient>
+  </defs>
+</svg>
+
+<template id="moleTpl"><svg viewBox="0 0 100 100" aria-hidden="true">
+      <g class="critter">
+        <path class="fur" d="M14 100 C12 52 28 14 50 14 C72 14 88 52 86 100 Z" fill="url(#gFur)"/>
+        <ellipse cx="50" cy="82" rx="22" ry="20" fill="#d9ab80" opacity="0.9"/>
+        <ellipse cx="50" cy="52" rx="17" ry="12" fill="#f0cfaa"/>
+        <g class="eyes">
+          <ellipse cx="37" cy="38" rx="5.6" ry="6.4" fill="#1b120c"/><ellipse cx="63" cy="38" rx="5.6" ry="6.4" fill="#1b120c"/>
+          <circle cx="39" cy="35.5" r="2" fill="#fff"/><circle cx="65" cy="35.5" r="2" fill="#fff"/>
+        </g>
+        <g class="ko" stroke="#1b120c" stroke-width="3.2" stroke-linecap="round">
+          <path d="M32 33 L42 43 M42 33 L32 43"/><path d="M58 33 L68 43 M68 33 L58 43"/>
+        </g>
+        <ellipse cx="27" cy="50" rx="6" ry="4" fill="#ff8fa3" opacity="0.6"/><ellipse cx="73" cy="50" rx="6" ry="4" fill="#ff8fa3" opacity="0.6"/>
+        <ellipse cx="50" cy="47" rx="7.5" ry="5.4" fill="#ff7a9a"/><ellipse cx="48" cy="45.5" rx="2.4" ry="1.5" fill="#fff" opacity="0.7"/>
+        <rect x="46" y="56" width="8" height="7" rx="1.5" fill="#fff" stroke="#c9a37f" stroke-width="0.8"/><path d="M50 56 V63" stroke="#c9a37f" stroke-width="0.8"/>
+        <ellipse cx="28" cy="94" rx="10" ry="7" fill="#e8b98e"/><ellipse cx="72" cy="94" rx="10" ry="7" fill="#e8b98e"/>
+        <path d="M22 92 v4 M27 91 v5 M32 92 v4 M68 92 v4 M73 91 v5 M78 92 v4" stroke="#a87a52" stroke-width="1.6" stroke-linecap="round"/>
+        <g class="shine" fill="#fff"><path d="M78 20 l2 6 6 2 -6 2 -2 6 -2 -6 -6 -2 6 -2z"/><path d="M20 30 l1.4 4 4 1.4 -4 1.4 -1.4 4 -1.4 -4 -4 -1.4 4 -1.4z"/></g>
+      </g>
+      <g class="bomb">
+        <circle cx="50" cy="62" r="32" fill="url(#gBomb)"/>
+        <ellipse cx="38" cy="48" rx="9" ry="6" fill="#fff" opacity="0.25" transform="rotate(-30 38 48)"/>
+        <rect x="42" y="24" width="16" height="10" rx="3" fill="#55555f"/>
+        <path d="M50 24 C52 14 60 12 64 6" fill="none" stroke="#c9a46a" stroke-width="3" stroke-linecap="round"/>
+        <g class="spark"><circle cx="65" cy="5" r="5" fill="#ffd34d"/><circle cx="65" cy="5" r="2.5" fill="#fff"/></g>
+        <text x="50" y="72" text-anchor="middle" font-family="Fredoka, sans-serif" font-size="20" font-weight="700" fill="#ff5a5a">✕</text>
+      </g>
+      <g class="dizzy" fill="#ffd34d"><path d="M50 4 l1.5 4.5 4.5 1.5 -4.5 1.5 -1.5 4.5 -1.5 -4.5 -4.5 -1.5 4.5 -1.5z"/><path d="M28 18 l1.2 3.6 3.6 1.2 -3.6 1.2 -1.2 3.6 -1.2 -3.6 -3.6 -1.2 3.6 -1.2z"/><path d="M72 18 l1.2 3.6 3.6 1.2 -3.6 1.2 -1.2 3.6 -1.2 -3.6 -3.6 -1.2 3.6 -1.2z"/></g>
+</svg></template>
+
+<div id="top">
+  <button id="pause" class="icon" aria-label="Pause" title="Pause (P)"><svg viewBox="0 0 24 24"><path d="M7 5h3.5v14H7zM13.5 5H17v14h-3.5z"/></svg></button>
+  <a class="home" href="/" aria-label="All games">← Games</a>
+  <div id="stats">
+    <div class="pill" id="scoreBox"><small>SCORE</small><b id="scoreVal">0</b></div>
+    <div id="timer"><svg viewBox="0 0 62 62"><circle class="track" cx="31" cy="31" r="26"/><circle class="left" id="ring" cx="31" cy="31" r="26"/></svg><span id="timeVal">30</span></div>
+    <div class="pill" id="combo"><small>COMBO</small><b id="comboVal">×1</b><div class="bar"><i id="comboBar"></i></div></div>
   </div>
-  <div id="board"></div>
+  <button id="live" class="icon" aria-label="Live 3D meadow" aria-pressed="false" title="Live 3D meadow (L) — beautiful, but heavy on slower devices"><svg viewBox="0 0 24 24"><path d="M5 20c0-8 5-14 15-15-1 10-7 15-15 15zm2-2c3-1 6-4 8-8-4 2-7 5-8 8z"/></svg></button>
+  <button id="mute" class="icon" aria-label="Sound" aria-pressed="false"><svg class="on" viewBox="0 0 24 24"><path d="M4 9h4l5-4v14l-5-4H4zM16 8.5a5 5 0 0 1 0 7l-1.4-1.4a3 3 0 0 0 0-4.2zM18.5 6a8.5 8.5 0 0 1 0 12l-1.4-1.4a6.5 6.5 0 0 0 0-9.2z"/></svg><svg class="off" viewBox="0 0 24 24"><path d="M4 9h4l5-4v14l-5-4H4zM15.5 9.9l1.4-1.4 2.1 2.1 2.1-2.1 1.4 1.4-2.1 2.1 2.1 2.1-1.4 1.4-2.1-2.1-2.1 2.1-1.4-1.4 2.1-2.1z"/></svg></button>
 </div>
 
-<div id="startScreen">
-  <h1>Whack-a-Mole</h1>
-  <p style="font-size:5vw; margin-bottom:6vw;">Tap the moles before they hide!</p>
-  <button class="bigBtn" id="startBtn">Start Game</button>
+<div id="board" aria-label="Mole holes"></div>
+<div id="count"></div>
+<div id="hammer"><svg viewBox="0 0 100 100" aria-hidden="true">
+  <rect x="62" y="40" width="10" height="56" rx="5" fill="#b57a45" transform="rotate(-40 67 68)"/>
+  <rect x="62" y="40" width="4" height="56" rx="2" fill="#d9a066" transform="rotate(-40 67 68)"/>
+  <g transform="rotate(-40 40 34)"><rect x="12" y="20" width="56" height="30" rx="9" fill="#e5484d"/><rect x="12" y="20" width="56" height="10" rx="5" fill="#ff7a7e"/><rect x="8" y="22" width="9" height="26" rx="3" fill="#ffd34d"/><rect x="63" y="22" width="9" height="26" rx="3" fill="#ffd34d"/></g>
+</svg></div>
+
+<div id="title" class="overlay">
+  <div class="card">
+    <div class="mascot" data-mole></div>
+    <div class="logo">Whack<span>-a-</span>Mole</div>
+    <p>Bonk the moles before they duck back down!</p>
+    <div class="legend">
+      <div><i data-mole></i><b>+1</b>Mole</div>
+      <div class="kind-gold"><i data-mole></i><b>+5</b>Golden</div>
+      <div class="kind-bomb"><i data-mole></i><b>−3</b>Don't hit!</div>
+    </div>
+    <div class="best">Hit moles in a row for a combo up to ×4 · Best: <b id="t-best">0</b></div>
+    <button id="startBtn" class="btn">Play</button>
+    <div class="keys">Click or tap the moles · <b>P</b> pause · <b>M</b> sound · <b>L</b> live 3D meadow</div>
+  </div>
 </div>
 
-<div id="endScreen" class="hidden">
-  <h1>Time's Up!</h1>
-  <p>Final Score: <span id="finalScore">0</span></p>
-  <button class="bigBtn" id="restartBtn">Play Again</button>
+<div id="paused" class="overlay hidden">
+  <div class="card">
+    <div class="logo" style="font-size:46px">Paused</div>
+    <button id="resumeBtn" class="btn">Resume</button>
+    <div class="row2"><button id="quitBtn">Restart</button></div>
+  </div>
+</div>
+
+<div id="over" class="overlay hidden">
+  <div class="card">
+    <div class="logo" style="font-size:40px">Time's up!</div>
+    <div class="stars" id="o-stars"></div>
+    <div id="o-score">0</div>
+    <div id="o-new">NEW BEST!</div>
+    <div class="grid3">
+      <div>BEST<b id="o-best">0</b></div>
+      <div>ACCURACY<b id="o-acc">0%</b></div>
+      <div>COMBO<b id="o-combo">0</b></div>
+    </div>
+    <button id="againBtn" class="btn">Play again</button>
+    <div class="row2"><button id="shareBtn">Share</button><a href="/">All games</a></div>
+  </div>
 </div>
 
 <script>
-const board = document.getElementById('board');
-const scoreVal = document.getElementById('scoreVal');
-const timeVal = document.getElementById('timeVal');
-const startScreen = document.getElementById('startScreen');
-const endScreen = document.getElementById('endScreen');
-const finalScore = document.getElementById('finalScore');
+(() => {
+  const $ = (id) => document.getElementById(id);
+  const GAME_MS = 30000, HOLES = 9;
+  const reducedMotion = matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const coarse = matchMedia("(pointer: coarse)").matches;
 
-let holes = [];
-let score = 0;
-let timeLeft = 30;
-let gameTimer = null;
-let spawnTimer = null;
-let activeMole = -1;
-let running = false;
+  // ---------- background ----------
+  // foreground grass: a strip of blades, each swaying on its own rhythm
+  {
+    const W = 1000, H = 200, greens = ["#3f8f2f", "#4fa53a", "#5fb544", "#6cc24f", "#357a28"];
+    const layers = Array.from({ length: 5 }, () => "");
+    for (let i = 0; i < 70; i++) {
+      const x = (i / 70) * W + Math.random() * 12, h = 70 + Math.random() * 120, w = 9 + Math.random() * 10, lean = (Math.random() - 0.5) * 40;
+      layers[i % 5] += `<path d="M${x - w / 2} ${H} Q${x + lean * 0.4} ${H - h * 0.55} ${x + lean} ${H - h} Q${x + lean * 0.3 + w * 0.2} ${H - h * 0.5} ${x + w / 2} ${H} Z" fill="${greens[i % greens.length]}"/>`;
+    }
+    $("sway").innerHTML = layers.map((paths, k) => `<svg viewBox="0 0 ${W} ${H}" preserveAspectRatio="none" style="--d:${(2.6 + k * 0.45).toFixed(2)}s;--delay:-${(k * 0.7).toFixed(1)}s;--a:${(4 + (k % 3) * 1.5).toFixed(1)}deg">${paths}</svg>`).join("");
+    for (let i = 0; i < 16; i++) {
+      const p = document.createElement("div");
+      p.className = "pollen";
+      p.style.cssText = `left:${Math.random() * 100}vw;top:${40 + Math.random() * 55}vh;--d:${10 + Math.random() * 10}s;--delay:-${Math.random() * 15}s;--dx:${(Math.random() - 0.3) * 260}px;--dy:${-120 - Math.random() * 200}px`;
+      document.body.appendChild(p);
+    }
+  }
+  // the live 3D meadow (Grass Wallpaper) is optional: lovely, but heavy on slower devices
+  let bg = null;
+  const liveBtn = $("live");
+  function setLive(on) {
+    try { localStorage.setItem("whackamole.live", on ? "1" : "0"); } catch { }
+    liveBtn.setAttribute("aria-pressed", on);
+    if (on && !bg) {
+      bg = document.createElement("iframe");
+      bg.id = "bg"; bg.title = ""; bg.tabIndex = -1; bg.setAttribute("aria-hidden", "true");
+      bg.addEventListener("load", () => {
+        bg.classList.add("on");
+        try {   // the meadow only sways, so ~30 fps is plenty; it leaves the main thread free for the game
+          const w = bg.contentWindow, raf = w.requestAnimationFrame.bind(w);
+          let last = 0;
+          w.requestAnimationFrame = (cb) => raf(function step(t) { if (t - last >= 31) { last = t; cb(t); } else raf(step); });
+        } catch { }
+      });
+      bg.src = `/grasswallpaper.html?blades=${Math.min(innerWidth, innerHeight) < 600 || coarse ? 9000 : 16000}`;
+      $("meadow").after(bg);
+    } else if (!on && bg) { bg.remove(); bg = null; }
+  }
+  setLive((() => { try { return localStorage.getItem("whackamole.live") === "1"; } catch { return false; } })());
+  liveBtn.addEventListener("click", () => setLive(!bg));
 
-for (let i = 0; i < 9; i++) {
-  const hole = document.createElement('div');
-  hole.className = 'hole';
-  hole.innerHTML = '<div class="dirt"></div><div class="mole"><div class="moleBody"><div class="eye eyeL"></div><div class="eye eyeR"></div><div class="nose"></div><div class="cheek cheekL"></div><div class="cheek cheekR"></div></div></div>';
-  board.appendChild(hole);
-  holes.push(hole);
-  const mole = hole.querySelector('.mole');
-  mole.addEventListener('pointerdown', (e) => {
-    e.preventDefault();
-    if (!running) return;
-    if (mole.classList.contains('up') && !mole.classList.contains('hit')) {
-      hitMole(hole, mole, e);
+  // ---------- sound (Web Audio, nothing to download) ----------
+  const sound = {
+    ctx: null, muted: (() => { try { return localStorage.getItem("whackamole.muted") === "1"; } catch { return false; } })(),
+    init() {
+      if (this.ctx) { if (this.ctx.state === "suspended") this.ctx.resume(); return; }
+      const AC = window.AudioContext || window.webkitAudioContext; if (!AC) return;
+      this.ctx = new AC(); this.out = this.ctx.createGain(); this.out.gain.value = this.muted ? 0 : 0.7; this.out.connect(this.ctx.destination);
+      this.noise = this.ctx.createBuffer(1, this.ctx.sampleRate, this.ctx.sampleRate); const d = this.noise.getChannelData(0); for (let i = 0; i < d.length; i++) d[i] = Math.random() * 2 - 1;
+    },
+    get ok() { return this.ctx && !this.muted && this.ctx.state === "running"; },
+    toggle() { this.muted = !this.muted; try { localStorage.setItem("whackamole.muted", this.muted ? "1" : "0"); } catch { } if (this.out) this.out.gain.value = this.muted ? 0 : 0.7; return this.muted; },
+    tone(f0, f1, dur, type, v, delay = 0) { const t = this.ctx.currentTime + delay, o = this.ctx.createOscillator(), g = this.ctx.createGain(); o.type = type; o.frequency.setValueAtTime(f0, t); o.frequency.exponentialRampToValueAtTime(f1, t + dur); g.gain.setValueAtTime(v, t); g.gain.exponentialRampToValueAtTime(0.0001, t + dur); o.connect(g).connect(this.out); o.start(t); o.stop(t + dur + 0.02); },
+    burst(freq, q, v, dur) { const t = this.ctx.currentTime, s = this.ctx.createBufferSource(), f = this.ctx.createBiquadFilter(), g = this.ctx.createGain(); s.buffer = this.noise; f.type = "bandpass"; f.frequency.value = freq; f.Q.value = q; g.gain.setValueAtTime(v, t); g.gain.exponentialRampToValueAtTime(0.0001, t + dur); s.connect(f).connect(g).connect(this.out); s.start(t, Math.random() * 0.5); s.stop(t + dur + 0.02); },
+    bonk(combo) { if (!this.ok) return; this.tone(520 + combo * 25, 180, 0.12, "triangle", 0.45); this.burst(1800, 2, 0.25, 0.06); this.tone(900 + combo * 40, 1300 + combo * 40, 0.08, "sine", 0.12, 0.03); },
+    gold() { if (!this.ok) return; [784, 988, 1175, 1568].forEach((f, i) => this.tone(f, f, 0.25, "triangle", 0.18, i * 0.06)); this.burst(1800, 2, 0.2, 0.06); },
+    boom() { if (!this.ok) return; this.tone(160, 40, 0.5, "sine", 0.6); this.burst(500, 0.6, 0.6, 0.4); },
+    whiff() { if (!this.ok) return; this.burst(900, 1.5, 0.12, 0.08); },
+    popup() { if (!this.ok) return; this.tone(300, 520, 0.07, "sine", 0.06); },
+    tick(hi) { if (!this.ok) return; this.tone(hi ? 1400 : 1000, hi ? 1400 : 1000, 0.05, "square", 0.05); },
+    go() { if (!this.ok) return; [523, 659, 784].forEach((f, i) => this.tone(f, f, 0.22, "triangle", 0.18, i * 0.08)); },
+    end() { if (!this.ok) return; [784, 659, 523, 659, 784, 1047].forEach((f, i) => this.tone(f, f, 0.3, "triangle", 0.16, i * 0.11)); },
+  };
+  const muteBtn = $("mute");
+  const syncMute = () => muteBtn.setAttribute("aria-pressed", sound.muted);
+  syncMute();
+
+  // ---------- board ----------
+  const MOLE = $("moleTpl").innerHTML;
+  for (const slot of document.querySelectorAll("[data-mole]")) slot.innerHTML = MOLE;
+  const board = $("board");
+  const holes = [];
+  const PIT = '<svg class="pit" viewBox="0 0 100 34"><ellipse cx="50" cy="17" rx="40" ry="14" fill="url(#gPit)"/><ellipse cx="50" cy="15" rx="40" ry="12" fill="none" stroke="#2a180a" stroke-width="2" opacity="0.6"/></svg>';
+  const LIP = '<svg class="lip" viewBox="0 0 100 34"><path d="M6 12 C8 30 92 30 94 12 C96 24 84 34 50 34 C16 34 4 24 6 12 Z" fill="url(#gLip)"/><path d="M10 14 C20 27 80 27 90 14" fill="none" stroke="#b98a5a" stroke-width="2" opacity="0.6"/>' +
+    '<g fill="#4fa53a"><path d="M8 26 q2 -12 5 -2 q1 -9 4 1z"/><path d="M84 26 q2 -12 5 -2 q1 -9 4 1z"/><path d="M40 33 q2 -9 4 -1 q2 -8 4 1z"/><path d="M62 32 q1 -8 3 -1 q2 -7 3 1z"/></g>' +
+    '<g fill="#6cc24f"><path d="M12 27 q1 -8 3 -1z"/><path d="M88 27 q1 -8 3 -1z"/><path d="M45 34 q1 -7 3 -1z"/></g></svg>';
+  for (let r = 0; r < 3; r++) {
+    const row = document.createElement("div");
+    row.className = `row r${r}`;
+    for (let c = 0; c < 3; c++) {
+      const el = document.createElement("div");
+      el.className = "hole";
+      el.innerHTML = `${PIT}<div class="clip"><div class="mole">${MOLE}</div></div>${LIP}`;
+      row.appendChild(el);
+      const h = { el, i: holes.length, state: "down", kind: "mole", until: 0 };
+      holes.push(h);
+      el.addEventListener("pointerdown", (e) => { e.preventDefault(); whack(h, e); });
+    }
+    board.appendChild(row);
+  }
+
+  // ---------- game state ----------
+  let state = "title", score = 0, combo = 0, bestCombo = 0, hits = 0, swings = 0;
+  let timeLeft = GAME_MS, elapsed = 0, nextSpawn = 0, lastTick = 0, overAt = 0;
+  const best = () => { try { return +localStorage.getItem("whackamole.best") || 0; } catch { return 0; } };
+  $("t-best").textContent = best();
+  const show = (which) => { for (const id of ["title", "paused", "over"]) $(id).classList.toggle("hidden", id !== which); document.body.dataset.state = which || "play"; };
+  const mult = () => Math.min(4, 1 + Math.floor(combo / 5));
+
+  function updateHud() {
+    $("scoreVal").textContent = score;
+    $("comboVal").textContent = "×" + mult();
+    $("comboBar").style.width = (mult() === 4 ? 100 : (combo % 5) * 20) + "%";
+    $("combo").classList.toggle("hot", mult() >= 2);
+    const s = Math.ceil(timeLeft / 1000);
+    $("timeVal").textContent = Math.max(0, s);
+    $("ring").style.strokeDashoffset = 163.4 * (1 - timeLeft / GAME_MS);
+    $("timer").classList.toggle("low", timeLeft <= 5000);
+  }
+  function bumpScore() { const el = $("scoreVal"); el.classList.remove("bump"); void el.offsetWidth; el.classList.add("bump"); }
+
+  function setKind(h, kind) { h.kind = kind; h.el.classList.remove("kind-mole", "kind-gold", "kind-bomb"); h.el.classList.add("kind-" + kind); }
+  function raise(h, now) {
+    const t = elapsed / 1000;
+    const r = Math.random();
+    setKind(h, t > 4 && r < 0.13 ? "bomb" : r > 0.92 ? "gold" : "mole");
+    const stay = Math.max(560, 1150 - t * 17) * (h.kind === "gold" ? 0.75 : h.kind === "bomb" ? 1.25 : 1);
+    h.state = "up"; h.until = now + stay;
+    h.el.classList.remove("hit", "leave"); h.el.classList.add("up");
+    sound.popup();
+  }
+  function lower(h, escaped) {
+    h.state = "down";
+    h.el.classList.remove("up", "hit"); h.el.classList.add("leave");
+    if (escaped && h.kind !== "bomb" && combo > 0) { combo = 0; updateHud(); }
+  }
+
+  function whack(h, e) {
+    if (state !== "play") return;
+    sound.init();
+    swing(e.clientX, e.clientY);
+    swings++;
+    if (h.state !== "up") { combo = 0; updateHud(); sound.whiff(); dust(e.clientX, e.clientY, 5); return; }
+    h.state = "hit";
+    h.el.classList.add("hit");
+    const rect = h.el.getBoundingClientRect(), x = rect.left + rect.width / 2, y = rect.top + rect.height * 0.32;
+    if (h.kind === "bomb") {
+      score = Math.max(0, score - 3); timeLeft = Math.max(0, timeLeft - 2000); combo = 0;
+      sound.boom(); boom(x, y + rect.height * 0.2); popText(x, y, "−3  −2s", "bad");
+      $("flash").classList.add("on"); setTimeout(() => $("flash").classList.remove("on"), 60);
+      if (!reducedMotion) { board.classList.remove("shake"); void board.offsetWidth; board.classList.add("shake"); }
+      if (navigator.vibrate) try { navigator.vibrate(80); } catch { }
+      setTimeout(() => lower(h, false), 120);
+    } else {
+      hits++; combo++; bestCombo = Math.max(bestCombo, combo);
+      const pts = (h.kind === "gold" ? 5 : 1) * mult();
+      score += pts;
+      if (h.kind === "gold") sound.gold(); else sound.bonk(combo);
+      stars(x, y, h.kind === "gold" ? 12 : 7, h.kind === "gold");
+      popText(x, y - 10, "+" + pts + (mult() > 1 ? `  ×${mult()}` : ""), h.kind === "gold" ? "gold" : "");
+      if (combo > 0 && combo % 5 === 0 && combo <= 15) popText(innerWidth / 2, innerHeight * 0.3, `COMBO ×${mult()}!`, "gold");
+      if (navigator.vibrate) try { navigator.vibrate(12); } catch { }
+      bumpScore();
+      setTimeout(() => lower(h, false), 380);
+    }
+    updateHud();
+  }
+
+  // ---------- effects (Web Animations API) ----------
+  function fx(cls, x, y, html = "") { const el = document.createElement("div"); el.className = "fx " + cls; el.style.left = x + "px"; el.style.top = y + "px"; el.innerHTML = html; document.body.appendChild(el); return el; }
+  function popText(x, y, text, kind) {
+    const el = fx("pop " + (kind || ""), x, y); el.textContent = text;
+    el.animate([{ opacity: 0, transform: "translate(-50%,-50%) scale(0.5)" }, { opacity: 1, transform: "translate(-50%,-80%) scale(1.15)", offset: 0.25 }, { opacity: 1, transform: "translate(-50%,-120%) scale(1)", offset: 0.7 }, { opacity: 0, transform: "translate(-50%,-170%) scale(0.95)" }], { duration: 850, easing: "ease-out" }).onfinish = () => el.remove();
+  }
+  const STAR = '<svg viewBox="0 0 20 20"><path d="M10 0 l2.6 6.6 7 .6 -5.4 4.6 1.7 7 -5.9 -3.8 -5.9 3.8 1.7 -7 -5.4 -4.6 7 -.6z" fill="#ffd34d" stroke="#c98a13" stroke-width="1"/></svg>';
+  function stars(x, y, n, gold) {
+    for (let i = 0; i < n; i++) {
+      const el = fx("star", x, y, STAR), a = (i / n) * Math.PI * 2 + Math.random() * 0.5, d = 50 + Math.random() * 50 * (gold ? 1.5 : 1);
+      el.animate([{ transform: "translate(0,0) scale(0.4) rotate(0deg)", opacity: 1 }, { transform: `translate(${Math.cos(a) * d}px, ${Math.sin(a) * d - 20}px) scale(${gold ? 1.3 : 1}) rotate(${(Math.random() - 0.5) * 360}deg)`, opacity: 0 }], { duration: 550 + Math.random() * 250, easing: "cubic-bezier(.2,.8,.3,1)" }).onfinish = () => el.remove();
+    }
+  }
+  function dust(x, y, n) {
+    for (let i = 0; i < n; i++) {
+      const el = fx("dust", x, y), a = -Math.PI * Math.random(), d = 20 + Math.random() * 30;
+      el.animate([{ transform: "translate(0,0) scale(0.6)", opacity: 0.9 }, { transform: `translate(${Math.cos(a) * d}px, ${Math.sin(a) * d}px) scale(1.4)`, opacity: 0 }], { duration: 450, easing: "ease-out" }).onfinish = () => el.remove();
+    }
+  }
+  function boom(x, y) {
+    const ring = fx("boom", x, y);
+    ring.animate([{ transform: "scale(0.3)", opacity: 1 }, { transform: "scale(4)", opacity: 0 }], { duration: 450, easing: "ease-out" }).onfinish = () => ring.remove();
+    for (let i = 0; i < 10; i++) {
+      const el = fx("dust", x, y), a = Math.random() * Math.PI * 2, d = 40 + Math.random() * 60;
+      el.style.background = i % 2 ? "rgba(60,60,70,.8)" : "rgba(255,150,60,.85)";
+      el.animate([{ transform: "translate(0,0) scale(1)", opacity: 1 }, { transform: `translate(${Math.cos(a) * d}px, ${Math.sin(a) * d}px) scale(2.4)`, opacity: 0 }], { duration: 650, easing: "ease-out" }).onfinish = () => el.remove();
+    }
+  }
+
+  // ---------- hammer that follows the pointer ----------
+  const hammer = $("hammer");
+  let hideHammer = 0;
+  function placeHammer(x, y) { hammer.style.transform = `translate(${x - 70}px, ${y - 72}px)`; }
+  function swing(x, y) {
+    placeHammer(x, y); hammer.classList.add("show", "swing");
+    setTimeout(() => hammer.classList.remove("swing"), 90);
+    clearTimeout(hideHammer);
+    if (coarse) hideHammer = setTimeout(() => hammer.classList.remove("show"), 350);
+  }
+  addEventListener("pointermove", (e) => {
+    if (e.pointerType !== "mouse") return;
+    placeHammer(e.clientX, e.clientY);
+    hammer.classList.toggle("show", state === "play" && !!e.target.closest && !e.target.closest("#top"));
+  });
+
+  // ---------- flow ----------
+  async function countdown() {
+    const el = $("count");
+    for (const t of ["3", "2", "1", "GO!"]) {
+      el.textContent = t; el.classList.remove("go"); void el.offsetWidth; el.classList.add("go");
+      t === "GO!" ? sound.go() : sound.tick(false);
+      await new Promise((r) => setTimeout(r, t === "GO!" ? 500 : 650));
+    }
+  }
+  async function start() {
+    sound.init();
+    show(null); document.body.dataset.state = "count";
+    for (const h of holes) { h.state = "down"; h.el.classList.remove("up", "hit", "leave"); }
+    score = 0; combo = 0; bestCombo = 0; hits = 0; swings = 0; timeLeft = GAME_MS; elapsed = 0;
+    updateHud();
+    state = "count";
+    await countdown();
+    if (state !== "count") return;
+    state = "play"; document.body.dataset.state = "play";
+    nextSpawn = performance.now() + 200; lastTick = performance.now();
+  }
+  function finish() {
+    state = "over"; overAt = performance.now();
+    for (const h of holes) if (h.state === "up") lower(h, false);
+    hammer.classList.remove("show");
+    const prev = best(), isNew = score > prev;
+    if (isNew) try { localStorage.setItem("whackamole.best", score); } catch { }
+    $("o-score").textContent = score;
+    $("o-best").textContent = Math.max(score, prev);
+    $("o-acc").textContent = (swings ? Math.round((hits / swings) * 100) : 0) + "%";
+    $("o-combo").textContent = bestCombo;
+    $("o-new").classList.toggle("hidden", !isNew);
+    const n = score >= 60 ? 3 : score >= 35 ? 2 : score >= 15 ? 1 : 0;
+    $("o-stars").innerHTML = "★".repeat(n) + `<em>${"★".repeat(3 - n)}</em>`;
+    $("t-best").textContent = Math.max(score, prev);
+    $("againBtn").classList.remove("arm"); void $("againBtn").offsetWidth; $("againBtn").classList.add("arm");
+    sound.end();
+    show("over");
+  }
+  function pause() { if (state !== "play") return; state = "paused"; show("paused"); hammer.classList.remove("show"); }
+  function resume() { if (state !== "paused") return; state = "play"; show(null); lastTick = performance.now(); }
+
+  function loop(now) {
+    if (state === "play") {
+      const dt = Math.min(100, now - lastTick); lastTick = now;
+      timeLeft -= dt; elapsed += dt;
+      const sec = Math.ceil(timeLeft / 1000);
+      if (timeLeft <= 5000 && sec !== loop.lastSec) { loop.lastSec = sec; if (sec > 0) sound.tick(true); }
+      for (const h of holes) if (h.state === "up" && now > h.until) lower(h, true);
+      const t = elapsed / 1000, maxUp = Math.min(3, 1 + Math.floor(t / 9));
+      if (now >= nextSpawn) {
+        const free = holes.filter((h) => h.state === "down");
+        if (holes.filter((h) => h.state === "up").length < maxUp && free.length) raise(free[Math.floor(Math.random() * free.length)], now);
+        nextSpawn = now + Math.max(330, 820 - t * 15) * (0.7 + Math.random() * 0.6);
+      }
+      if (timeLeft <= 0) { timeLeft = 0; updateHud(); finish(); }
+      else updateHud();
+    }
+    requestAnimationFrame(loop);
+  }
+  requestAnimationFrame(loop);
+
+  // ---------- controls ----------
+  $("startBtn").addEventListener("click", start);
+  $("againBtn").addEventListener("click", () => { if (performance.now() - overAt > 700) start(); });
+  $("resumeBtn").addEventListener("click", resume);
+  $("quitBtn").addEventListener("click", () => { state = "title"; start(); });
+  $("pause").addEventListener("click", () => { sound.init(); state === "play" ? pause() : resume(); });
+  muteBtn.addEventListener("click", () => { sound.init(); sound.toggle(); syncMute(); });
+  $("shareBtn").addEventListener("click", async () => {
+    const url = location.origin + location.pathname, text = `I bonked ${score} points in Whack-a-Mole! Can you beat it?`;
+    try { if (navigator.share) await navigator.share({ title: "Whack-a-Mole", text, url }); else { await navigator.clipboard.writeText(`${text} ${url}`); $("shareBtn").textContent = "Link copied"; } } catch { }
+  });
+  addEventListener("keydown", (e) => {
+    if (e.code === "KeyM") { sound.init(); sound.toggle(); syncMute(); }
+    else if (e.code === "KeyL") setLive(!bg);
+    else if (e.code === "KeyP" || e.code === "Escape") { state === "play" ? pause() : resume(); }
+    else if ((e.code === "Enter" || e.code === "Space") && !e.repeat && !(e.target instanceof HTMLButtonElement)) {
+      if (state === "title") start(); else if (state === "over" && performance.now() - overAt > 700) start(); else if (state === "paused") resume();
     }
   });
-}
-
-function hitMole(hole, mole, e) {
-  score++;
-  scoreVal.textContent = score;
-  mole.classList.add('hit');
-  const rect = hole.getBoundingClientRect();
-  const pop = document.createElement('div');
-  pop.id = 'popText';
-  pop.textContent = '+1';
-  pop.style.left = (rect.left + rect.width/2 - 20) + 'px';
-  pop.style.top = (rect.top + rect.height/2) + 'px';
-  document.body.appendChild(pop);
-  setTimeout(() => pop.remove(), 650);
-  setTimeout(() => {
-    mole.classList.remove('up', 'hit');
-  }, 150);
-  if (activeMole === holes.indexOf(hole)) activeMole = -1;
-}
-
-function popRandomMole() {
-  if (!running) return;
-  if (activeMole !== -1) {
-    const prevMole = holes[activeMole].querySelector('.mole');
-    prevMole.classList.remove('up');
-  }
-  let idx = Math.floor(Math.random() * holes.length);
-  activeMole = idx;
-  const mole = holes[idx].querySelector('.mole');
-  mole.classList.remove('hit');
-  mole.classList.add('up');
-  const upDuration = Math.max(500, 1300 - score * 15);
-  setTimeout(() => {
-    if (mole.classList.contains('up')) mole.classList.remove('up');
-    if (activeMole === idx) activeMole = -1;
-  }, upDuration);
-}
-
-function scheduleSpawn() {
-  if (!running) return;
-  const delay = Math.max(450, 1100 - score * 10) + Math.random() * 400;
-  spawnTimer = setTimeout(() => {
-    popRandomMole();
-    scheduleSpawn();
-  }, delay);
-}
-
-function startGame() {
-  score = 0;
-  timeLeft = 30;
-  scoreVal.textContent = '0';
-  timeVal.textContent = '30';
-  timeVal.classList.remove('low');
-  startScreen.classList.add('hidden');
-  endScreen.classList.add('hidden');
-  running = true;
-  holes.forEach(h => h.querySelector('.mole').classList.remove('up','hit'));
-  activeMole = -1;
-  scheduleSpawn();
-  gameTimer = setInterval(() => {
-    timeLeft--;
-    timeVal.textContent = timeLeft;
-    if (timeLeft <= 10) timeVal.classList.add('low');
-    if (timeLeft <= 0) endGame();
-  }, 1000);
-}
-
-function endGame() {
-  running = false;
-  clearInterval(gameTimer);
-  clearTimeout(spawnTimer);
-  holes.forEach(h => h.querySelector('.mole').classList.remove('up'));
-  finalScore.textContent = score;
-  endScreen.classList.remove('hidden');
-}
-
-document.getElementById('startBtn').addEventListener('click', startGame);
-document.getElementById('restartBtn').addEventListener('click', startGame);
-
-// Prevent double-tap zoom / scrolling on mobile
-document.addEventListener('touchmove', (e) => e.preventDefault(), { passive: false });
+  document.addEventListener("visibilitychange", () => { if (document.hidden) pause(); });
+  addEventListener("blur", pause);
+  document.addEventListener("touchmove", (e) => e.preventDefault(), { passive: false });
+  window.__whack = () => ({ state, score, combo, timeLeft: Math.round(timeLeft), up: holes.filter((h) => h.state === "up").map((h) => [h.i, h.kind]) });
+})();
 </script>
 </body>
 </html>
