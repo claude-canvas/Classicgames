@@ -145,23 +145,18 @@
   .hole .pit { top: 58%; }
   .hole .lip { top: 63%; z-index: 3; pointer-events: none; }
   .clip { position: absolute; left: 12%; right: 12%; top: -30%; height: 98%; overflow: hidden; z-index: 2; pointer-events: none; }
-  .mole { position: absolute; left: 0; right: 0; bottom: 0; height: 76%; transform: translateY(105%); transition: transform .14s cubic-bezier(.3, 1.4, .5, 1); }
-  .mole svg { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; }
-  .hole.up .mole { transform: translateY(14%); }
-  .hole.hit .mole { transform: translateY(46%) rotate(-6deg); transition: transform .1s ease-out; }
-  .hole.leave .mole { transform: translateY(105%); transition: transform .2s ease-in; }
-  .ko, .dizzy { display: none; }
-  .hit .ko, .hit .dizzy { display: inline; }
-  .hit .eyes { display: none; }
-  .dizzy { transform-origin: 50px 20px; animation: spin 0.7s linear infinite; }
-  @keyframes spin { to { transform: rotate(360deg); } }
-  .kind-gold .fur { fill: url(#gGold); } .kind-gold .shine { display: inline; }
-  .shine { display: none; animation: twinkle 0.8s ease-in-out infinite; transform-origin: center; }
-  @keyframes twinkle { 50% { opacity: 0.2; transform: scale(0.6); } }
-  .bomb { display: none; }
-  .kind-bomb .critter { display: none; } .kind-bomb .bomb { display: inline; }
-  .spark { animation: flick 0.18s steps(2) infinite; }
-  @keyframes flick { 50% { opacity: 0.4; } }
+  /* the moles are 3D renders (projection3d Space camera, baked to sprites) brought to life with frame swaps */
+  .mole { position: absolute; left: -18%; right: -18%; bottom: 0; height: 100%; transform: translateY(108%); transition: transform .16s cubic-bezier(.3, 1.5, .5, 1); }
+  .mole img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: contain; object-position: 50% 100%; transform-origin: 50% 92%; animation: idle 1.5s ease-in-out infinite; -webkit-user-drag: none; }
+  @keyframes idle { 50% { transform: scale(1.025, 0.975); } }
+  .hole.up .mole { transform: translateY(8%); }
+  .hole.hit .mole { transform: translateY(22%); transition: transform .1s ease-out; }
+  .hole.hit .mole img { animation: squash .3s ease-out; }
+  @keyframes squash { 0% { transform: scale(1.25, 0.72); } 60% { transform: scale(0.95, 1.05); } 100% { transform: scale(1, 1); } }
+  .hole.leave .mole { transform: translateY(108%); transition: transform .2s ease-in; }
+  .kind-gold .mole img { filter: drop-shadow(0 0 10px rgba(255, 214, 90, 0.85)); }
+  .kind-bomb .mole img { animation: wobble .5s ease-in-out infinite; }
+  @keyframes wobble { 25% { transform: rotate(-3deg); } 75% { transform: rotate(3deg); } }
 
   /* hammer */
   #hammer { position: fixed; left: 0; top: 0; width: 92px; height: 92px; pointer-events: none; z-index: 9; transform-origin: 78% 82%; opacity: 0; transition: opacity .15s; }
@@ -190,13 +185,13 @@
   @keyframes rise { from { transform: translateY(50px) scale(0.92); opacity: 0; } }
   .logo { font-size: clamp(42px, 11vw, 58px); line-height: 0.95; font-weight: 700; color: #fff; -webkit-text-stroke: 3px #7a4519; text-shadow: 0 5px 0 #7a4519, 0 12px 20px rgba(90, 50, 10, 0.3); margin-bottom: 4px; }
   .logo span { color: #ffd34d; }
-  .card .mascot { width: 120px; height: 104px; margin: 4px auto -6px; }
-  .card .mascot svg { width: 100%; height: 100%; overflow: visible; }
+  .card .mascot { width: 132px; height: 132px; margin: -6px auto -10px; }
+  .card .mascot img { width: 100%; height: 100%; object-fit: contain; transform-origin: 50% 90%; animation: idle 1.5s ease-in-out infinite; }
   .card p { font-size: 15px; color: #7a5532; }
   .legend { display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; margin: 14px 0 4px; }
   .legend div { padding: 8px 4px; border-radius: 14px; background: rgba(255, 255, 255, 0.7); font-size: 12px; font-weight: 600; color: #7a5532; }
-  .legend i { display: block; width: 38px; height: 38px; margin: 0 auto 2px; }
-  .legend svg { width: 100%; height: 100%; display: block; overflow: visible; }
+  .legend i { display: block; width: 46px; height: 46px; margin: 0 auto 2px; }
+  .legend img { width: 100%; height: 100%; display: block; object-fit: contain; }
   .legend b { display: block; font-size: 15px; color: #4a2c12; }
   .best { margin-top: 10px; font-size: 14px; font-weight: 600; color: #a0703a; }
   .best b { color: #4a2c12; font-size: 18px; }
@@ -219,7 +214,7 @@
   @media (pointer: coarse) { .keys { display: none; } .hole { cursor: default; } #live { display: none; } }
   @media (max-aspect-ratio: 4/5) { #board { bottom: calc(10vh + env(safe-area-inset-bottom)); width: min(98vw, 70vh); } }
   @media (max-width: 420px) { .pill { min-width: 76px; padding: 5px 10px 6px; } .pill b { font-size: 24px; } #timer { width: 56px; height: 56px; } }
-  @media (prefers-reduced-motion: reduce) { .dizzy, .shine, .spark, #o-new, #meadow, .blade, .pollen { animation: none; } }
+  @media (prefers-reduced-motion: reduce) { .mole img, #o-new, #meadow, #sway svg, .pollen { animation: none !important; } }
 </style>
 </head>
 <body data-state="title">
@@ -238,36 +233,6 @@
     <linearGradient id="gLip" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#9a6a3e"/><stop offset="1" stop-color="#5e3a1c"/></linearGradient>
   </defs>
 </svg>
-
-<template id="moleTpl"><svg viewBox="0 0 100 100" aria-hidden="true">
-      <g class="critter">
-        <path class="fur" d="M14 100 C12 52 28 14 50 14 C72 14 88 52 86 100 Z" fill="url(#gFur)"/>
-        <ellipse cx="50" cy="82" rx="22" ry="20" fill="#d9ab80" opacity="0.9"/>
-        <ellipse cx="50" cy="52" rx="17" ry="12" fill="#f0cfaa"/>
-        <g class="eyes">
-          <ellipse cx="37" cy="38" rx="5.6" ry="6.4" fill="#1b120c"/><ellipse cx="63" cy="38" rx="5.6" ry="6.4" fill="#1b120c"/>
-          <circle cx="39" cy="35.5" r="2" fill="#fff"/><circle cx="65" cy="35.5" r="2" fill="#fff"/>
-        </g>
-        <g class="ko" stroke="#1b120c" stroke-width="3.2" stroke-linecap="round">
-          <path d="M32 33 L42 43 M42 33 L32 43"/><path d="M58 33 L68 43 M68 33 L58 43"/>
-        </g>
-        <ellipse cx="27" cy="50" rx="6" ry="4" fill="#ff8fa3" opacity="0.6"/><ellipse cx="73" cy="50" rx="6" ry="4" fill="#ff8fa3" opacity="0.6"/>
-        <ellipse cx="50" cy="47" rx="7.5" ry="5.4" fill="#ff7a9a"/><ellipse cx="48" cy="45.5" rx="2.4" ry="1.5" fill="#fff" opacity="0.7"/>
-        <rect x="46" y="56" width="8" height="7" rx="1.5" fill="#fff" stroke="#c9a37f" stroke-width="0.8"/><path d="M50 56 V63" stroke="#c9a37f" stroke-width="0.8"/>
-        <ellipse cx="28" cy="94" rx="10" ry="7" fill="#e8b98e"/><ellipse cx="72" cy="94" rx="10" ry="7" fill="#e8b98e"/>
-        <path d="M22 92 v4 M27 91 v5 M32 92 v4 M68 92 v4 M73 91 v5 M78 92 v4" stroke="#a87a52" stroke-width="1.6" stroke-linecap="round"/>
-        <g class="shine" fill="#fff"><path d="M78 20 l2 6 6 2 -6 2 -2 6 -2 -6 -6 -2 6 -2z"/><path d="M20 30 l1.4 4 4 1.4 -4 1.4 -1.4 4 -1.4 -4 -4 -1.4 4 -1.4z"/></g>
-      </g>
-      <g class="bomb">
-        <circle cx="50" cy="62" r="32" fill="url(#gBomb)"/>
-        <ellipse cx="38" cy="48" rx="9" ry="6" fill="#fff" opacity="0.25" transform="rotate(-30 38 48)"/>
-        <rect x="42" y="24" width="16" height="10" rx="3" fill="#55555f"/>
-        <path d="M50 24 C52 14 60 12 64 6" fill="none" stroke="#c9a46a" stroke-width="3" stroke-linecap="round"/>
-        <g class="spark"><circle cx="65" cy="5" r="5" fill="#ffd34d"/><circle cx="65" cy="5" r="2.5" fill="#fff"/></g>
-        <text x="50" y="72" text-anchor="middle" font-family="Fredoka, sans-serif" font-size="20" font-weight="700" fill="#ff5a5a">✕</text>
-      </g>
-      <g class="dizzy" fill="#ffd34d"><path d="M50 4 l1.5 4.5 4.5 1.5 -4.5 1.5 -1.5 4.5 -1.5 -4.5 -4.5 -1.5 4.5 -1.5z"/><path d="M28 18 l1.2 3.6 3.6 1.2 -3.6 1.2 -1.2 3.6 -1.2 -3.6 -3.6 -1.2 3.6 -1.2z"/><path d="M72 18 l1.2 3.6 3.6 1.2 -3.6 1.2 -1.2 3.6 -1.2 -3.6 -3.6 -1.2 3.6 -1.2z"/></g>
-</svg></template>
 
 <div id="top">
   <button id="pause" class="icon" aria-label="Pause" title="Pause (P)"><svg viewBox="0 0 24 24"><path d="M7 5h3.5v14H7zM13.5 5H17v14h-3.5z"/></svg></button>
@@ -404,8 +369,18 @@
   syncMute();
 
   // ---------- board ----------
-  const MOLE = $("moleTpl").innerHTML;
-  for (const slot of document.querySelectorAll("[data-mole]")) slot.innerHTML = MOLE;
+  const FRAMES = ["mole-idle", "mole-blink", "mole-left", "mole-right", "mole-hit", "gold-idle", "gold-blink", "gold-hit", "bomb-a", "bomb-b"];
+  const src = (name) => `/img/mole/${name}.webp`;
+  for (const n of FRAMES) { const im = new Image(); im.src = src(n); if (im.decode) im.decode().catch(() => { }); }   // all decoded up front: frame swaps are instant
+  const MOLE = `<img alt="" draggable="false" src="${src("mole-idle")}">`;
+  for (const slot of document.querySelectorAll("[data-mole]")) {
+    const k = slot.parentElement.classList;
+    slot.innerHTML = `<img alt="" draggable="false" src="${src(k.contains("kind-gold") ? "gold-idle" : k.contains("kind-bomb") ? "bomb-a" : "mole-idle")}">`;
+  }
+  { // the title mascot blinks now and then
+    const m = document.querySelector(".mascot img");
+    setInterval(() => { if (!m) return; m.src = src("mole-blink"); setTimeout(() => { m.src = src(Math.random() < 0.3 ? (Math.random() < 0.5 ? "mole-left" : "mole-right") : "mole-idle"); }, 140); }, 2600);
+  }
   const board = $("board");
   const holes = [];
   const PIT = '<svg class="pit" viewBox="0 0 100 34"><ellipse cx="50" cy="17" rx="40" ry="14" fill="url(#gPit)"/><ellipse cx="50" cy="15" rx="40" ry="12" fill="none" stroke="#2a180a" stroke-width="2" opacity="0.6"/></svg>';
@@ -420,7 +395,7 @@
       el.className = "hole";
       el.innerHTML = `${PIT}<div class="clip"><div class="mole">${MOLE}</div></div>${LIP}`;
       row.appendChild(el);
-      const h = { el, i: holes.length, state: "down", kind: "mole", until: 0 };
+      const h = { el, img: el.querySelector(".mole img"), i: holes.length, state: "down", kind: "mole", until: 0, frame: "mole-idle", nextAct: 0, actUntil: 0, act: null };
       holes.push(h);
       el.addEventListener("pointerdown", (e) => { e.preventDefault(); whack(h, e); });
     }
@@ -448,10 +423,24 @@
   function bumpScore() { const el = $("scoreVal"); el.classList.remove("bump"); void el.offsetWidth; el.classList.add("bump"); }
 
   function setKind(h, kind) { h.kind = kind; h.el.classList.remove("kind-mole", "kind-gold", "kind-bomb"); h.el.classList.add("kind-" + kind); }
+  function setFrame(h, name) { if (h.frame !== name) { h.frame = name; h.img.src = src(name); } }
+  const idleFrame = (h) => (h.kind === "bomb" ? "bomb-a" : h.kind === "gold" ? "gold-idle" : "mole-idle");
+  // while a mole is up it blinks and glances around; the bomb's fuse flickers
+  function animateMole(h, now) {
+    if (h.kind === "bomb") { setFrame(h, Math.floor(now / 110) % 2 ? "bomb-b" : "bomb-a"); return; }
+    if (now >= h.nextAct) {
+      const r = Math.random();
+      h.act = h.kind === "gold" || r < 0.5 ? (h.kind === "gold" ? "gold-blink" : "mole-blink") : r < 0.75 ? "mole-left" : "mole-right";
+      h.actUntil = now + (h.act.endsWith("blink") ? 130 : 420);
+      h.nextAct = now + 600 + Math.random() * 900;
+    }
+    setFrame(h, now < h.actUntil ? h.act : idleFrame(h));
+  }
   function raise(h, now) {
     const t = elapsed / 1000;
     const r = Math.random();
     setKind(h, t > 4 && r < 0.13 ? "bomb" : r > 0.92 ? "gold" : "mole");
+    setFrame(h, idleFrame(h)); h.nextAct = now + 250 + Math.random() * 500; h.actUntil = 0;
     const stay = Math.max(560, 1150 - t * 17) * (h.kind === "gold" ? 0.75 : h.kind === "bomb" ? 1.25 : 1);
     h.state = "up"; h.until = now + stay;
     h.el.classList.remove("hit", "leave"); h.el.classList.add("up");
@@ -471,6 +460,7 @@
     if (h.state !== "up") { combo = 0; updateHud(); sound.whiff(); dust(e.clientX, e.clientY, 5); return; }
     h.state = "hit";
     h.el.classList.add("hit");
+    if (h.kind !== "bomb") setFrame(h, h.kind === "gold" ? "gold-hit" : "mole-hit");
     const rect = h.el.getBoundingClientRect(), x = rect.left + rect.width / 2, y = rect.top + rect.height * 0.32;
     if (h.kind === "bomb") {
       score = Math.max(0, score - 3); timeLeft = Math.max(0, timeLeft - 2000); combo = 0;
@@ -587,7 +577,7 @@
       timeLeft -= dt; elapsed += dt;
       const sec = Math.ceil(timeLeft / 1000);
       if (timeLeft <= 5000 && sec !== loop.lastSec) { loop.lastSec = sec; if (sec > 0) sound.tick(true); }
-      for (const h of holes) if (h.state === "up" && now > h.until) lower(h, true);
+      for (const h of holes) if (h.state === "up") { if (now > h.until) lower(h, true); else animateMole(h, now); }
       const t = elapsed / 1000, maxUp = Math.min(3, 1 + Math.floor(t / 9));
       if (now >= nextSpawn) {
         const free = holes.filter((h) => h.state === "down");
