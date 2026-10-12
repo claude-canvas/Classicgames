@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <title>Classic Race 3D – Play Free Online | Classic Games Arcade</title>
+<!-- seo:head -->
+<meta name="description" content="Play Classic Race 3D free in your browser. Weave through traffic on a seaside highway, chain near misses for bonus points and drive from sunset into a starry night. Keyboard or touch controls." />
+<link rel="canonical" href="https://classicgames-flame.vercel.app/classicrace3d/" />
+<meta name="robots" content="index, follow, max-image-preview:large" />
+<meta name="theme-color" content="#0b0a14" />
+<link rel="icon" href="/favicon.ico" sizes="32x32" />
+<link rel="icon" href="/icon.svg" type="image/svg+xml" />
+<link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+<link rel="manifest" href="/manifest.webmanifest" />
+<meta property="og:site_name" content="Classic Games Arcade" />
+<meta property="og:type" content="website" />
+<meta property="og:title" content="Classic Race 3D – Play Free Online | Classic Games Arcade" />
+<meta property="og:description" content="Play Classic Race 3D free in your browser. Weave through traffic on a seaside highway, chain near misses for bonus points and drive from sunset into a starry night. Keyboard or touch controls." />
+<meta property="og:url" content="https://classicgames-flame.vercel.app/classicrace3d/" />
+<meta property="og:image" content="https://classicgames-flame.vercel.app/og/classicrace3d.jpg" />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+<meta property="og:image:alt" content="Classic Race 3D gameplay" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="Classic Race 3D – Play Free Online | Classic Games Arcade" />
+<meta name="twitter:description" content="Play Classic Race 3D free in your browser. Weave through traffic on a seaside highway, chain near misses for bonus points and drive from sunset into a starry night. Keyboard or touch controls." />
+<meta name="twitter:image" content="https://classicgames-flame.vercel.app/og/classicrace3d.jpg" />
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "VideoGame",
+      "name": "Classic Race 3D",
+      "description": "Play Classic Race 3D free in your browser. Weave through traffic on a seaside highway, chain near misses for bonus points and drive from sunset into a starry night. Keyboard or touch controls.",
+      "url": "https://classicgames-flame.vercel.app/classicrace3d/",
+      "image": "https://classicgames-flame.vercel.app/thumbs/classicrace3d.webp",
+      "genre": [
+        "Racing"
+      ],
+      "gamePlatform": "Web browser",
+      "applicationCategory": "Game",
+      "operatingSystem": "Any",
+      "playMode": "SinglePlayer",
+      "isAccessibleForFree": true,
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "USD",
+        "availability": "https://schema.org/InStock"
+      },
+      "isPartOf": {
+        "@type": "WebSite",
+        "name": "Classic Games Arcade",
+        "url": "https://classicgames-flame.vercel.app/"
+      }
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Games",
+          "item": "https://classicgames-flame.vercel.app/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Classic Race 3D",
+          "item": "https://classicgames-flame.vercel.app/classicrace3d/"
+        }
+      ]
+    }
+  ]
+}
+</script>
+<!-- /seo:head -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Russo+One&family=Fredoka:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+        html, body { margin: 0; height: 100%; overflow: hidden; background: #2a1830; color: #fff; font-family: Fredoka, "Segoe UI", system-ui, sans-serif; user-select: none; -webkit-user-select: none; touch-action: none; overscroll-behavior: none; }
+        #view { position: fixed; inset: 0; width: 100%; height: 100%; display: block; }
+        .hidden { display: none !important; }
+        button { font: inherit; color: inherit; cursor: pointer; border: 0; background: none; }
+        :focus-visible { outline: 3px solid #fff; outline-offset: 3px; }
+        .shadow { text-shadow: 0 2px 0 rgba(0, 0, 0, 0.25), 0 4px 18px rgba(0, 0, 0, 0.45); }
+        .num { font-family: "Russo One", Fredoka, sans-serif; font-style: italic; }
+
+        .corner { position: fixed; top: calc(12px + env(safe-area-inset-top)); z-index: 6; width: 46px; height: 46px; border-radius: 15px; display: grid; place-items: center; background: rgba(10, 10, 25, 0.45); }
+        .corner svg { width: 21px; height: 21px; fill: #fff; }
+        #pause { left: calc(12px + env(safe-area-inset-left)); }
+        #mute { right: calc(12px + env(safe-area-inset-right)); }
+        #mute[aria-pressed="true"] .on, #mute[aria-pressed="false"] .off { display: none; }
+        body[data-state="title"] #pause, body[data-state="over"] #pause { display: none; }
+        .home { position: fixed; top: calc(12px + env(safe-area-inset-top)); left: calc(12px + env(safe-area-inset-left)); z-index: 7; height: 46px; padding: 0 16px; border-radius: 15px; display: flex; align-items: center; color: #fff; text-decoration: none; font-weight: 600; background: rgba(10, 10, 25, 0.45); }
+
+        /* HUD */
+        #hud { position: fixed; inset: 0; pointer-events: none; }
+        body[data-state="title"] #hud { display: none; }
+        .panel { position: absolute; top: calc(12px + env(safe-area-inset-top)); padding: 6px 14px 8px; border-radius: 16px; background: rgba(10, 10, 25, 0.45); text-align: center; }
+        .panel small { display: block; font-size: 11px; font-weight: 600; letter-spacing: 0.16em; opacity: 0.8; }
+        .panel b { display: block; font-size: 26px; line-height: 1.05; }
+        #scorebox { left: 70px; min-width: 110px; }
+        #bestbox { right: 70px; min-width: 96px; }
+        #bestbox b { font-size: 20px; color: #ffd36b; }
+        #gauge { position: absolute; left: 50%; bottom: calc(18px + env(safe-area-inset-bottom)); transform: translateX(-50%); width: 170px; height: 104px; }
+        #gauge svg { width: 100%; height: 100%; overflow: visible; }
+        #needle { transform-origin: 85px 85px; transition: transform .12s linear; }
+        #kmh { position: absolute; left: 0; right: 0; top: 46px; text-align: center; font-size: 34px; line-height: 1; }
+        #gauge .unit { position: absolute; left: 0; right: 0; top: 82px; text-align: center; font-size: 11px; letter-spacing: 0.2em; opacity: 0.85; }
+        #pop { position: absolute; top: 24%; left: 0; right: 0; text-align: center; font-size: clamp(22px, 4vw, 34px); color: #fff36b; opacity: 0; }
+        #pop.show { animation: pop 1s ease-out forwards; }
+        @keyframes pop { 0% { opacity: 0; transform: scale(0.6) skewX(-10deg); } 15% { opacity: 1; transform: scale(1.15) skewX(-10deg); } 30% { transform: scale(1) skewX(-10deg); } 75% { opacity: 1; } 100% { opacity: 0; transform: translateY(-20px) skewX(-10deg); } }
+        #banner { position: absolute; top: 34%; left: 0; right: 0; text-align: center; font-size: clamp(34px, 7vw, 64px); opacity: 0; }
+        #banner.show { animation: band 1.8s ease-out forwards; }
+        @keyframes band { 0% { opacity: 0; letter-spacing: 0.6em; } 20% { opacity: 1; letter-spacing: 0.08em; } 75% { opacity: 1; } 100% { opacity: 0; } }
+        #count { position: fixed; inset: 0; display: grid; place-items: center; pointer-events: none; z-index: 5; font-size: clamp(90px, 20vw, 170px); color: #fff; opacity: 0; }
+        #count.show { animation: count .7s ease-out forwards; }
+        @keyframes count { 0% { opacity: 0; transform: scale(2); } 25% { opacity: 1; transform: scale(1); } 80% { opacity: 1; } 100% { opacity: 0; transform: scale(0.7); } }
+        #toast { position: fixed; top: calc(76px + env(safe-area-inset-top)); left: 50%; transform: translateX(-50%); padding: 8px 18px; border-radius: 30px; background: rgba(10, 10, 25, 0.6); font-weight: 600; opacity: 0; transition: opacity .25s; pointer-events: none; z-index: 8; }
+        #toast.show { opacity: 1; }
+
+        /* touch steering pads */
+        .pad { position: fixed; bottom: calc(22px + env(safe-area-inset-bottom)); width: 86px; height: 86px; border-radius: 28px; display: none; place-items: center; z-index: 5; background: rgba(10, 10, 25, 0.35); box-shadow: inset 0 0 0 2px rgba(255, 255, 255, 0.25); touch-action: none; }
+        .pad svg { width: 38px; height: 38px; fill: #fff; }
+        .pad.on { background: rgba(255, 255, 255, 0.3); transform: scale(0.94); }
+        .pad.l { left: calc(18px + env(safe-area-inset-left)); } .pad.r { right: calc(18px + env(safe-area-inset-right)); }
+        @media (pointer: coarse) { body[data-state="hud"] .pad { display: grid; } }
+
+        /* cards */
+        .overlay { position: fixed; inset: 0; display: grid; place-items: center; z-index: 7; padding: 16px; background: radial-gradient(ellipse at 50% 50%, rgba(20, 10, 30, 0.1), rgba(20, 10, 30, 0.55)); }
+        .card { width: min(380px, 100%); max-height: calc(100vh - 32px); overflow-y: auto; text-align: center; padding: 22px 22px 20px; border-radius: 26px; background: linear-gradient(160deg, rgba(40, 22, 52, 0.94), rgba(18, 12, 30, 0.96)); border: 1px solid rgba(255, 180, 120, 0.25); box-shadow: 0 30px 80px rgba(0, 0, 0, 0.5); animation: rise .45s cubic-bezier(.2, 1.4, .4, 1) both; }
+        @keyframes rise { from { transform: translateY(40px) scale(0.94); opacity: 0; } }
+        .logo { margin: 0; font-family: "Russo One", sans-serif; font-style: italic; font-size: clamp(40px, 10vw, 58px); line-height: 0.95; letter-spacing: 0.01em; background: linear-gradient(180deg, #fff 30%, #ffc56b 60%, #ff6b4a); -webkit-background-clip: text; background-clip: text; color: transparent; filter: drop-shadow(0 4px 16px rgba(255, 110, 60, 0.35)); transform: skewX(-6deg); }
+        .logo span { display: block; font-size: 0.55em; letter-spacing: 0.3em; }
+        .sub { margin: 12px 0 4px; font-size: 15px; color: #e7d6ef; }
+        .best { margin-top: 10px; font-size: 14px; color: #c9b4d6; }
+        .best b { color: #ffd36b; font-size: 18px; }
+        .big { width: 100%; height: 58px; margin-top: 16px; border-radius: 18px; font-family: "Russo One", sans-serif; font-size: 22px; letter-spacing: 0.06em; color: #2a1408; background: linear-gradient(180deg, #ffd37a, #ff8a3d); box-shadow: 0 5px 0 #b8521c, 0 12px 30px rgba(255, 120, 50, 0.35); transition: transform .1s; position: relative; overflow: hidden; }
+        .big:active { transform: translateY(3px); }
+        .big.arm::before { content: ""; position: absolute; inset: 0; background: rgba(255, 255, 255, 0.35); transform-origin: left; animation: arm .7s linear forwards; }
+        @keyframes arm { from { transform: scaleX(1); } to { transform: scaleX(0); } }
+        .row { display: flex; gap: 8px; margin-top: 10px; }
+        .row button, .row a { flex: 1; height: 46px; border-radius: 15px; display: grid; place-items: center; font-weight: 600; color: #ffe2c4; text-decoration: none; background: rgba(255, 255, 255, 0.08); }
+        .keys { margin-top: 12px; font-size: 12px; color: #a993b8; line-height: 1.6; }
+        kbd { display: inline-block; padding: 1px 6px; border-radius: 6px; background: rgba(255, 255, 255, 0.12); font: inherit; font-weight: 600; }
+        #o-score { font-size: 64px; line-height: 1; margin: 6px 0 2px; color: #fff; }
+        .grid3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; margin-top: 12px; }
+        .grid3 div { padding: 8px 4px; border-radius: 14px; background: rgba(255, 255, 255, 0.07); font-size: 11px; font-weight: 600; letter-spacing: 0.08em; color: #c9b4d6; }
+        .grid3 b { display: block; font-size: 17px; color: #fff; letter-spacing: 0; }
+        #o-new { display: inline-block; margin-top: 6px; padding: 2px 10px; border-radius: 10px; font-size: 13px; font-weight: 700; background: #ff4f6d; animation: pulse .8s ease-in-out infinite; }
+        @keyframes pulse { 50% { transform: scale(1.1); } }
+        .touch-only { display: none; }
+        @media (pointer: coarse) { .keys { display: none; } .touch-only { display: block; } }
+        @media (max-width: 520px) { #scorebox { left: 66px; min-width: 90px; } #bestbox { right: 66px; min-width: 76px; } .panel b { font-size: 21px; } #gauge { width: 140px; height: 88px; } #kmh { font-size: 28px; top: 38px; } #gauge .unit { top: 68px; } }
+        @media (prefers-reduced-motion: reduce) { #o-new { animation: none; } }
+    </style>
+</head>
+
+<body data-state="title">
+    <canvas id="view" aria-label="Classic Race 3D"></canvas>
+
+    <div id="hud" class="shadow">
+        <div class="panel" id="scorebox"><small>SCORE</small><b class="num" id="score">0</b></div>
+        <div class="panel" id="bestbox"><small>BEST</small><b class="num" id="best">0</b></div>
+        <div id="gauge">
+            <svg viewBox="0 0 170 104" aria-hidden="true">
+                <defs><linearGradient id="arc" x1="0" x2="1"><stop offset="0" stop-color="#5ee3ff"/><stop offset="0.6" stop-color="#ffd36b"/><stop offset="1" stop-color="#ff5a3d"/></linearGradient></defs>
+                <path d="M 18 85 A 67 67 0 1 1 152 85" fill="none" stroke="rgba(10,10,25,0.5)" stroke-width="14" stroke-linecap="round"/>
+                <path d="M 18 85 A 67 67 0 1 1 152 85" fill="none" stroke="url(#arc)" stroke-width="6" stroke-linecap="round"/>
+                <g id="needle"><path d="M85 85 L83 30 L85 24 L87 30 Z" fill="#fff"/><circle cx="85" cy="85" r="6" fill="#fff"/></g>
+            </svg>
+            <div id="kmh" class="num">0</div><div class="unit">KM/H</div>
+        </div>
+        <div id="pop" class="num shadow"></div>
+        <div id="banner" class="num shadow"></div>
+    </div>
+    <div id="count" class="num shadow"></div>
+    <div id="toast"></div>
+    <button class="pad l" data-dir="-1" aria-label="Steer left"><svg viewBox="0 0 24 24"><path d="M15 5 L7 12 L15 19 Z"/></svg></button>
+    <button class="pad r" data-dir="1" aria-label="Steer right"><svg viewBox="0 0 24 24"><path d="M9 5 L17 12 L9 19 Z"/></svg></button>
+
+    <button id="pause" class="corner" title="Pause (P)" aria-label="Pause"><svg viewBox="0 0 24 24"><path d="M7 5h3.5v14H7zM13.5 5H17v14h-3.5z"/></svg></button>
+    <button id="mute" class="corner" aria-label="Sound" aria-pressed="false"><svg class="on" viewBox="0 0 24 24"><path d="M4 9h4l5-4v14l-5-4H4zM16 8.5a5 5 0 0 1 0 7l-1.4-1.4a3 3 0 0 0 0-4.2zM18.5 6a8.5 8.5 0 0 1 0 12l-1.4-1.4a6.5 6.5 0 0 0 0-9.2z"/></svg><svg class="off" viewBox="0 0 24 24"><path d="M4 9h4l5-4v14l-5-4H4zM15.5 9.9l1.4-1.4 2.1 2.1 2.1-2.1 1.4 1.4-2.1 2.1 2.1 2.1-1.4 1.4-2.1-2.1-2.1 2.1-1.4-1.4 2.1-2.1z"/></svg></button>
+
+    <div id="title" class="overlay">
+        <a class="home" href="/" aria-label="All games">← Games</a>
+        <div class="card">
+            <h1 class="logo">CLASSIC RACE<span>3D</span></h1>
+            <p class="sub">Race the coast road at sunset. Weave through traffic, skim past for near-miss bonuses, and see how far you get.</p>
+            <div class="best">Best score: <b class="num" id="t-best">0</b></div>
+            <button id="play" class="big">DRIVE</button>
+            <div class="keys"><kbd>←</kbd><kbd>→</kbd> or <kbd>A</kbd><kbd>D</kbd> to steer · drag to steer · <kbd>P</kbd> pause · <kbd>M</kbd> sound</div>
+            <div class="keys touch-only">Drag anywhere or hold the arrows to steer</div>
+        </div>
+    </div>
+
+    <div id="paused" class="overlay hidden">
+        <div class="card">
+            <h2 class="logo" style="font-size:44px">PAUSED</h2>
+            <button id="resume" class="big">RESUME</button>
+            <div class="row"><button id="restart">Restart</button></div>
+        </div>
+    </div>
+
+    <div id="over" class="overlay hidden">
+        <a class="home" href="/" aria-label="All games">← Games</a>
+        <div class="card">
+            <h2 class="logo" style="font-size:40px">CRASHED!</h2>
+            <div id="o-score" class="num">0</div>
+            <div id="o-new">NEW BEST!</div>
+            <div class="grid3">
+                <div>DISTANCE<b class="num" id="o-dist">0</b></div>
+                <div>NEAR MISS<b class="num" id="o-bonus">0</b></div>
+                <div>BEST<b class="num" id="o-best">0</b></div>
+            </div>
+            <button id="again" class="big">DRIVE AGAIN</button>
+            <div class="row"><button id="share">Share</button><a href="/">All games</a></div>
+        </div>
+    </div>
+
+    <script type="module" src="main.js"></script>
+</body>
+
+</html>
