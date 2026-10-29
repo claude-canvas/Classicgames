@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+<title>Forest Rally</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;800&family=Nunito:wght@400;700;800&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
+<style>
+  :root { --ink: #ffffff; --muted: #e6f4dc; --glass: rgba(20, 40, 18, 0.45); --line: rgba(255, 255, 255, 0.25); --acc: #ffcf3a; }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; height: 100%; overflow: hidden; background: #8fc0e8; color: var(--ink); font-family: "Nunito", system-ui, sans-serif; user-select: none; -webkit-user-select: none; touch-action: none; }
+  #view { position: fixed; inset: 0; width: 100%; height: 100%; display: block; }
+  .hide { display: none !important; }
+  .glass { background: var(--glass); border: 1px solid var(--line); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); border-radius: 14px; }
+  #loading { position: fixed; inset: 0; z-index: 10; display: grid; place-items: center; text-align: center; background: linear-gradient(180deg, #7ec3f0, #4f9d4a); transition: opacity .8s; }
+  #loading.out { opacity: 0; pointer-events: none; }
+  .logo { font-family: "Baloo 2", system-ui, sans-serif; font-weight: 800; font-size: clamp(42px, 8vw, 86px); line-height: 1; color: #fff; text-shadow: 0 4px 0 #e08a1e, 0 8px 24px rgba(0, 0, 0, .25); }
+  #ld-msg { margin-top: 10px; font-weight: 700; letter-spacing: .08em; }
+  #loading .bar { width: 260px; height: 10px; border-radius: 10px; background: rgba(255, 255, 255, .35); margin: 18px auto 0; overflow: hidden; } #ld-bar { display: block; height: 100%; width: 0; background: var(--acc); transition: width .15s; }
+  #hud { position: fixed; inset: 0; pointer-events: none; }
+  #title { position: absolute; top: max(14px, env(safe-area-inset-top)); left: 16px; padding: 8px 16px; font-family: "Baloo 2", sans-serif; font-weight: 800; font-size: 22px; }
+  #help { position: absolute; left: 16px; bottom: max(16px, env(safe-area-inset-bottom)); padding: 10px 16px; font-size: 13px; line-height: 1.9; color: var(--muted); }
+  #help kbd { display: inline-block; min-width: 22px; text-align: center; font: 800 11px "Nunito", sans-serif; padding: 1px 6px; border: 1px solid var(--line); border-radius: 5px; color: #fff; background: rgba(255, 255, 255, .1); margin-right: 2px; }
+  #fps { position: absolute; top: max(16px, env(safe-area-inset-top)); right: 16px; font-size: 12px; padding: 6px 10px; }
+  #speedo { position: absolute; right: 18px; bottom: max(18px, env(safe-area-inset-bottom)); padding: 8px 18px 6px; text-align: right; }
+  #spd { font-family: "Baloo 2", sans-serif; font-weight: 800; font-size: 48px; line-height: 1; } #speedo small { display: block; font-size: 11px; letter-spacing: .2em; color: var(--muted); }
+  #touch { display: none; } @media (pointer: coarse) { #touch { display: block; } #touch button { position: absolute; bottom: 24px; width: 78px; height: 78px; border-radius: 50%; color: #fff; font: 800 13px "Nunito", sans-serif; pointer-events: auto; } #t-left { left: 18px; } #t-right { left: 108px; } #t-gas { right: 18px; bottom: 120px !important; } #t-brake { right: 108px; bottom: 120px !important; } #touch #t-cam { top: max(64px, env(safe-area-inset-top)); bottom: auto; right: 16px; width: 58px; height: 58px; } #help { display: none; } }
+</style>
+</head>
+<body>
+<canvas id="view"></canvas>
+<div id="loading"><div><div class="logo">Forest Rally</div><div id="ld-msg">Warming up the engine…</div><div class="bar"><i id="ld-bar"></i></div></div></div>
+<div id="hud" class="hide">
+  <div id="title" class="glass">Forest Rally</div>
+  <div id="fps" class="glass"></div>
+  <div id="help" class="glass"><kbd>W</kbd> accelerate · <kbd>S</kbd> brake / reverse · <kbd>A</kbd><kbd>D</kbd> steer · <kbd>Space</kbd> handbrake<br><kbd>C</kbd> driver view / chase view · <kbd>R</kbd> back to the start line · <kbd>H</kbd> hide help</div>
+  <div id="speedo" class="glass"><div id="spd">0</div><small>KM/H</small></div>
+  <div id="touch"><button class="glass" id="t-left">◀</button><button class="glass" id="t-right">▶</button><button class="glass" id="t-brake">BRAKE</button><button class="glass" id="t-gas">GO</button><button class="glass" id="t-cam">CAM</button></div>
+</div>
+<script type="module" src="./main.js"></script>
+</body>
+</html>

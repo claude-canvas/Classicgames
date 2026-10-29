@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <title>Gemfall – Play Free Online | Classic Games Arcade</title>
+<!-- seo:head -->
+<meta name="description" content="A sparkling 3D match-3 puzzle: swap gems, chain cascades, make bombs and line blasts and clear 30 hand-made levels. Free online, no download." />
+<link rel="canonical" href="https://classicgames-flame.vercel.app/gemfall/" />
+<meta name="robots" content="index, follow, max-image-preview:large" />
+<meta name="theme-color" content="#0b0a14" />
+<link rel="icon" href="/favicon.ico" sizes="32x32" />
+<link rel="icon" href="/icon.svg" type="image/svg+xml" />
+<link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+<link rel="manifest" href="/manifest.webmanifest" />
+<meta property="og:site_name" content="Classic Games Arcade" />
+<meta property="og:type" content="website" />
+<meta property="og:title" content="Gemfall – Play Free Online | Classic Games Arcade" />
+<meta property="og:description" content="A sparkling 3D match-3 puzzle: swap gems, chain cascades, make bombs and line blasts and clear 30 hand-made levels. Free online, no download." />
+<meta property="og:url" content="https://classicgames-flame.vercel.app/gemfall/" />
+<meta property="og:image" content="https://classicgames-flame.vercel.app/og/gemfall.jpg" />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+<meta property="og:image:alt" content="Gemfall gameplay" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="Gemfall – Play Free Online | Classic Games Arcade" />
+<meta name="twitter:description" content="A sparkling 3D match-3 puzzle: swap gems, chain cascades, make bombs and line blasts and clear 30 hand-made levels. Free online, no download." />
+<meta name="twitter:image" content="https://classicgames-flame.vercel.app/og/gemfall.jpg" />
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "VideoGame",
+      "name": "Gemfall",
+      "description": "A sparkling 3D match-3 puzzle: swap gems, chain cascades, make bombs and line blasts and clear 30 hand-made levels. Free online, no download.",
+      "url": "https://classicgames-flame.vercel.app/gemfall/",
+      "image": "https://classicgames-flame.vercel.app/thumbs/gemfall.webp",
+      "genre": [
+        "Puzzle"
+      ],
+      "gamePlatform": "Web browser",
+      "applicationCategory": "Game",
+      "operatingSystem": "Any",
+      "playMode": "SinglePlayer",
+      "isAccessibleForFree": true,
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "USD",
+        "availability": "https://schema.org/InStock"
+      },
+      "isPartOf": {
+        "@type": "WebSite",
+        "name": "Classic Games Arcade",
+        "url": "https://classicgames-flame.vercel.app/"
+      }
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Games",
+          "item": "https://classicgames-flame.vercel.app/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Gemfall",
+          "item": "https://classicgames-flame.vercel.app/gemfall/"
+        }
+      ]
+    }
+  ]
+}
+</script>
+<!-- /seo:head -->
+    <link rel="icon" href="/favicon.ico" sizes="32x32">
+    <link rel="icon" href="/icon.svg" type="image/svg+xml">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Italiana&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,700;9..40,800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #140a16; --glass: rgba(30, 16, 34, 0.62); --line: rgba(255, 200, 190, 0.16); --line2: rgba(255, 255, 255, 0.07);
+            --text: #fbefe9; --muted: #b9a2ad; --rose: #f2b5a3; --rose2: #d98a7c; --gold: #f5d08a; --plum: #6a2a6e;
+            --display: "Italiana", "Didot", Georgia, serif; --ui: "DM Sans", "Segoe UI", system-ui, sans-serif;
+            --shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+        }
+        * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+        html, body { margin: 0; height: 100%; overflow: hidden; background: var(--bg); color: var(--text); font-family: var(--ui); user-select: none; -webkit-user-select: none; touch-action: none; overscroll-behavior: none; }
+        #view { position: fixed; inset: 0; width: 100%; height: 100%; display: block; }
+        .hidden { display: none !important; }
+        button { font: inherit; color: inherit; cursor: pointer; border: 0; background: none; padding: 0; }
+        :focus-visible { outline: 2px solid var(--rose); outline-offset: 3px; }
+        .glass { background: var(--glass); border: 1px solid var(--line); backdrop-filter: blur(16px) saturate(1.4); -webkit-backdrop-filter: blur(16px) saturate(1.4); box-shadow: var(--shadow), inset 0 1px 0 rgba(255, 255, 255, 0.06); }
+        .num { font-variant-numeric: tabular-nums; }
+        .kicker { font-size: 11px; font-weight: 800; letter-spacing: 0.34em; color: var(--rose); text-transform: uppercase; }
+        .btn { display: inline-flex; align-items: center; justify-content: center; gap: 9px; height: 48px; padding: 0 24px; border-radius: 999px; font-weight: 800; font-size: 14px; letter-spacing: 0.06em; border: 1px solid var(--line); background: rgba(255, 255, 255, 0.05); transition: transform .15s, background .15s, box-shadow .2s, opacity .2s; }
+        .btn:hover:not(:disabled) { background: rgba(255, 255, 255, 0.1); transform: translateY(-1px); }
+        .btn:active:not(:disabled) { transform: translateY(1px) scale(0.98); }
+        .btn:disabled { opacity: 0.4; cursor: default; }
+        .btn.rose { color: #3a1414; border: 0; background: linear-gradient(135deg, #ffe0d4, #f2b5a3 45%, #d98a7c); box-shadow: 0 10px 30px rgba(242, 181, 163, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.7); }
+        .btn.rose:hover:not(:disabled) { box-shadow: 0 14px 40px rgba(242, 181, 163, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.7); }
+        .btn.lg { height: 58px; padding: 0 40px; font-size: 16px; }
+        .iconbtn { width: 46px; height: 46px; border-radius: 50%; display: grid; place-items: center; }
+        .iconbtn svg { width: 20px; height: 20px; fill: var(--text); }
+        .gemi { width: 22px; height: 22px; flex: none; filter: drop-shadow(0 0 6px currentColor); }
+
+        #loading { position: fixed; inset: 0; z-index: 50; display: grid; place-items: center; background: radial-gradient(ellipse at 50% 40%, #3a1a3c, var(--bg) 70%); transition: opacity .6s; }
+        #loading.out { opacity: 0; pointer-events: none; }
+        #loading .spin { display: flex; gap: 10px; }
+        #loading .spin svg { width: 26px; height: 26px; animation: hop 1s ease-in-out infinite; }
+        #loading .spin svg:nth-child(2) { animation-delay: .12s; } #loading .spin svg:nth-child(3) { animation-delay: .24s; }
+        @keyframes hop { 50% { transform: translateY(-10px) rotate(20deg); } }
+
+        /* title */
+        #title { position: fixed; inset: 0; z-index: 10; display: grid; place-items: center; text-align: center; padding: 24px; background: radial-gradient(ellipse at 50% 45%, rgba(20, 10, 22, 0.1), rgba(20, 10, 22, 0.75) 75%); }
+        .t-top { position: absolute; top: calc(18px + env(safe-area-inset-top)); left: 22px; right: 22px; display: flex; justify-content: space-between; }
+        .back { display: inline-flex; align-items: center; gap: 8px; height: 40px; padding: 0 16px; border-radius: 999px; color: var(--text); text-decoration: none; font-weight: 700; font-size: 13px; }
+        .logo { margin: 8px 0 0; font-family: var(--display); font-weight: 400; font-size: clamp(72px, 13vw, 168px); line-height: 0.9; letter-spacing: 0.04em; background: linear-gradient(180deg, #fff 0%, #ffe4dc 40%, #f2b5a3 70%, #c97a8a 100%); -webkit-background-clip: text; background-clip: text; color: transparent; filter: drop-shadow(0 0 30px rgba(242, 160, 180, 0.35)) drop-shadow(0 6px 0 rgba(60, 20, 40, 0.5)); animation: shimmer 5s ease-in-out infinite; }
+        @keyframes shimmer { 50% { filter: drop-shadow(0 0 46px rgba(242, 160, 200, 0.6)) drop-shadow(0 6px 0 rgba(60, 20, 40, 0.5)); } }
+        .gemrow { display: flex; gap: 14px; justify-content: center; margin-bottom: 8px; }
+        .gemrow svg { width: 30px; height: 30px; animation: float 3s ease-in-out infinite; }
+        .gemrow svg:nth-child(2n) { animation-delay: -1.5s; }
+        @keyframes float { 50% { transform: translateY(-7px); } }
+        .tag { font-size: clamp(15px, 1.6vw, 19px); color: #e7ccd3; margin: 16px auto 30px; max-width: 520px; line-height: 1.55; }
+        .tmeta { margin-top: 18px; font-size: 13px; color: var(--muted); }
+        .tmeta b { color: var(--gold); }
+
+        /* journey */
+        #journey { position: fixed; inset: 0; z-index: 10; overflow-y: auto; touch-action: pan-y; background: radial-gradient(ellipse at 50% 0%, rgba(80, 30, 80, 0.55), rgba(20, 10, 22, 0.9) 60%); }
+        .j-head { position: sticky; top: 0; z-index: 2; display: flex; align-items: center; justify-content: space-between; padding: calc(16px + env(safe-area-inset-top)) 22px 14px; background: linear-gradient(rgba(20, 10, 22, 0.95), rgba(20, 10, 22, 0)); }
+        .j-head h2 { margin: 0; font-family: var(--display); font-weight: 400; font-size: 34px; letter-spacing: 0.04em; }
+        .starpill { display: inline-flex; align-items: center; gap: 8px; height: 40px; padding: 0 16px; border-radius: 999px; font-weight: 800; }
+        .starpill b { color: var(--gold); font-size: 18px; }
+        #path { position: relative; width: min(560px, 100%); margin: 0 auto; padding: 20px 0 80px; }
+        #path svg.trail { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; overflow: visible; }
+        .node { position: absolute; width: 76px; height: 76px; margin: -38px 0 0 -38px; border-radius: 50%; display: grid; place-items: center; font-family: var(--display); font-size: 30px; background: radial-gradient(circle at 35% 30%, #5a2a5e, #2a1230 70%); border: 2px solid rgba(242, 181, 163, 0.5); box-shadow: 0 10px 26px rgba(0, 0, 0, 0.5), inset 0 2px 0 rgba(255, 255, 255, 0.15); transition: transform .2s; }
+        .node:hover:not(.locked) { transform: scale(1.08); }
+        .node .st { position: absolute; bottom: -16px; left: 50%; transform: translateX(-50%); font-size: 15px; letter-spacing: 1px; color: rgba(255, 255, 255, 0.15); white-space: nowrap; font-family: var(--ui); }
+        .node .st b { color: var(--gold); font-weight: 400; text-shadow: 0 0 8px rgba(245, 208, 138, 0.7); }
+        .node.done { background: radial-gradient(circle at 35% 30%, #ffd3c6, #d98a7c 65%, #8a3d4a); color: #3a1414; border-color: #fff0ea; }
+        .node.cur { background: radial-gradient(circle at 35% 30%, #fff, #f2b5a3 50%, #a04a6a); color: #3a1414; border-color: #fff; animation: pulse 1.6s ease-in-out infinite; }
+        @keyframes pulse { 50% { box-shadow: 0 0 0 10px rgba(242, 181, 163, 0.18), 0 0 40px rgba(242, 181, 163, 0.6); } }
+        .node.locked { opacity: 0.45; cursor: default; }
+        .node.locked::after { content: ""; position: absolute; width: 16px; height: 13px; bottom: 16px; border-radius: 3px; background: rgba(255, 255, 255, 0.35); }
+
+        /* HUD */
+        #hud { position: fixed; inset: 0; pointer-events: none; z-index: 5; }
+        #hud > * { pointer-events: auto; }
+        .topbar { position: absolute; top: calc(12px + env(safe-area-inset-top)); left: 50%; transform: translateX(-50%); width: min(760px, calc(100% - 20px)); display: grid; grid-template-columns: auto 1fr auto; gap: 12px; align-items: center; padding: 10px 12px; border-radius: 26px; animation: drop .5s both; }
+        @keyframes drop { from { opacity: 0; transform: translate(-50%, -14px); } }
+        .moves { width: 70px; height: 70px; border-radius: 50%; display: grid; place-items: center; text-align: center; background: radial-gradient(circle at 35% 30%, #ffe0d4, #f2b5a3 45%, #b0607a); color: #3a1414; box-shadow: 0 6px 20px rgba(242, 181, 163, 0.35), inset 0 2px 0 rgba(255, 255, 255, 0.7); }
+        .moves b { display: block; font-size: 28px; line-height: 1; font-weight: 800; }
+        .moves small { display: block; font-size: 9px; letter-spacing: 0.2em; font-weight: 800; opacity: 0.75; }
+        .moves.low { animation: low 0.9s ease-in-out infinite; } @keyframes low { 50% { box-shadow: 0 0 0 6px rgba(255, 90, 110, 0.35), 0 6px 20px rgba(255, 90, 110, 0.5); } }
+        .mid { min-width: 0; }
+        #goals { display: flex; gap: 8px; flex-wrap: wrap; }
+        .goal { display: inline-flex; align-items: center; gap: 7px; height: 34px; padding: 0 12px 0 8px; border-radius: 999px; background: rgba(255, 255, 255, 0.06); border: 1px solid var(--line2); font-weight: 800; font-size: 14px; }
+        .goal.done { background: rgba(120, 230, 160, 0.15); border-color: rgba(120, 230, 160, 0.5); color: #b7f5cb; }
+        .goal .frosti { width: 20px; height: 20px; border-radius: 5px; background: linear-gradient(135deg, #e8f8ff, #8fcfff); box-shadow: 0 0 8px #8fcfff; }
+        .goal.pop { animation: gpop .3s; } @keyframes gpop { 50% { transform: scale(1.12); } }
+        .scorebar { position: relative; height: 10px; margin-top: 10px; border-radius: 5px; background: rgba(0, 0, 0, 0.35); }
+        #sfill { position: absolute; inset: 0 auto 0 0; width: 0; border-radius: 5px; background: linear-gradient(90deg, #d98a7c, #f2b5a3, #f5d08a); box-shadow: 0 0 12px rgba(245, 208, 138, 0.5); transition: width .4s cubic-bezier(.2, .8, .2, 1); }
+        .tick { position: absolute; top: 50%; width: 20px; height: 20px; margin: -10px 0 0 -10px; font-size: 18px; line-height: 20px; text-align: center; color: rgba(255, 255, 255, 0.25); text-shadow: 0 1px 2px #000; }
+        .tick.on { color: var(--gold); text-shadow: 0 0 10px rgba(245, 208, 138, 0.9); animation: gpop .4s; }
+        .scoreline { display: flex; justify-content: space-between; margin-top: 4px; font-size: 12px; color: var(--muted); font-weight: 700; } .scoreline b { color: var(--text); font-size: 14px; }
+        .boosters { position: absolute; bottom: calc(16px + env(safe-area-inset-bottom)); left: 50%; transform: translateX(-50%); display: flex; gap: 10px; padding: 8px; border-radius: 30px; animation: up .5s .1s both; }
+        @keyframes up { from { opacity: 0; transform: translate(-50%, 14px); } }
+        .boost { position: relative; display: flex; align-items: center; gap: 9px; height: 52px; padding: 0 18px 0 8px; border-radius: 26px; font-weight: 800; font-size: 14px; transition: background .15s, transform .15s; }
+        .boost:hover:not(:disabled) { background: rgba(255, 255, 255, 0.08); }
+        .boost:disabled { opacity: 0.35; cursor: default; }
+        .boost.on { background: rgba(242, 181, 163, 0.18); box-shadow: inset 0 0 0 1.5px var(--rose); }
+        .boost .bi { width: 38px; height: 38px; border-radius: 50%; display: grid; place-items: center; background: rgba(255, 255, 255, 0.08); }
+        .boost .bi svg { width: 21px; height: 21px; fill: var(--rose); }
+        .boost .ct { position: absolute; top: 2px; left: 34px; min-width: 18px; height: 18px; border-radius: 9px; padding: 0 5px; display: grid; place-items: center; font-size: 11px; background: var(--rose2); color: #fff; }
+        #b-pause { position: absolute; top: calc(12px + env(safe-area-inset-top)); right: calc(12px + env(safe-area-inset-right)); }
+
+        #callout { position: fixed; top: 46%; left: 0; right: 0; text-align: center; pointer-events: none; z-index: 6; font-family: var(--display); font-size: clamp(44px, 7vw, 86px); opacity: 0; background: linear-gradient(180deg, #fff, #ffd8cf 40%, #f5d08a); -webkit-background-clip: text; background-clip: text; color: transparent; filter: drop-shadow(0 0 24px rgba(255, 180, 200, 0.7)) drop-shadow(0 4px 0 rgba(60, 20, 40, 0.6)); }
+        #callout.show { animation: call 1.3s cubic-bezier(.2, 1.3, .4, 1) forwards; }
+        @keyframes call { 0% { opacity: 0; transform: scale(0.5); } 20% { opacity: 1; transform: scale(1.06); } 70% { opacity: 1; transform: scale(1); } 100% { opacity: 0; transform: translateY(-30px); } }
+        #toast { position: fixed; bottom: calc(96px + env(safe-area-inset-bottom)); left: 50%; transform: translate(-50%, 8px); padding: 10px 20px; border-radius: 999px; font-size: 14px; font-weight: 700; opacity: 0; transition: opacity .2s, transform .2s; pointer-events: none; z-index: 7; white-space: nowrap; }
+        #toast.show { opacity: 1; transform: translate(-50%, 0); }
+        #floaters { position: fixed; inset: 0; pointer-events: none; z-index: 4; }
+        .fl { position: absolute; transform: translate(-50%, -50%); font-weight: 800; font-size: 16px; color: #fff; text-shadow: 0 0 10px rgba(255, 200, 220, 0.9), 0 2px 3px #000; animation: fl 0.9s ease-out forwards; }
+        @keyframes fl { from { opacity: 1; margin-top: 0; } to { opacity: 0; margin-top: -40px; } }
+
+        /* modals */
+        .scrim { position: fixed; inset: 0; z-index: 20; display: grid; place-items: center; padding: 16px; background: rgba(12, 5, 14, 0.55); backdrop-filter: blur(4px); -webkit-backdrop-filter: blur(4px); animation: fade .25s both; overflow-y: auto; touch-action: pan-y; }
+        @keyframes fade { from { opacity: 0; } }
+        .modal { position: relative; width: min(430px, 100%); border-radius: 30px; padding: 30px 28px 26px; text-align: center; overflow: hidden; animation: pop .45s cubic-bezier(.2, 1.4, .4, 1) both; background: linear-gradient(180deg, rgba(60, 28, 62, 0.92), rgba(28, 13, 32, 0.95)); }
+        .modal::before { content: ""; position: absolute; inset: -40% -20% auto; height: 200px; background: radial-gradient(ellipse at 50% 100%, rgba(242, 181, 163, 0.25), transparent 70%); pointer-events: none; }
+        @keyframes pop { from { opacity: 0; transform: translateY(14px) scale(0.95); } }
+        .modal h2 { position: relative; margin: 6px 0 4px; font-family: var(--display); font-weight: 400; font-size: 44px; letter-spacing: 0.03em; }
+        .modal p { position: relative; margin: 0; color: #e0c8cf; font-size: 14.5px; line-height: 1.55; }
+        .modal .col { display: grid; gap: 10px; margin-top: 22px; }
+        .modal .btns { display: flex; gap: 10px; justify-content: center; margin-top: 22px; flex-wrap: wrap; }
+        .modal .x { position: absolute; top: 14px; right: 14px; width: 36px; height: 36px; border-radius: 50%; display: grid; place-items: center; z-index: 1; }
+        .modal .x:hover { background: rgba(255, 255, 255, 0.08); } .modal .x svg { width: 14px; height: 14px; fill: var(--muted); }
+        .lgoals { display: grid; gap: 8px; margin: 18px 0 6px; }
+        .lgoal { display: flex; align-items: center; gap: 12px; padding: 12px 14px; border-radius: 16px; background: rgba(255, 255, 255, 0.05); border: 1px solid var(--line2); text-align: left; font-weight: 700; font-size: 14.5px; }
+        .lgoal .gemi { width: 26px; height: 26px; }
+        .lgoal small { display: block; color: var(--muted); font-weight: 500; font-size: 12px; }
+        .lmeta { display: flex; justify-content: center; gap: 18px; margin-top: 12px; font-size: 13px; color: var(--muted); } .lmeta b { color: var(--text); }
+        #r-stars { position: relative; font-size: 54px; letter-spacing: 12px; padding-left: 12px; height: 70px; margin: 6px 0 2px; }
+        #r-stars b { display: inline-block; color: rgba(255, 255, 255, 0.12); font-weight: 400; animation: star .8s cubic-bezier(.2, 1.8, .4, 1) both; }
+        #r-stars b.on { color: var(--gold); text-shadow: 0 0 26px rgba(245, 208, 138, 0.9); }
+        @keyframes star { from { transform: scale(0) rotate(-140deg); opacity: 0; } }
+        .rscore { position: relative; font-size: 40px; font-weight: 800; letter-spacing: 0.02em; } .rscore small { display: block; font-size: 11px; letter-spacing: 0.3em; color: var(--muted); font-weight: 800; }
+        .setrow { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 14px 0; border-top: 1px solid var(--line2); text-align: left; font-weight: 700; }
+        .setrow:first-of-type { border-top: 0; } .setrow small { display: block; color: var(--muted); font-weight: 500; font-size: 12px; }
+        .switch { width: 46px; height: 28px; border-radius: 14px; background: rgba(255, 255, 255, 0.14); position: relative; transition: background .2s; flex: none; }
+        .switch::after { content: ""; position: absolute; top: 3px; left: 3px; width: 22px; height: 22px; border-radius: 50%; background: #fff; transition: transform .25s cubic-bezier(.3, 1.5, .5, 1); }
+        .switch[aria-checked="true"] { background: var(--rose2); } .switch[aria-checked="true"]::after { transform: translateX(18px); }
+        input[type=range] { -webkit-appearance: none; appearance: none; width: 150px; height: 4px; border-radius: 2px; background: linear-gradient(90deg, var(--rose) var(--v, 80%), rgba(255, 255, 255, 0.15) var(--v, 80%)); }
+        input[type=range]::-webkit-slider-thumb { -webkit-appearance: none; width: 18px; height: 18px; border-radius: 50%; background: #fff; cursor: pointer; }
+        input[type=range]::-moz-range-thumb { width: 18px; height: 18px; border: 0; border-radius: 50%; background: #fff; }
+        .howgrid { position: relative; display: grid; grid-template-columns: 1fr 1fr; gap: 9px; margin-top: 16px; text-align: left; }
+        .howgrid div { padding: 12px; border-radius: 14px; background: rgba(255, 255, 255, 0.05); font-size: 12.5px; color: #e0c8cf; line-height: 1.45; }
+        .howgrid b { display: block; color: var(--text); font-size: 13px; margin-bottom: 3px; }
+        @media (max-width: 600px) {
+            .topbar { grid-template-columns: auto 1fr; padding: 8px 10px; border-radius: 22px; width: calc(100% - 72px); left: 10px; transform: none; animation: none; }
+            .moves { width: 58px; height: 58px; } .moves b { font-size: 23px; }
+            .goal { height: 30px; font-size: 13px; padding: 0 9px 0 6px; } .gemi { width: 18px; height: 18px; }
+            .boost { padding: 0 12px 0 7px; font-size: 13px; } .boost .lbl { display: none; }
+            .howgrid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+
+<body>
+    <svg width="0" height="0" style="position:absolute" aria-hidden="true">
+        <defs>
+            <linearGradient id="gl" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fff" stop-opacity=".9" /><stop offset=".45" stop-color="#fff" stop-opacity="0" /></linearGradient>
+            <symbol id="g0" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" fill="#ff3a55" /><path d="M12 2 17 7H7zM2 12l5-5v10zM22 12l-5-5v10zM12 22l5-5H7z" fill="#b0102a" opacity=".6" /><rect x="7" y="7" width="10" height="10" fill="#ff6b80" /><circle cx="12" cy="12" r="10" fill="url(#gl)" /></symbol>
+            <symbol id="g1" viewBox="0 0 24 24"><path d="M6 3h12l4 4v10l-4 4H6l-4-4V7z" fill="#3f6bff" /><path d="M8 6h8l2 2v8l-2 2H8l-2-2V8z" fill="#6f8fff" /><path d="M6 3h12l4 4v10l-4 4H6l-4-4V7z" fill="url(#gl)" /></symbol>
+            <symbol id="g2" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2" fill="#16b860" /><rect x="7" y="7" width="10" height="10" fill="#4fe08f" /><path d="M3 3l4 4M21 3l-4 4M3 21l4-4M21 21l-4-4" stroke="#0c7a40" /><rect x="3" y="3" width="18" height="18" rx="2" fill="url(#gl)" /></symbol>
+            <symbol id="g3" viewBox="0 0 24 24"><path d="M12 2c4 5 8 9 8 13a8 8 0 0 1-16 0c0-4 4-8 8-13z" fill="#ffbb2a" /><path d="M12 8c2 3 4 5 4 7.5a4 4 0 0 1-8 0C8 13 10 11 12 8z" fill="#ffe08a" /><path d="M12 2c4 5 8 9 8 13a8 8 0 0 1-16 0c0-4 4-8 8-13z" fill="url(#gl)" /></symbol>
+            <symbol id="g4" viewBox="0 0 24 24"><path d="M12 2c2 0 10 15 10 17s-2 3-4 3H6c-2 0-4-1-4-3S10 2 12 2z" fill="#a54dff" /><path d="M12 9l5 9H7z" fill="#cc8cff" /><path d="M12 2c2 0 10 15 10 17s-2 3-4 3H6c-2 0-4-1-4-3S10 2 12 2z" fill="url(#gl)" /></symbol>
+            <symbol id="g5" viewBox="0 0 24 24"><path d="M12 1l8 11-8 11-8-11z" fill="#d8ecff" /><path d="M12 1l3 11-3 11-3-11zM4 12h16" stroke="#8fb8e0" stroke-width=".8" fill="#f4fbff" /><path d="M12 1l8 11-8 11-8-11z" fill="url(#gl)" /></symbol>
+            <symbol id="i-hammer" viewBox="0 0 24 24"><path d="M2 19.6 12.6 9l2.4 2.4L4.4 22zM13.5 2 22 10.5l-2.8 2.8-2.1-2.1-1.4 1.4-4.2-4.2 1.4-1.4-2.1-2.1z" /></symbol>
+            <symbol id="i-shuffle" viewBox="0 0 24 24"><path d="M10.6 9.2 5.4 4 4 5.4l5.2 5.2zM14.5 4l2 2L4 18.6 5.4 20 18 7.5l2 2V4zm.3 9.4-1.4 1.4 3.1 3.1-2 2.1H20v-5.5l-2 2z" /></symbol>
+        </defs>
+    </svg>
+    <canvas id="view"></canvas>
+    <div id="floaters"></div>
+    <div id="loading"><div class="spin"><svg><use href="#g0" /></svg><svg><use href="#g2" /></svg><svg><use href="#g1" /></svg></div></div>
+
+    <div id="title" class="hidden">
+        <div class="t-top">
+            <a class="back glass" href="/"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M15.4 4.6 14 3.2 5.2 12l8.8 8.8 1.4-1.4L8 12z" /></svg>All games</a>
+            <button class="iconbtn glass" id="t-settings" aria-label="Settings"><svg viewBox="0 0 24 24"><path d="M19.4 13a7.6 7.6 0 0 0 0-2l2.1-1.6-2-3.4-2.5 1a7.4 7.4 0 0 0-1.7-1L15 3.3h-4l-.4 2.7a7.4 7.4 0 0 0-1.7 1l-2.5-1-2 3.4L6.6 11a7.6 7.6 0 0 0 0 2l-2.1 1.6 2 3.4 2.5-1c.5.4 1.1.8 1.7 1l.4 2.7h4l.4-2.7c.6-.2 1.2-.6 1.7-1l2.5 1 2-3.4zM13 15.5a3.5 3.5 0 1 1 0-7 3.5 3.5 0 0 1 0 7z" /></svg></button>
+        </div>
+        <div>
+            <div class="gemrow"><svg><use href="#g0" /></svg><svg><use href="#g1" /></svg><svg><use href="#g2" /></svg><svg><use href="#g3" /></svg><svg><use href="#g4" /></svg><svg><use href="#g5" /></svg></div>
+            <div class="kicker">The jeweller's puzzle</div>
+            <h1 class="logo">Gemfall</h1>
+            <p class="tag">Swap faceted jewels, forge dazzling specials and set off cascades that light up the whole atelier.</p>
+            <div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap">
+                <button class="btn rose lg" id="t-play">Play</button>
+                <button class="btn lg" id="t-how">How to play</button>
+            </div>
+            <div class="tmeta" id="t-meta"></div>
+        </div>
+    </div>
+
+    <div id="journey" class="hidden">
+        <div class="j-head">
+            <button class="iconbtn glass" id="j-back" aria-label="Back"><svg viewBox="0 0 24 24"><path d="M15.4 4.6 14 3.2 5.2 12l8.8 8.8 1.4-1.4L8 12z" /></svg></button>
+            <h2>The Journey</h2>
+            <span class="starpill glass">★ <b id="j-stars">0</b>/90</span>
+        </div>
+        <div id="path"></div>
+    </div>
+
+    <div id="hud" class="hidden">
+        <div class="topbar glass">
+            <div class="moves" id="moves"><div><b id="h-moves">20</b><small>MOVES</small></div></div>
+            <div class="mid">
+                <div id="goals"></div>
+                <div class="scorebar"><div id="sfill"></div><span class="tick" id="tk0">★</span><span class="tick" id="tk1">★</span><span class="tick" id="tk2">★</span></div>
+                <div class="scoreline"><span id="h-level">Level 1</span><span>Score <b class="num" id="h-score">0</b></span></div>
+            </div>
+        </div>
+        <button class="iconbtn glass" id="b-pause" aria-label="Pause"><svg viewBox="0 0 24 24"><path d="M7 5h4v14H7zm6 0h4v14h-4z" /></svg></button>
+        <div class="boosters glass">
+            <button class="boost" id="b-hammer"><span class="bi"><svg><use href="#i-hammer" /></svg></span><span class="lbl">Hammer</span><span class="ct" id="c-hammer">2</span></button>
+            <button class="boost" id="b-shuffle"><span class="bi"><svg><use href="#i-shuffle" /></svg></span><span class="lbl">Shuffle</span><span class="ct" id="c-shuffle">1</span></button>
+        </div>
+    </div>
+    <div id="callout"></div>
+    <div id="toast" class="glass"></div>
+
+    <div class="scrim hidden" id="m-level"><div class="modal glass">
+        <button class="x" id="ml-close" aria-label="Close"><svg viewBox="0 0 24 24"><path d="M19 6.4 17.6 5 12 10.6 6.4 5 5 6.4 10.6 12 5 17.6 6.4 19l5.6-5.6 5.6 5.6 1.4-1.4-5.6-5.6z" /></svg></button>
+        <div class="kicker" id="ml-k">Level 1</div><h2 id="ml-t">Goals</h2>
+        <div class="lgoals" id="ml-goals"></div>
+        <div class="lmeta"><span><b id="ml-moves">20</b> moves</span><span>★ <b id="ml-s1">0</b></span><span>★★ <b id="ml-s2">0</b></span><span>★★★ <b id="ml-s3">0</b></span></div>
+        <div class="btns"><button class="btn rose lg" id="ml-play">Play</button></div>
+    </div></div>
+
+    <div class="scrim hidden" id="m-pause"><div class="modal glass">
+        <div class="kicker">Paused</div><h2>A moment's rest</h2><p id="mp-sub"></p>
+        <div class="col"><button class="btn rose" id="mp-resume">Resume</button><button class="btn" id="mp-retry">Restart level</button><button class="btn" id="mp-settings">Settings</button><button class="btn" id="mp-map">Back to journey</button></div>
+    </div></div>
+
+    <div class="scrim hidden" id="m-settings"><div class="modal glass">
+        <button class="x" id="ms-close" aria-label="Close"><svg viewBox="0 0 24 24"><path d="M19 6.4 17.6 5 12 10.6 6.4 5 5 6.4 10.6 12 5 17.6 6.4 19l5.6-5.6 5.6 5.6 1.4-1.4-5.6-5.6z" /></svg></button>
+        <div class="kicker">Settings</div><h2>Atelier</h2>
+        <div style="margin-top:12px">
+            <div class="setrow"><span>Sound</span><input type="range" id="s-vol" min="0" max="100" value="80" aria-label="Volume"></div>
+            <div class="setrow"><span>Hints<small>A valid swap glows after a few idle seconds</small></span><button class="switch" id="s-hints" role="switch" aria-checked="true" aria-label="Hints"></button></div>
+        </div>
+    </div></div>
+
+    <div class="scrim hidden" id="m-how"><div class="modal glass" style="width:min(520px,100%)">
+        <button class="x" id="mh-close" aria-label="Close"><svg viewBox="0 0 24 24"><path d="M19 6.4 17.6 5 12 10.6 6.4 5 5 6.4 10.6 12 5 17.6 6.4 19l5.6-5.6 5.6 5.6 1.4-1.4-5.6-5.6z" /></svg></button>
+        <div class="kicker">How to play</div><h2>Match &amp; forge</h2>
+        <p>Drag a gem onto its neighbour (or tap one, then the other) to swap. Line up three or more of the same jewel to collect them.</p>
+        <div class="howgrid">
+            <div><b>4 in a line</b>forges a Line gem that sweeps its whole row or column.</div>
+            <div><b>L or T shape</b>forges a Bomb that blasts the gems around it.</div>
+            <div><b>5 in a line</b>forges a Prism — swap it with any gem to clear that colour.</div>
+            <div><b>Special + special</b>swap two specials together for a huge combo.</div>
+            <div><b>Frost</b>match on frosted cells to melt the ice beneath.</div>
+            <div><b>Moves left</b>turn into bonus Line gems when you finish early.</div>
+        </div>
+        <div class="btns"><button class="btn rose" id="mh-ok">Got it</button></div>
+    </div></div>
+
+    <div class="scrim hidden" id="m-result"><div class="modal glass">
+        <div class="kicker" id="r-k">Level complete</div><h2 id="r-t">Dazzling</h2>
+        <div id="r-stars"></div>
+        <div class="rscore"><small>SCORE</small><span class="num" id="r-score">0</span></div>
+        <p id="r-msg" style="margin-top:8px"></p>
+        <div class="btns"><button class="btn" id="r-map">Journey</button><button class="btn" id="r-retry">Retry</button><button class="btn rose" id="r-next">Next level</button></div>
+    </div></div>
+
+    <script type="module" src="main.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+<title>The Hollow Pines – Play Free Online | Classic Games Arcade</title>
+<!-- seo:head -->
+<meta name="description" content="A first-person horror game in a foggy pine forest at night. Search candle-lit shrines by torchlight for the holy cross while the ghost of Agnes Wren stalks and hunts you, then hold the cross up to her face. Free 3D game, best with headphones." />
+<link rel="canonical" href="https://classicgames-flame.vercel.app/hollow-pines/" />
+<meta name="robots" content="index, follow, max-image-preview:large" />
+<meta name="theme-color" content="#0b0a14" />
+<link rel="icon" href="/favicon.ico" sizes="32x32" />
+<link rel="icon" href="/icon.svg" type="image/svg+xml" />
+<link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+<link rel="manifest" href="/manifest.webmanifest" />
+<meta property="og:site_name" content="Classic Games Arcade" />
+<meta property="og:type" content="website" />
+<meta property="og:title" content="The Hollow Pines – Play Free Online | Classic Games Arcade" />
+<meta property="og:description" content="A first-person horror game in a foggy pine forest at night. Search candle-lit shrines by torchlight for the holy cross while the ghost of Agnes Wren stalks and hunts you, then hold the cross up to her face. Free 3D game, best with headphones." />
+<meta property="og:url" content="https://classicgames-flame.vercel.app/hollow-pines/" />
+<meta property="og:image" content="https://classicgames-flame.vercel.app/og/hollow-pines.jpg" />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+<meta property="og:image:alt" content="The Hollow Pines gameplay" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="The Hollow Pines – Play Free Online | Classic Games Arcade" />
+<meta name="twitter:description" content="A first-person horror game in a foggy pine forest at night. Search candle-lit shrines by torchlight for the holy cross while the ghost of Agnes Wren stalks and hunts you, then hold the cross up to her face. Free 3D game, best with headphones." />
+<meta name="twitter:image" content="https://classicgames-flame.vercel.app/og/hollow-pines.jpg" />
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "VideoGame",
+      "name": "The Hollow Pines",
+      "description": "A first-person horror game in a foggy pine forest at night. Search candle-lit shrines by torchlight for the holy cross while the ghost of Agnes Wren stalks and hunts you, then hold the cross up to her face. Free 3D game, best with headphones.",
+      "url": "https://classicgames-flame.vercel.app/hollow-pines/",
+      "image": "https://classicgames-flame.vercel.app/thumbs/hollow-pines.webp",
+      "genre": [
+        "Horror",
+        "Adventure"
+      ],
+      "gamePlatform": "Web browser",
+      "applicationCategory": "Game",
+      "operatingSystem": "Any",
+      "playMode": "SinglePlayer",
+      "isAccessibleForFree": true,
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "USD",
+        "availability": "https://schema.org/InStock"
+      },
+      "isPartOf": {
+        "@type": "WebSite",
+        "name": "Classic Games Arcade",
+        "url": "https://classicgames-flame.vercel.app/"
+      }
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Games",
+          "item": "https://classicgames-flame.vercel.app/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "The Hollow Pines",
+          "item": "https://classicgames-flame.vercel.app/hollow-pines/"
+        }
+      ]
+    }
+  ]
+}
+</script>
+<!-- /seo:head -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IM+Fell+English:ital@0;1&family=Special+Elite&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
+<style>
+  :root { --ink: #d9d4c7; --dim: #8f897c; --blood: #b3150d; --glass: rgba(4, 5, 7, 0.55); --line: rgba(220, 210, 190, 0.14); }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; height: 100%; overflow: hidden; background: #000; color: var(--ink); font-family: "IM Fell English", Georgia, serif; user-select: none; -webkit-user-select: none; cursor: default; }
+  #view { position: fixed; inset: 0; width: 100%; height: 100%; display: block; }
+  .hide { display: none !important; }
+  #loading { position: fixed; inset: 0; z-index: 20; display: grid; place-items: center; text-align: center; background: #000; transition: opacity 2s; }
+  #loading.out { opacity: 0; pointer-events: none; }
+  .logo { font-size: clamp(42px, 8vw, 96px); line-height: 1; letter-spacing: .04em; color: #cfc8b8; text-shadow: 0 0 30px rgba(180, 20, 10, .35); animation: breathe 4s ease-in-out infinite; }
+  .logo small { display: block; margin-top: 14px; font: italic clamp(15px, 2.2vw, 20px) "IM Fell English", serif; letter-spacing: .08em; color: var(--dim); }
+  @keyframes breathe { 50% { opacity: .65; letter-spacing: .06em; } }
+  #ld-msg { margin-top: 22px; font: 14px "Special Elite", monospace; letter-spacing: .08em; color: var(--dim); }
+  .bar { width: min(260px, 70vw); height: 2px; background: rgba(255, 255, 255, .08); margin: 16px auto 0; overflow: hidden; } #ld-bar { display: block; height: 100%; width: 0; background: var(--blood); transition: width .3s; }
+  #hud { position: fixed; inset: 0; pointer-events: none; }
+  #shake { position: absolute; inset: 0; }
+  #dot { position: absolute; left: 50%; top: 50%; width: 4px; height: 4px; margin: -2px; border-radius: 50%; background: rgba(230, 220, 200, .45); }
+  #goal { position: absolute; left: 18px; top: max(16px, env(safe-area-inset-top)); font: 15px "Special Elite", monospace; letter-spacing: .04em; color: var(--dim); text-shadow: 0 1px 6px #000; }
+  #meters { position: absolute; left: 18px; bottom: max(18px, env(safe-area-inset-bottom)); width: 180px; font: 11px "Special Elite", monospace; letter-spacing: .12em; color: var(--dim); }
+  .m { height: 3px; background: rgba(255, 255, 255, .08); margin: 4px 0 10px; } .m i { display: block; height: 100%; background: #cfc8b8; transition: width .2s; }
+  #stambar.low i { background: var(--blood); } #battbar.off i { background: #444; }
+  #crossicon { position: absolute; right: 22px; bottom: max(20px, env(safe-area-inset-bottom)); width: 26px; height: 40px; opacity: .8; }
+  #crossicon::before, #crossicon::after { content: ""; position: absolute; background: #c9a25a; box-shadow: 0 0 10px rgba(255, 190, 90, .5); }
+  #crossicon::before { left: 11px; top: 0; width: 4px; height: 40px; } #crossicon::after { left: 2px; top: 10px; width: 22px; height: 4px; }
+  #crossicon.up::before, #crossicon.up::after { box-shadow: 0 0 22px rgba(255, 200, 100, 1); background: #ffd98a; }
+  #prompt { position: absolute; left: 50%; top: 58%; transform: translateX(-50%); font: 16px "Special Elite", monospace; letter-spacing: .06em; color: #e8e2d4; text-shadow: 0 0 8px #000, 0 0 2px #000; }
+  #sub { position: absolute; left: 50%; bottom: calc(max(22px, env(safe-area-inset-bottom)) + 44px); transform: translate(-50%, 6px); max-width: min(720px, calc(100vw - 40px)); text-align: center; font: italic clamp(18px, 2.5vw, 24px) "IM Fell English", serif; color: #ece6d8; text-shadow: 0 2px 10px #000, 0 0 3px #000; opacity: 0; transition: opacity .8s, transform .8s; }
+  #sub.show { opacity: 1; transform: translate(-50%, 0); }
+  #fps { position: absolute; right: 14px; top: max(12px, env(safe-area-inset-top)); font: 10px "Special Elite", monospace; color: #555; }
+  #devtag { position: absolute; right: 14px; top: calc(max(12px, env(safe-area-inset-top)) + 18px); font: 10px "Special Elite", monospace; letter-spacing: .14em; color: var(--blood); }
+  .card { position: fixed; left: 50%; top: 50%; transform: translate(-50%, -50%); width: min(600px, calc(100vw - 32px)); padding: 34px 36px 30px; text-align: center; z-index: 10; background: rgba(0, 0, 0, .78); border: 1px solid var(--line); box-shadow: 0 0 80px #000; }
+  .card h1 { margin: 0; font-weight: 400; font-size: clamp(40px, 7vw, 66px); line-height: 1; color: #d8d1c0; text-shadow: 0 0 24px rgba(179, 21, 13, .5); }
+  .card h1.red { color: var(--blood); text-shadow: 0 0 30px rgba(255, 0, 0, .6); }
+  .card .lede { margin: 8px 0 0; font-style: italic; color: var(--dim); }
+  .card p { margin: 16px 0; font-size: 18px; line-height: 1.55; color: #cbc4b4; }
+  .card .keys { font: 13px "Special Elite", monospace; color: var(--dim); letter-spacing: .04em; line-height: 1.7; }
+  .card .warn { font: 12px "Special Elite", monospace; color: var(--blood); letter-spacing: .08em; }
+  .btn { margin-top: 6px; padding: 12px 34px; border: 1px solid rgba(179, 21, 13, .7); background: rgba(80, 6, 4, .5); color: #f0e6d6; font: 16px "Special Elite", monospace; letter-spacing: .16em; cursor: pointer; }
+  .btn:hover { background: rgba(140, 10, 6, .6); } .btn:focus-visible { outline: 2px solid #fff; outline-offset: 3px; }
+</style>
+</head>
+<body>
+<canvas id="view"></canvas>
+<div id="loading"><div><div class="logo">The Hollow Pines<small>she walks the woods at night</small></div><div id="ld-msg">Walking into the woods…</div><div class="bar"><i id="ld-bar"></i></div></div></div>
+<div id="hud" class="hide"><div id="shake">
+  <div id="dot"></div>
+  <div id="goal"></div>
+  <div id="meters">STAMINA<div class="m" id="stambar"><i id="stam"></i></div>TORCH<div class="m" id="battbar"><i id="batt"></i></div></div>
+  <div id="crossicon" class="hide"></div>
+  <div id="prompt"></div>
+  <div id="sub"></div>
+  <div id="fps"></div>
+  <div id="devtag" class="hide">LIVE · AUTO</div>
+</div></div>
+<div id="title" class="card hide">
+  <h1>The Hollow Pines</h1>
+  <div class="lede">she walks the woods at night</div>
+  <p>Your little sister Ellie walked into the pines at dusk, following a voice. She hasn't come back.</p>
+  <p>The village says the woods belong to <b>Agnes Wren</b>, who drowned herself after the chapel burned with her children inside. The priest's <b>holy cross</b> was hidden at one of the old shrines out there. Find it. When she comes for you, hold it up to her face.</p>
+  <button class="btn" id="start">ENTER THE WOODS</button>
+  <p class="keys">mouse — look · WASD — move · Shift — run · F — torch<br>E — search · E or right mouse — raise the cross</p>
+  <p class="warn">HEADPHONES. LIGHTS OFF. LOUD SOUNDS.</p>
+</div>
+<div id="end" class="card hide">
+  <h1 id="e-title"></h1>
+  <p id="e-text"></p>
+  <button class="btn" id="again">TRY AGAIN</button>
+</div>
+<script>if (/[?&]dev/.test(location.search)) document.getElementById("devtag").classList.remove("hide");</script>
+<script type="module" src="./main.js"></script>
+</body>
+</html>

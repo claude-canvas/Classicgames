@@ -2,10 +2,10 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-<title>Raycaster – Play Free Online | Classic Games Arcade</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
+<title>Blackmoor – Play Free Online | Classic Games Arcade</title>
 <!-- seo:head -->
-<meta name="description" content="Explore a retro first-person 3D maze in the style of classic raycaster shooters. Find your way through the corridors. Free, runs in any browser." />
+<meta name="description" content="A first-person survival horror game. Trapped in a dark asylum with a flashlight and something hunting you, find the fuses, restore the power and escape. Free online." />
 <link rel="canonical" href="https://classicgames-flame.vercel.app/raycaster/" />
 <meta name="robots" content="index, follow, max-image-preview:large" />
 <meta name="theme-color" content="#0b0a14" />
@@ -15,16 +15,16 @@
 <link rel="manifest" href="/manifest.webmanifest" />
 <meta property="og:site_name" content="Classic Games Arcade" />
 <meta property="og:type" content="website" />
-<meta property="og:title" content="Raycaster – Play Free Online | Classic Games Arcade" />
-<meta property="og:description" content="Explore a retro first-person 3D maze in the style of classic raycaster shooters. Find your way through the corridors. Free, runs in any browser." />
+<meta property="og:title" content="Blackmoor – Play Free Online | Classic Games Arcade" />
+<meta property="og:description" content="A first-person survival horror game. Trapped in a dark asylum with a flashlight and something hunting you, find the fuses, restore the power and escape. Free online." />
 <meta property="og:url" content="https://classicgames-flame.vercel.app/raycaster/" />
 <meta property="og:image" content="https://classicgames-flame.vercel.app/og/raycaster.jpg" />
 <meta property="og:image:width" content="1200" />
 <meta property="og:image:height" content="630" />
-<meta property="og:image:alt" content="Raycaster gameplay" />
+<meta property="og:image:alt" content="Blackmoor gameplay" />
 <meta name="twitter:card" content="summary_large_image" />
-<meta name="twitter:title" content="Raycaster – Play Free Online | Classic Games Arcade" />
-<meta name="twitter:description" content="Explore a retro first-person 3D maze in the style of classic raycaster shooters. Find your way through the corridors. Free, runs in any browser." />
+<meta name="twitter:title" content="Blackmoor – Play Free Online | Classic Games Arcade" />
+<meta name="twitter:description" content="A first-person survival horror game. Trapped in a dark asylum with a flashlight and something hunting you, find the fuses, restore the power and escape. Free online." />
 <meta name="twitter:image" content="https://classicgames-flame.vercel.app/og/raycaster.jpg" />
 <script type="application/ld+json">
 {
@@ -32,11 +32,12 @@
   "@graph": [
     {
       "@type": "VideoGame",
-      "name": "Raycaster",
-      "description": "Explore a retro first-person 3D maze in the style of classic raycaster shooters. Find your way through the corridors. Free, runs in any browser.",
+      "name": "Blackmoor",
+      "description": "A first-person survival horror game. Trapped in a dark asylum with a flashlight and something hunting you, find the fuses, restore the power and escape. Free online.",
       "url": "https://classicgames-flame.vercel.app/raycaster/",
       "image": "https://classicgames-flame.vercel.app/thumbs/raycaster.webp",
       "genre": [
+        "Horror",
         "Adventure"
       ],
       "gamePlatform": "Web browser",
@@ -68,7 +69,7 @@
         {
           "@type": "ListItem",
           "position": 2,
-          "name": "Raycaster",
+          "name": "Blackmoor",
           "item": "https://classicgames-flame.vercel.app/raycaster/"
         }
       ]
@@ -77,134 +78,160 @@
 }
 </script>
 <!-- /seo:head -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IM+Fell+English+SC&family=Special+Elite&display=swap" rel="stylesheet">
 <style>
-  html, body {
-    margin: 0;
-    padding: 0;
-    width: 100%;
-    height: 100%;
-    background: #000;
-    overflow: hidden;
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-    touch-action: none;
-    -webkit-user-select: none;
-    user-select: none;
-  }
+  :root { --ink: #e9e2d0; --dim: #8f8778; --blood: #b3120f; --paper: #d9cfb3; --type: "Special Elite", "Courier New", monospace; --fell: "IM Fell English SC", Georgia, serif; }
+  * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+  html, body { margin: 0; height: 100%; background: #000; overflow: hidden; color: var(--ink); font-family: var(--type); touch-action: none; user-select: none; -webkit-user-select: none; }
+  #view { position: fixed; inset: 0; width: 100%; height: 100%; image-rendering: pixelated; image-rendering: crisp-edges; display: block; }
+  .hidden { display: none !important; }
+  button { font: inherit; color: inherit; background: none; border: 0; cursor: pointer; padding: 0; }
+  #film { position: fixed; inset: 0; pointer-events: none; z-index: 2; background: radial-gradient(ellipse at 50% 50%, transparent 38%, rgba(0,0,0,0.55) 75%, rgba(0,0,0,0.92) 100%), repeating-linear-gradient(0deg, rgba(0,0,0,0.18) 0 1px, transparent 1px 3px); }
+  #grain { position: fixed; inset: -10%; width: 120%; height: 120%; pointer-events: none; z-index: 2; opacity: 0.16; mix-blend-mode: overlay; image-rendering: pixelated; }
+  #shake { position: fixed; inset: 0; }
 
-  #game-canvas {
-    display: block;
-    width: 100vw;
-    height: 100vh;
-    background: #000;
-    cursor: crosshair;
-  }
+  #title { position: fixed; inset: 0; z-index: 10; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; background: radial-gradient(ellipse at 50% 45%, rgba(0,0,0,0.1), rgba(0,0,0,0.85) 75%); padding: 20px; }
+  #title h1 { margin: 0; font-family: var(--fell); font-weight: 400; font-size: clamp(56px, 12vw, 150px); letter-spacing: 0.08em; color: #d8d0bd; text-shadow: 0 0 30px rgba(150,0,0,0.35), 0 4px 0 #000; animation: flick 6s infinite; }
+  #title h1 span { color: var(--blood); }
+  #title .sub { margin-top: 4px; font-size: clamp(14px, 2.2vw, 20px); letter-spacing: 0.6em; color: var(--dim); padding-left: 0.6em; }
+  @keyframes flick { 0%, 41%, 43%, 45%, 78%, 79%, 100% { opacity: 1; } 42% { opacity: 0.2; } 44% { opacity: 0.4; } 78.5% { opacity: 0.3; } }
+  .menu { margin-top: 46px; display: flex; flex-direction: column; gap: 12px; align-items: center; }
+  .mbtn { min-width: 240px; padding: 13px 26px; font-size: 18px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--ink); border: 1px solid rgba(233,226,208,0.25); background: rgba(10,8,8,0.55); transition: background .2s, border-color .2s, letter-spacing .3s; }
+  .mbtn:hover, .mbtn:focus-visible { background: rgba(120,8,8,0.55); border-color: rgba(200,40,30,0.8); letter-spacing: 0.24em; outline: none; }
+  .mbtn:disabled { opacity: 0.3; cursor: default; }
+  .warn { margin-top: 34px; font-size: 13px; color: var(--dim); line-height: 1.7; max-width: 520px; }
+  .back { position: absolute; top: calc(16px + env(safe-area-inset-top)); left: 18px; color: var(--dim); text-decoration: none; font-size: 14px; letter-spacing: 0.1em; }
+  .back:hover { color: var(--ink); }
 
-  #hud {
-    position: fixed;
-    top: 10px;
-    right: 12px;
-    color: rgba(255, 255, 255, 0.6);
-    font-size: 12px;
-    text-align: right;
-    pointer-events: none;
-  }
+  #hud { position: fixed; inset: 0; z-index: 5; pointer-events: none; }
+  #objective { position: absolute; top: calc(18px + env(safe-area-inset-top)); left: 22px; max-width: min(560px, 70vw); font-size: 15px; line-height: 1.5; text-shadow: 0 2px 4px #000, 0 0 12px #000; opacity: 0.92; }
+  #objective small { display: block; font-size: 11px; letter-spacing: 0.35em; color: var(--blood); margin-bottom: 2px; }
+  #objective.new { animation: objIn 1.6s ease-out; }
+  @keyframes objIn { 0% { opacity: 0; transform: translateX(-10px); } 30% { opacity: 1; color: #fff; } }
+  #zone { position: absolute; top: 26%; left: 0; right: 0; text-align: center; font-family: var(--fell); font-size: clamp(26px, 4.6vw, 52px); letter-spacing: 0.3em; color: rgba(233,226,208,0.85); text-shadow: 0 0 20px #000; opacity: 0; transition: opacity 1.2s; }
+  #zone.show { opacity: 1; }
+  #prompt { position: absolute; left: 50%; top: 58%; transform: translateX(-50%); font-size: 16px; padding: 6px 14px; background: rgba(0,0,0,0.45); border: 1px solid rgba(233,226,208,0.15); white-space: nowrap; text-shadow: 0 1px 3px #000; }
+  #prompt b { color: #f0d080; }
+  #dot { position: absolute; left: 50%; top: 50%; width: 3px; height: 3px; margin: -1.5px; background: rgba(233,226,208,0.5); border-radius: 50%; }
+  #bars { position: absolute; left: 22px; bottom: calc(20px + env(safe-area-inset-bottom)); display: grid; gap: 7px; font-size: 11px; letter-spacing: 0.2em; color: var(--dim); }
+  .bar { display: grid; grid-template-columns: 74px 120px; align-items: center; gap: 8px; }
+  .bar i { display: block; height: 5px; background: rgba(255,255,255,0.1); position: relative; }
+  .bar i::after { content: ""; position: absolute; inset: 0; width: var(--v, 100%); background: var(--c, #d8cfb0); transition: width .2s; }
+  .bar.low i::after { animation: blink 0.6s infinite; }
+  @keyframes blink { 50% { opacity: 0.2; } }
+  #inv { display: flex; gap: 8px; margin-top: 4px; min-height: 26px; flex-wrap: wrap; max-width: 60vw; }
+  .it { padding: 4px 8px; border: 1px solid rgba(233,226,208,0.2); background: rgba(0,0,0,0.5); font-size: 12px; letter-spacing: 0.08em; color: var(--ink); }
+  .it.y { border-color: #c9a51e; color: #e8c84a; } .it.r { border-color: #a01818; color: #ff6a5a; } .it.u { border-color: #c98a2a; color: #f0b050; }
+  #toast { position: absolute; left: 50%; bottom: 22%; transform: translateX(-50%); font-size: 16px; text-align: center; max-width: 80vw; text-shadow: 0 2px 6px #000, 0 0 14px #000; opacity: 0; transition: opacity .5s; }
+  #toast.show { opacity: 1; }
+  #intro { position: fixed; inset: 0; z-index: 8; display: flex; flex-direction: column; justify-content: center; align-items: center; gap: 18px; background: #000; transition: opacity 2s; pointer-events: none; font-size: clamp(16px, 2.4vw, 22px); text-align: center; padding: 20px; }
+  #intro p { margin: 0; opacity: 0; transition: opacity 1.5s; } #intro p.on { opacity: 1; }
+  #intro.out { opacity: 0; }
+  #vents { position: fixed; inset: 0; z-index: 4; pointer-events: none; background: repeating-linear-gradient(180deg, #050505 0 34px, transparent 34px 52px); box-shadow: inset 0 0 180px 80px #000; }
+  #vents span { position: absolute; bottom: 12%; left: 50%; transform: translateX(-50%); font-size: 14px; color: var(--dim); background: #000; padding: 6px 12px; white-space: nowrap; }
 
-  #lock-hint {
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    color: #fff;
-    background: rgba(0, 0, 0, 0.55);
-    padding: 14px 20px;
-    border-radius: 10px;
-    font-size: 14px;
-    text-align: center;
-    pointer-events: none;
-  }
+  #note { position: fixed; inset: 0; z-index: 20; display: grid; place-items: center; background: rgba(0,0,0,0.75); padding: 16px; }
+  .paper { width: min(520px, 100%); max-height: 90vh; overflow-y: auto; padding: 34px 34px 26px; color: #2b2116; background: radial-gradient(ellipse at 30% 20%, #e6dcc0, #cbbd98 70%, #a99872); box-shadow: 0 20px 60px #000, inset 0 0 60px rgba(90,60,20,0.45); transform: rotate(-1.2deg); font-size: 16.5px; line-height: 1.65; white-space: pre-wrap; animation: noteIn .35s ease-out; }
+  @keyframes noteIn { from { transform: rotate(-4deg) translateY(30px); opacity: 0; } }
+  .paper h3 { margin: 0 0 14px; font-size: 19px; text-decoration: underline; text-decoration-color: rgba(120,20,10,0.6); }
+  .paper .close { display: block; margin-top: 18px; font-size: 12px; color: #6b5a3e; text-align: right; }
 
-  #controls {
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-end;
-    padding: 18px;
-    box-sizing: border-box;
-    pointer-events: none;
-  }
+  #scare { position: fixed; inset: 0; z-index: 30; background: #000; display: grid; place-items: center; overflow: hidden; }
+  #scare canvas { width: 96vmin; height: 96vmin; animation: lunge 1.5s cubic-bezier(.2,2,.4,1) forwards, jitter 0.06s steps(2) infinite; filter: contrast(1.4) saturate(1.3); }
+  @keyframes lunge { 0% { transform: scale(0.3); } 12% { transform: scale(1.12); } 100% { transform: scale(1.3); } }
+  @keyframes jitter { 0% { translate: -8px 4px; } 50% { translate: 9px -6px; } }
+  #scare::after { content: ""; position: absolute; inset: 0; background: rgba(160,0,0,0.25); mix-blend-mode: multiply; animation: redflash 0.12s steps(2) infinite; }
+  @keyframes redflash { 50% { background: rgba(255,255,255,0.12); } }
+  .screen { position: fixed; inset: 0; z-index: 25; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 20px; background: rgba(0,0,0,0.88); }
+  .screen h2 { margin: 0; font-family: var(--fell); font-weight: 400; font-size: clamp(42px, 8vw, 96px); letter-spacing: 0.1em; color: var(--blood); text-shadow: 0 0 30px rgba(180,0,0,0.5); }
+  .screen h2.pale { color: #e6dfcf; text-shadow: 0 0 40px rgba(255,255,255,0.3); }
+  .screen p { color: var(--dim); font-size: 16px; line-height: 1.7; max-width: 560px; margin: 16px 0 0; }
+  .screen .menu { margin-top: 34px; }
+  #death { animation: fadeIn 1.2s; } @keyframes fadeIn { from { opacity: 0; } }
+  .setrow { display: flex; justify-content: space-between; align-items: center; gap: 24px; width: min(420px, 90vw); padding: 12px 0; border-top: 1px solid rgba(233,226,208,0.1); font-size: 15px; letter-spacing: 0.08em; }
+  input[type=range] { width: 170px; accent-color: #8a1010; }
 
-  .pad {
-    display: grid;
-    grid-template-columns: repeat(3, 52px);
-    grid-template-rows: repeat(2, 52px);
-    gap: 6px;
-    pointer-events: auto;
-  }
-
-  .pad button {
-    width: 52px;
-    height: 52px;
-    border-radius: 10px;
-    border: 1px solid rgba(255, 255, 255, 0.25);
-    background: rgba(255, 255, 255, 0.12);
-    color: #fff;
-    font-size: 18px;
-    -webkit-tap-highlight-color: transparent;
-  }
-
-  .pad button:active {
-    background: rgba(255, 255, 255, 0.3);
-  }
-
-  #move-pad {
-    grid-template-areas:
-      ".    fwd  ."
-      "left back right";
-  }
-  #btn-forward { grid-area: fwd; }
-  #btn-backward { grid-area: back; }
-  #btn-strafe-left { grid-area: left; }
-  #btn-strafe-right { grid-area: right; }
-
-  #turn-pad {
-    grid-template-columns: repeat(2, 52px);
-    grid-template-rows: 52px;
-  }
+  #touch { position: fixed; inset: 0; z-index: 6; pointer-events: none; }
+  #touch .tb { position: absolute; pointer-events: auto; width: 62px; height: 62px; border-radius: 50%; border: 1px solid rgba(233,226,208,0.3); background: rgba(0,0,0,0.35); font-size: 12px; letter-spacing: 0.08em; display: grid; place-items: center; color: var(--ink); }
+  #touch .tb.on { background: rgba(140,10,10,0.5); }
+  #t-use { right: 24px; bottom: 110px; width: 74px; height: 74px; font-size: 18px; }
+  #t-light { right: 112px; bottom: 150px; } #t-run { right: 112px; bottom: 60px; } #t-crouch { right: 24px; bottom: 24px; width: 56px; height: 56px; font-size: 10px; }
+  #t-pause { right: 18px; top: calc(16px + env(safe-area-inset-top)); width: 44px; height: 44px; }
+  #stick { position: absolute; width: 120px; height: 120px; margin: -60px; border-radius: 50%; border: 1px solid rgba(233,226,208,0.25); background: rgba(255,255,255,0.04); }
+  #stick i { position: absolute; left: 50%; top: 50%; width: 46px; height: 46px; margin: -23px; border-radius: 50%; background: rgba(233,226,208,0.25); }
 </style>
 </head>
 <body>
+<div id="shake"><canvas id="view"></canvas></div>
+<div id="film"></div><canvas id="grain" width="160" height="90"></canvas>
 
-<canvas id="game-canvas"></canvas>
-
-<div id="hud">WASD to move &middot; touch controls below</div>
-<div id="lock-hint">Click anywhere to enable mouse look + sound<br />(Esc to release)</div>
-
-<div id="controls">
-  <div class="pad" id="move-pad">
-    <button id="btn-forward">&#9650;</button>
-    <button id="btn-strafe-left">&#9664;</button>
-    <button id="btn-backward">&#9660;</button>
-    <button id="btn-strafe-right">&#9654;</button>
+<div id="title" class="hidden">
+  <a class="back" href="/">&larr; all games</a>
+  <h1>BLACK<span>M</span>OOR</h1>
+  <div class="sub">lights out</div>
+  <div class="menu">
+    <button class="mbtn" id="b-new">New game</button>
+    <button class="mbtn" id="b-cont">Continue</button>
+    <button class="mbtn" id="b-set">Settings</button>
   </div>
-
-  <div class="pad" id="turn-pad">
-    <button id="btn-turn-left">&#8634;</button>
-    <button id="btn-turn-right">&#8635;</button>
-  </div>
+  <div class="warn" id="t-warn">Headphones recommended. Play in the dark.<br>WASD move · mouse look · SHIFT run · C crouch · E use · F flashlight</div>
 </div>
 
-<!-- Load order matters: each file depends on globals defined by the ones before it. -->
-<script src="js/config.js"></script>
-<script src="js/textures.js"></script>
-<script src="js/audio.js"></script>
-<script src="js/player.js"></script>
-<script src="js/input.js"></script>
-<script src="js/raycaster.js"></script>
-<script src="js/renderer.js"></script>
-<script src="js/game.js"></script>
-<script src="js/main.js"></script>
+<div id="intro" class="hidden"><p>Blackmoor Asylum. 2:13 a.m.</p><p>The storm took the power an hour ago.</p><p>You woke up in Room 13. The door was open.</p><p>You are not alone in here.</p></div>
+
+<div id="hud" class="hidden">
+  <div id="objective"><small>OBJECTIVE</small><span id="obj-t">Find a light</span></div>
+  <div id="zone"></div>
+  <div id="dot"></div>
+  <div id="prompt" class="hidden"></div>
+  <div id="toast"></div>
+  <div id="bars">
+    <div class="bar" id="bar-bat"><span>LIGHT</span><i id="bat" style="--c:#e8dca8"></i></div>
+    <div class="bar" id="bar-sta"><span>BREATH</span><i id="sta" style="--c:#9fb0a8"></i></div>
+    <div id="inv"></div>
+  </div>
+</div>
+<div id="vents" class="hidden"><span>Hiding · hold still · E to leave</span></div>
+
+<div id="touch" class="hidden">
+  <div id="stick" class="hidden"><i id="stick-dot"></i></div>
+  <button class="tb" id="t-pause">II</button>
+  <button class="tb" id="t-use">E</button>
+  <button class="tb" id="t-light">LIGHT</button>
+  <button class="tb" id="t-run">RUN</button>
+  <button class="tb" id="t-crouch">CROUCH</button>
+</div>
+
+<div id="note" class="hidden"><div class="paper"><h3 id="note-t"></h3><div id="note-b"></div><span class="close">[E] / tap to put it down</span></div></div>
+<div id="scare" class="hidden"></div>
+
+<div class="screen hidden" id="death">
+  <h2>SHE FOUND YOU</h2>
+  <p id="death-p">The Matron does not let her patients leave.</p>
+  <div class="menu"><button class="mbtn" id="d-retry">Wake up again</button><button class="mbtn" id="d-title">Title</button></div>
+</div>
+<div class="screen hidden" id="won">
+  <h2 class="pale">YOU ESCAPED</h2>
+  <p id="won-p"></p>
+  <div class="menu"><button class="mbtn" id="w-title">Title</button></div>
+</div>
+<div class="screen hidden" id="pause">
+  <h2 class="pale" style="font-size:clamp(34px,6vw,64px)">Paused</h2>
+  <p>She is still out there.</p>
+  <div class="menu"><button class="mbtn" id="p-resume">Resume</button><button class="mbtn" id="p-set">Settings</button><button class="mbtn" id="p-cp">Last checkpoint</button><button class="mbtn" id="p-title">Quit to title</button></div>
+</div>
+<div class="screen hidden" id="settings">
+  <h2 class="pale" style="font-size:clamp(30px,5vw,56px)">Settings</h2>
+  <div style="margin-top:24px">
+    <div class="setrow"><span>Volume</span><input type="range" id="s-vol" min="0" max="100" value="85"></div>
+    <div class="setrow"><span>Look sensitivity</span><input type="range" id="s-sens" min="20" max="250" value="100"></div>
+    <div class="setrow"><span>Brightness</span><input type="range" id="s-bri" min="50" max="250" value="100"></div>
+  </div>
+  <div class="menu"><button class="mbtn" id="s-back">Back</button></div>
+</div>
+
+<script type="module" src="js/main.js"></script>
 </body>
 </html>

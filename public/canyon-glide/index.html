@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+<title>Canyon Glide – Play Free Online | Classic Games Arcade</title>
+<!-- seo:head -->
+<meta name="description" content="Glide a paper plane through an endless red-rock canyon at sunset. Dive for speed, ride thermals, thread rings and stone arches and skim the river. Free 3D flying game." />
+<link rel="canonical" href="https://classicgames-flame.vercel.app/canyon-glide/" />
+<meta name="robots" content="index, follow, max-image-preview:large" />
+<meta name="theme-color" content="#0b0a14" />
+<link rel="icon" href="/favicon.ico" sizes="32x32" />
+<link rel="icon" href="/icon.svg" type="image/svg+xml" />
+<link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+<link rel="manifest" href="/manifest.webmanifest" />
+<meta property="og:site_name" content="Classic Games Arcade" />
+<meta property="og:type" content="website" />
+<meta property="og:title" content="Canyon Glide – Play Free Online | Classic Games Arcade" />
+<meta property="og:description" content="Glide a paper plane through an endless red-rock canyon at sunset. Dive for speed, ride thermals, thread rings and stone arches and skim the river. Free 3D flying game." />
+<meta property="og:url" content="https://classicgames-flame.vercel.app/canyon-glide/" />
+<meta property="og:image" content="https://classicgames-flame.vercel.app/og/canyon-glide.jpg" />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+<meta property="og:image:alt" content="Canyon Glide gameplay" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="Canyon Glide – Play Free Online | Classic Games Arcade" />
+<meta name="twitter:description" content="Glide a paper plane through an endless red-rock canyon at sunset. Dive for speed, ride thermals, thread rings and stone arches and skim the river. Free 3D flying game." />
+<meta name="twitter:image" content="https://classicgames-flame.vercel.app/og/canyon-glide.jpg" />
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "VideoGame",
+      "name": "Canyon Glide",
+      "description": "Glide a paper plane through an endless red-rock canyon at sunset. Dive for speed, ride thermals, thread rings and stone arches and skim the river. Free 3D flying game.",
+      "url": "https://classicgames-flame.vercel.app/canyon-glide/",
+      "image": "https://classicgames-flame.vercel.app/thumbs/canyon-glide.webp",
+      "genre": [
+        "Arcade",
+        "Simulation"
+      ],
+      "gamePlatform": "Web browser",
+      "applicationCategory": "Game",
+      "operatingSystem": "Any",
+      "playMode": "SinglePlayer",
+      "isAccessibleForFree": true,
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "USD",
+        "availability": "https://schema.org/InStock"
+      },
+      "isPartOf": {
+        "@type": "WebSite",
+        "name": "Classic Games Arcade",
+        "url": "https://classicgames-flame.vercel.app/"
+      }
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Games",
+          "item": "https://classicgames-flame.vercel.app/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Canyon Glide",
+          "item": "https://classicgames-flame.vercel.app/canyon-glide/"
+        }
+      ]
+    }
+  ]
+}
+</script>
+<!-- /seo:head -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Outfit:wght@300;400;600;700&display=swap" rel="stylesheet">
+<style>
+  :root { --ink: #fff6ec; --muted: #f1d9c4; --dim: #c8a68e; --glass: rgba(50, 20, 12, 0.38); --line: rgba(255, 220, 190, 0.24); --sun: #ffb35c; --display: "Bebas Neue", Impact, sans-serif; --ui: "Outfit", system-ui, sans-serif; }
+  * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+  html, body { margin: 0; height: 100%; overflow: hidden; background: #2b130c; color: var(--ink); font-family: var(--ui); user-select: none; -webkit-user-select: none; touch-action: none; }
+  #view { position: fixed; inset: 0; width: 100%; height: 100%; display: block; cursor: crosshair; }
+  .hidden { display: none !important; }
+  button { font: inherit; color: inherit; background: none; border: 0; padding: 0; cursor: pointer; }
+  .glass { background: var(--glass); border: 1px solid var(--line); backdrop-filter: blur(12px) saturate(1.3); -webkit-backdrop-filter: blur(12px) saturate(1.3); box-shadow: 0 14px 40px rgba(40, 10, 0, .3); }
+  .btn { display: inline-flex; align-items: center; justify-content: center; gap: 8px; height: 50px; padding: 0 30px; border-radius: 999px; font-family: var(--display); font-size: 22px; letter-spacing: .08em; border: 1px solid var(--line); background: rgba(255, 255, 255, .08); transition: background .15s, transform .15s; }
+  .btn:hover { background: rgba(255, 255, 255, .16); transform: translateY(-1px); }
+  .btn.pri { border: 0; color: #3a1405; background: linear-gradient(135deg, #ffe08a, #ff9a4a 60%, #ff6a4a); box-shadow: 0 10px 34px rgba(255, 130, 60, .45), inset 0 1px 0 rgba(255, 255, 255, .6); }
+  .btn.lg { height: 58px; padding: 0 44px; font-size: 26px; }
+  #loading { position: fixed; inset: 0; z-index: 50; display: grid; place-items: center; background: #2b130c; transition: opacity .8s; font-family: var(--display); font-size: 30px; letter-spacing: .3em; color: var(--muted); }
+  #loading.out { opacity: 0; pointer-events: none; }
+  #title { position: fixed; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 16px; text-align: center; pointer-events: none; }
+  #title > * { pointer-events: auto; }
+  .logo { font-family: var(--display); font-size: clamp(80px, 17vw, 220px); line-height: .85; letter-spacing: .02em; color: #fff4e4; text-shadow: 0 6px 0 rgba(120, 40, 10, .5), 0 0 60px rgba(255, 160, 80, .5); }
+  .tag { color: var(--muted); font-size: 17px; max-width: 520px; line-height: 1.5; margin: 14px 0 28px; text-shadow: 0 2px 12px rgba(60, 20, 0, .6); }
+  .row { display: flex; gap: 12px; flex-wrap: wrap; justify-content: center; }
+  #t-best { margin-top: 18px; color: var(--muted); font-size: 13px; text-shadow: 0 1px 8px #000; }
+
+  #hud { position: fixed; inset: 0; pointer-events: none; }
+  #hud > * { pointer-events: auto; }
+  #stats { position: absolute; top: max(14px, env(safe-area-inset-top)); left: 16px; display: flex; flex-direction: column; gap: 2px; pointer-events: none; text-shadow: 0 2px 10px rgba(40, 10, 0, .7); }
+  #h-dist { font-family: var(--display); font-size: 46px; line-height: .9; }
+  #h-score { font-family: var(--display); font-size: 28px; color: var(--sun); }
+  #h-mult { font-family: var(--display); font-size: 22px; color: var(--muted); transition: color .2s, transform .2s; } #h-mult.hot { color: #ffe08a; transform: scale(1.1); transform-origin: left; }
+  #h-chain { font-size: 13px; color: #ffe08a; }
+  #b-pause { position: absolute; top: 12px; right: 12px; width: 44px; height: 44px; border-radius: 50%; }
+  #spd { position: absolute; left: 50%; bottom: max(18px, env(safe-area-inset-bottom)); transform: translateX(-50%); width: min(60vw, 360px); pointer-events: none; text-align: center; }
+  #spd .bar { height: 8px; border-radius: 4px; background: rgba(255, 255, 255, .15); overflow: hidden; margin-top: 4px; }
+  #spd-i { height: 100%; background: linear-gradient(90deg, #ffe08a, #ff7a4a); border-radius: 4px; }
+  #spd.stall #spd-i { background: #ff4a3a; animation: blink .3s infinite alternate; }
+  @keyframes blink { from { opacity: .4; } to { opacity: 1; } }
+  #spd-v { font-family: var(--display); font-size: 20px; letter-spacing: .05em; text-shadow: 0 2px 8px #000; } #h-alt { font-size: 12px; color: var(--muted); }
+  #boosts { position: absolute; right: 16px; top: 66px; display: flex; gap: 6px; pointer-events: none; } #boosts i { width: 16px; height: 22px; clip-path: polygon(50% 0, 100% 100%, 50% 75%, 0 100%); background: rgba(255, 255, 255, .2); } #boosts i.on { background: #ffe08a; filter: drop-shadow(0 0 6px #ffb35c); }
+  #ctrls { position: absolute; right: 16px; bottom: 70px; display: none; gap: 10px; }
+  @media (pointer: coarse) { #ctrls { display: flex; } }
+  .cbtn { width: 76px; height: 76px; border-radius: 50%; font-family: var(--display); font-size: 18px; letter-spacing: .08em; }
+  #pop { position: absolute; top: 28%; left: 50%; transform: translate(-50%, 10px); text-align: center; opacity: 0; transition: opacity .25s, transform .25s; pointer-events: none; text-shadow: 0 2px 16px rgba(40, 10, 0, .8); }
+  #pop.show { opacity: 1; transform: translate(-50%, 0); }
+  #pop-t { font-family: var(--display); font-size: 48px; letter-spacing: .04em; } #pop-s { font-size: 16px; color: #ffe08a; }
+  #toast { position: absolute; top: 16%; left: 50%; transform: translateX(-50%); font-family: var(--display); font-size: 36px; letter-spacing: .25em; opacity: 0; transition: opacity .6s; pointer-events: none; text-shadow: 0 2px 20px rgba(40, 10, 0, .8); white-space: nowrap; }
+  #toast.show { opacity: .95; }
+  .modal { position: fixed; inset: 0; display: grid; place-items: center; background: rgba(40, 14, 6, .4); z-index: 20; padding: 16px; }
+  .mcard { border-radius: 22px; padding: 28px 36px; text-align: center; min-width: min(360px, 92vw); max-width: 92vw; }
+  .mcard h2 { font-family: var(--display); font-size: 48px; margin: 0; letter-spacing: .05em; }
+  .mcard .col { display: flex; flex-direction: column; gap: 10px; margin-top: 18px; }
+  .kicker { font-size: 11px; letter-spacing: .4em; color: var(--sun); text-transform: uppercase; font-weight: 600; }
+  #c-dist { font-family: var(--display); font-size: 70px; line-height: 1; } #c-score { font-family: var(--display); font-size: 34px; color: var(--sun); } #c-best, #c-stats { color: var(--muted); font-size: 14px; }
+  .set-row { display: flex; align-items: center; justify-content: space-between; gap: 16px; margin: 12px 0; color: var(--muted); }
+  .seg { display: inline-flex; border-radius: 999px; border: 1px solid var(--line); overflow: hidden; } .seg button { padding: 8px 14px; font-size: 13px; } .seg button.on { background: rgba(255, 180, 100, .3); }
+  input[type=range] { accent-color: #ff9a4a; width: 160px; }
+</style>
+</head>
+<body>
+<canvas id="view"></canvas>
+<div id="loading">CANYON GLIDE</div>
+
+<div id="title" class="hidden">
+  <div class="logo">CANYON GLIDE</div>
+  <p class="tag">A paper plane, an endless red-rock canyon and a sun that never quite sets. Dive for speed, ride the thermals, thread the rings.</p>
+  <div class="row"><button class="btn pri lg" id="t-play">Fly</button><button class="btn lg" id="t-set" aria-label="Settings">⚙</button></div>
+  <div id="t-best"></div>
+</div>
+
+<div id="hud" class="hidden">
+  <div id="stats"><div id="h-dist">0 m</div><div id="h-score">0</div><div id="h-mult">×1.0</div><div id="h-chain"></div></div>
+  <button id="b-pause" class="glass" aria-label="Pause">❚❚</button>
+  <div id="boosts"></div>
+  <div id="spd"><div id="spd-v"></div><div class="bar"><div id="spd-i"></div></div><div id="h-alt"></div></div>
+  <div id="ctrls"><button class="cbtn glass" id="c-brake">BRAKE</button><button class="cbtn glass" id="c-boost">FLAP</button></div>
+  <div id="pop"><div id="pop-t"></div><div id="pop-s"></div></div>
+  <div id="toast"></div>
+</div>
+
+<div class="modal hidden" id="m-pause"><div class="mcard glass"><div class="kicker">Paused</div><h2>CANYON GLIDE</h2>
+  <div class="col"><button class="btn pri" id="p-resume">Resume</button><button class="btn" id="p-restart">Restart</button><button class="btn" id="p-set">Settings</button><button class="btn" id="p-title">Title</button></div></div></div>
+<div class="modal hidden" id="m-crash"><div class="mcard glass"><div class="kicker" id="c-why"></div><div id="c-dist"></div><div id="c-score"></div><div id="c-stats"></div><div id="c-best"></div>
+  <div class="col"><button class="btn pri" id="c-retry">Fly again</button><button class="btn" id="c-title">Title</button></div></div></div>
+<div class="modal hidden" id="m-set"><div class="mcard glass"><div class="kicker">Settings</div><h2>SETTINGS</h2>
+  <div class="set-row">Sound <input type="range" id="st-vol" min="0" max="100"></div>
+  <div class="set-row">Music <input type="range" id="st-mus" min="0" max="100"></div>
+  <div class="set-row">Sensitivity <input type="range" id="st-sens" min="50" max="150"></div>
+  <div class="set-row">Invert pitch <div class="seg" id="st-inv"><button data-v="0">Off</button><button data-v="1">On</button></div></div>
+  <div class="col"><button class="btn pri" id="st-close">Done</button></div></div></div>
+
+<script type="module" src="./main.js"></script>
+</body>
+</html>

@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+<title>Neon Velocity – Play Free Online | Classic Games Arcade</title>
+<!-- seo:head -->
+<meta name="description" content="Race anti-gravity hover-ships on a neon skyway through a night megacity. Drift for turbo, hit boost pads and beat 7 CPU pilots over 3 laps at 300+ km/h. Free 3D racing game." />
+<link rel="canonical" href="https://classicgames-flame.vercel.app/neon-velocity/" />
+<meta name="robots" content="index, follow, max-image-preview:large" />
+<meta name="theme-color" content="#0b0a14" />
+<link rel="icon" href="/favicon.ico" sizes="32x32" />
+<link rel="icon" href="/icon.svg" type="image/svg+xml" />
+<link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+<link rel="manifest" href="/manifest.webmanifest" />
+<meta property="og:site_name" content="Classic Games Arcade" />
+<meta property="og:type" content="website" />
+<meta property="og:title" content="Neon Velocity – Play Free Online | Classic Games Arcade" />
+<meta property="og:description" content="Race anti-gravity hover-ships on a neon skyway through a night megacity. Drift for turbo, hit boost pads and beat 7 CPU pilots over 3 laps at 300+ km/h. Free 3D racing game." />
+<meta property="og:url" content="https://classicgames-flame.vercel.app/neon-velocity/" />
+<meta property="og:image" content="https://classicgames-flame.vercel.app/og/neon-velocity.jpg" />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+<meta property="og:image:alt" content="Neon Velocity gameplay" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="Neon Velocity – Play Free Online | Classic Games Arcade" />
+<meta name="twitter:description" content="Race anti-gravity hover-ships on a neon skyway through a night megacity. Drift for turbo, hit boost pads and beat 7 CPU pilots over 3 laps at 300+ km/h. Free 3D racing game." />
+<meta name="twitter:image" content="https://classicgames-flame.vercel.app/og/neon-velocity.jpg" />
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "VideoGame",
+      "name": "Neon Velocity",
+      "description": "Race anti-gravity hover-ships on a neon skyway through a night megacity. Drift for turbo, hit boost pads and beat 7 CPU pilots over 3 laps at 300+ km/h. Free 3D racing game.",
+      "url": "https://classicgames-flame.vercel.app/neon-velocity/",
+      "image": "https://classicgames-flame.vercel.app/thumbs/neon-velocity.webp",
+      "genre": [
+        "Racing",
+        "Arcade"
+      ],
+      "gamePlatform": "Web browser",
+      "applicationCategory": "Game",
+      "operatingSystem": "Any",
+      "playMode": "SinglePlayer",
+      "isAccessibleForFree": true,
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "USD",
+        "availability": "https://schema.org/InStock"
+      },
+      "isPartOf": {
+        "@type": "WebSite",
+        "name": "Classic Games Arcade",
+        "url": "https://classicgames-flame.vercel.app/"
+      }
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Games",
+          "item": "https://classicgames-flame.vercel.app/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Neon Velocity",
+          "item": "https://classicgames-flame.vercel.app/neon-velocity/"
+        }
+      ]
+    }
+  ]
+}
+</script>
+<!-- /seo:head -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;900&family=Outfit:wght@300;400;600&display=swap" rel="stylesheet">
+<style>
+  :root { --ink: #eef8ff; --muted: #a9c2dc; --dim: #6f86a3; --glass: rgba(6, 8, 22, 0.5); --line: rgba(120, 220, 255, 0.22); --cy: #3ff0ff; --mg: #ff3fc8; --hud: "Orbitron", sans-serif; --ui: "Outfit", system-ui, sans-serif; }
+  * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+  html, body { margin: 0; height: 100%; overflow: hidden; background: #030410; color: var(--ink); font-family: var(--ui); user-select: none; -webkit-user-select: none; touch-action: none; }
+  #view { position: fixed; inset: 0; width: 100%; height: 100%; display: block; }
+  .hidden { display: none !important; }
+  button { font: inherit; color: inherit; background: none; border: 0; padding: 0; cursor: pointer; }
+  .glass { background: var(--glass); border: 1px solid var(--line); backdrop-filter: blur(12px) saturate(1.4); -webkit-backdrop-filter: blur(12px) saturate(1.4); }
+  .btn { display: inline-flex; align-items: center; justify-content: center; height: 52px; padding: 0 30px; border-radius: 6px; font-family: var(--hud); font-weight: 700; font-size: 14px; letter-spacing: .15em; border: 1px solid var(--line); background: rgba(255, 255, 255, .05); transition: background .15s, transform .15s; clip-path: polygon(10px 0, 100% 0, calc(100% - 10px) 100%, 0 100%); }
+  .btn:hover { background: rgba(255, 255, 255, .14); transform: translateY(-1px); }
+  .btn.pri { border: 0; color: #02101a; background: linear-gradient(90deg, var(--cy), #8a7bff 55%, var(--mg)); }
+  .btn.lg { height: 60px; padding: 0 52px; font-size: 17px; }
+  #loading { position: fixed; inset: 0; z-index: 50; display: grid; place-items: center; background: #030410; transition: opacity .8s; font-family: var(--hud); letter-spacing: .5em; color: var(--muted); }
+  #loading.out { opacity: 0; pointer-events: none; }
+  #title { position: fixed; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: flex-end; padding: 0 16px 8vh; text-align: center; pointer-events: none; background: linear-gradient(0deg, rgba(3, 4, 16, .85), transparent 55%); }
+  #title > * { pointer-events: auto; }
+  .logo { font-family: var(--hud); font-weight: 900; font-size: clamp(46px, 10vw, 130px); line-height: .9; font-style: italic; letter-spacing: .02em; background: linear-gradient(90deg, #fff, var(--cy) 40%, var(--mg)); -webkit-background-clip: text; background-clip: text; color: transparent; filter: drop-shadow(0 0 26px rgba(63, 240, 255, .55)); }
+  .tag { color: var(--muted); font-size: 15px; letter-spacing: .3em; margin: 12px 0 22px; text-transform: uppercase; }
+  .row { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+  .seg { display: inline-flex; border: 1px solid var(--line); overflow: hidden; margin-top: 16px; clip-path: polygon(8px 0, 100% 0, calc(100% - 8px) 100%, 0 100%); } .seg button { padding: 10px 18px; font-family: var(--hud); font-size: 11px; letter-spacing: .15em; color: var(--muted); } .seg button.on { background: rgba(63, 240, 255, .2); color: #fff; }
+  #t-keys { margin-top: 16px; color: var(--dim); font-size: 13px; } #t-keys kbd { font-family: var(--hud); font-size: 11px; padding: 3px 7px; border: 1px solid var(--line); border-radius: 4px; margin: 0 2px; color: var(--ink); }
+  #t-best { margin-top: 8px; color: var(--dim); font-size: 12px; }
+  #hud { position: fixed; inset: 0; pointer-events: none; font-family: var(--hud); }
+  #hud > * { pointer-events: auto; }
+  #tl { position: absolute; top: max(14px, env(safe-area-inset-top)); left: 18px; pointer-events: none; text-shadow: 0 0 12px rgba(63, 240, 255, .6); }
+  #h-pos { font-size: 64px; font-weight: 900; font-style: italic; line-height: .9; } #h-pos small { font-size: 22px; color: var(--muted); }
+  #h-lap { font-size: 16px; letter-spacing: .15em; margin-top: 4px; } #h-time { font-size: 14px; color: var(--muted); margin-top: 2px; }
+  #board { position: absolute; top: 140px; left: 18px; font-size: 11px; letter-spacing: .1em; pointer-events: none; }
+  #board div { display: flex; align-items: center; gap: 8px; padding: 2px 8px; color: var(--muted); } #board div.me { color: #fff; background: rgba(63, 240, 255, .15); } #board b { width: 14px; } #board i { width: 8px; height: 8px; border-radius: 50%; }
+  #mini { position: absolute; top: 14px; right: 66px; width: 170px; height: 170px; border-radius: 10px; pointer-events: none; }
+  #b-pause { position: absolute; top: 14px; right: 14px; width: 42px; height: 42px; border-radius: 50%; }
+  #gauge { position: absolute; right: 22px; bottom: 22px; text-align: right; pointer-events: none; }
+  #h-spd { font-size: 64px; font-weight: 900; font-style: italic; line-height: 1; text-shadow: 0 0 16px rgba(63, 240, 255, .6); } #gauge small { font-size: 13px; color: var(--muted); letter-spacing: .2em; }
+  #spd { width: 240px; height: 8px; background: rgba(255, 255, 255, .1); margin-top: 6px; transform: skewX(-20deg); } #spd-i { height: 100%; background: linear-gradient(90deg, var(--cy), var(--mg)); } #spd.boost #spd-i { background: linear-gradient(90deg, #fff, var(--cy)); box-shadow: 0 0 14px var(--cy); }
+  #drift { width: 240px; height: 6px; background: rgba(255, 255, 255, .08); margin-top: 6px; transform: skewX(-20deg); transition: opacity .2s; } #drift-i { height: 100%; } #drift-i.l0 { background: #ccc; } #drift-i.l1 { background: #4aa8ff; box-shadow: 0 0 10px #4aa8ff; } #drift-i.l2 { background: #ff9a2a; box-shadow: 0 0 10px #ff9a2a; } #drift-i.l3 { background: #ff3fc8; box-shadow: 0 0 12px #ff3fc8; }
+  #turbo { font-size: 12px; color: var(--cy); letter-spacing: .15em; margin-top: 6px; height: 14px; }
+  #count { position: absolute; top: 36%; left: 50%; transform: translate(-50%, -50%) scale(.8); font-size: 140px; font-weight: 900; font-style: italic; opacity: 0; transition: opacity .2s, transform .2s; pointer-events: none; text-shadow: 0 0 40px var(--cy); }
+  #count.show { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+  #banner { position: absolute; top: 24%; left: 50%; transform: translateX(-50%); font-size: 42px; font-weight: 900; font-style: italic; letter-spacing: .1em; opacity: 0; transition: opacity .3s; pointer-events: none; text-shadow: 0 0 30px var(--mg); white-space: nowrap; }
+  #banner.show { opacity: 1; }
+  #wrong { position: absolute; top: 45%; left: 50%; transform: translateX(-50%); font-size: 30px; color: #ff4a4a; letter-spacing: .2em; opacity: 0; pointer-events: none; } #wrong.show { opacity: 1; animation: blink .4s infinite alternate; }
+  @keyframes blink { from { opacity: .3; } to { opacity: 1; } }
+  #touch { display: none; } @media (pointer: coarse) { #touch { display: block; } #touch button { position: absolute; bottom: 20px; width: 74px; height: 74px; border-radius: 50%; font-family: var(--hud); font-size: 12px; } #t-left { left: 16px; } #t-right { left: 100px; } #t-dl { left: 16px; bottom: 104px !important; width: 58px !important; height: 58px !important; } #t-dr { left: 100px; bottom: 104px !important; width: 58px !important; height: 58px !important; } #t-gas { right: 280px; } #t-brake { right: 360px; } }
+  .modal { position: fixed; inset: 0; display: grid; place-items: center; background: rgba(3, 4, 16, .55); z-index: 20; padding: 16px; }
+  .mcard { padding: 28px 34px; text-align: center; min-width: min(380px, 92vw); border-radius: 10px; }
+  .mcard h2 { font-family: var(--hud); font-size: 22px; letter-spacing: .15em; margin: 6px 0 12px; } .mcard .col { display: flex; flex-direction: column; gap: 10px; margin-top: 18px; align-items: center; }
+  .kicker { font-family: var(--hud); font-size: 11px; letter-spacing: .4em; color: var(--cy); text-transform: uppercase; }
+  #r-pos { font-family: var(--hud); font-size: 80px; font-weight: 900; font-style: italic; line-height: 1; text-shadow: 0 0 30px var(--cy); }
+  #r-list div { display: flex; align-items: center; gap: 10px; padding: 4px 8px; font-family: var(--hud); font-size: 13px; color: var(--muted); } #r-list div.me { color: #fff; background: rgba(63, 240, 255, .15); } #r-list i { width: 10px; height: 10px; border-radius: 50%; } #r-list span { flex: 1; text-align: left; } #r-list b { width: 16px; }
+  #r-best { color: var(--muted); margin-top: 8px; }
+  .set-row { display: flex; align-items: center; justify-content: space-between; gap: 16px; margin: 12px 0; color: var(--muted); } input[type=range] { accent-color: #3ff0ff; width: 160px; }
+</style>
+</head>
+<body>
+<canvas id="view"></canvas>
+<div id="loading">NEON VELOCITY</div>
+<div id="title" class="hidden">
+  <div class="logo">NEON VELOCITY</div>
+  <div class="tag">Anti-gravity racing · 8 ships · 3 laps</div>
+  <div class="row"><button class="btn pri lg" id="b-race">RACE</button><button class="btn lg" id="b-set">⚙</button></div>
+  <div class="seg" id="t-diff"><button data-v="0">ROOKIE</button><button data-v="1">PRO</button><button data-v="2">ELITE</button></div>
+  <div id="t-keys"><kbd>←</kbd><kbd>→</kbd> steer · <kbd>A</kbd><kbd>D</kbd> drift · <kbd>W</kbd> accelerate · <kbd>S</kbd> brake · <kbd>Space</kbd> turbo</div>
+  <div id="t-best"></div>
+</div>
+<div id="hud" class="hidden">
+  <div id="tl"><div id="h-pos"></div><div id="h-lap"></div><div id="h-time"></div></div>
+  <div id="board"></div>
+  <canvas id="mini" class="glass" width="340" height="340"></canvas>
+  <button id="b-pause" class="glass" aria-label="Pause">❚❚</button>
+  <div id="gauge"><div id="h-spd">0</div><small>KM/H</small><div id="spd"><div id="spd-i"></div></div><div id="drift"><div id="drift-i"></div></div><div id="turbo"></div></div>
+  <div id="count"></div><div id="banner"></div><div id="wrong">WRONG WAY</div>
+  <div id="touch"><button class="glass" id="t-left">◀</button><button class="glass" id="t-right">▶</button><button class="glass" id="t-dl">DRIFT</button><button class="glass" id="t-dr">DRIFT</button><button class="glass" id="t-brake">BRAKE</button><button class="glass" id="t-gas">GO</button></div>
+</div>
+<div class="modal hidden" id="m-pause"><div class="mcard glass"><div class="kicker">Paused</div><h2>NEON VELOCITY</h2><div class="col"><button class="btn pri" id="p-resume">RESUME</button><button class="btn" id="p-restart">RESTART</button><button class="btn" id="p-set">SETTINGS</button><button class="btn" id="p-title">QUIT</button></div></div></div>
+<div class="modal hidden" id="m-res"><div class="mcard glass"><div class="kicker" id="r-k"></div><div id="r-pos"></div><div id="r-list"></div><div id="r-best"></div><div class="col"><button class="btn pri" id="r-again">RACE AGAIN</button><button class="btn" id="r-title">TITLE</button></div></div></div>
+<div class="modal hidden" id="m-set"><div class="mcard glass"><div class="kicker">Settings</div><h2>SETTINGS</h2>
+  <div class="set-row">Sound <input type="range" id="st-vol" min="0" max="100"></div>
+  <div class="set-row">Music <input type="range" id="st-mus" min="0" max="100"></div>
+  <div class="col"><button class="btn pri" id="st-close">DONE</button></div></div></div>
+<script type="module" src="./main.js"></script>
+</body>
+</html>

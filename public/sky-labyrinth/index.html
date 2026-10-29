@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <title>Sky Labyrinth – Play Free Online | Classic Games Arcade</title>
+<!-- seo:head -->
+<meta name="description" content="Tilt a carved stone labyrinth floating above a sea of sunset clouds and roll a glass marble past holes, ice, gates and crumbling tiles. 24 levels, free online." />
+<link rel="canonical" href="https://classicgames-flame.vercel.app/sky-labyrinth/" />
+<meta name="robots" content="index, follow, max-image-preview:large" />
+<meta name="theme-color" content="#0b0a14" />
+<link rel="icon" href="/favicon.ico" sizes="32x32" />
+<link rel="icon" href="/icon.svg" type="image/svg+xml" />
+<link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+<link rel="manifest" href="/manifest.webmanifest" />
+<meta property="og:site_name" content="Classic Games Arcade" />
+<meta property="og:type" content="website" />
+<meta property="og:title" content="Sky Labyrinth – Play Free Online | Classic Games Arcade" />
+<meta property="og:description" content="Tilt a carved stone labyrinth floating above a sea of sunset clouds and roll a glass marble past holes, ice, gates and crumbling tiles. 24 levels, free online." />
+<meta property="og:url" content="https://classicgames-flame.vercel.app/sky-labyrinth/" />
+<meta property="og:image" content="https://classicgames-flame.vercel.app/og/sky-labyrinth.jpg" />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+<meta property="og:image:alt" content="Sky Labyrinth gameplay" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="Sky Labyrinth – Play Free Online | Classic Games Arcade" />
+<meta name="twitter:description" content="Tilt a carved stone labyrinth floating above a sea of sunset clouds and roll a glass marble past holes, ice, gates and crumbling tiles. 24 levels, free online." />
+<meta name="twitter:image" content="https://classicgames-flame.vercel.app/og/sky-labyrinth.jpg" />
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "VideoGame",
+      "name": "Sky Labyrinth",
+      "description": "Tilt a carved stone labyrinth floating above a sea of sunset clouds and roll a glass marble past holes, ice, gates and crumbling tiles. 24 levels, free online.",
+      "url": "https://classicgames-flame.vercel.app/sky-labyrinth/",
+      "image": "https://classicgames-flame.vercel.app/thumbs/sky-labyrinth.webp",
+      "genre": [
+        "Puzzle",
+        "Arcade"
+      ],
+      "gamePlatform": "Web browser",
+      "applicationCategory": "Game",
+      "operatingSystem": "Any",
+      "playMode": "SinglePlayer",
+      "isAccessibleForFree": true,
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "USD",
+        "availability": "https://schema.org/InStock"
+      },
+      "isPartOf": {
+        "@type": "WebSite",
+        "name": "Classic Games Arcade",
+        "url": "https://classicgames-flame.vercel.app/"
+      }
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Games",
+          "item": "https://classicgames-flame.vercel.app/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Sky Labyrinth",
+          "item": "https://classicgames-flame.vercel.app/sky-labyrinth/"
+        }
+      ]
+    }
+  ]
+}
+</script>
+<!-- /seo:head -->
+    <link rel="icon" href="/favicon.ico" sizes="32x32">
+    <link rel="icon" href="/icon.svg" type="image/svg+xml">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700;800&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root { --bg: #141a33; --glass: rgba(20, 24, 48, 0.55); --glass2: rgba(255, 255, 255, 0.07); --line: rgba(255, 236, 200, 0.2); --line2: rgba(255, 255, 255, 0.08); --text: #fff8ee; --muted: #c4c3d6; --gold: #ffd58a; --gold2: #f0a94e; --rose: #ff9db8; --sky: #8fd3ff; --display: "Cinzel", Georgia, serif; --ui: "Outfit", "Segoe UI", system-ui, sans-serif; --shadow: 0 20px 60px rgba(8, 6, 30, 0.45); }
+        * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+        html, body { margin: 0; height: 100%; overflow: hidden; background: var(--bg); color: var(--text); font-family: var(--ui); user-select: none; -webkit-user-select: none; touch-action: none; overscroll-behavior: none; }
+        #view { position: fixed; inset: 0; width: 100%; height: 100%; display: block; }
+        .hidden { display: none !important; }
+        button { font: inherit; color: inherit; cursor: pointer; border: 0; background: none; padding: 0; }
+        :focus-visible { outline: 2px solid var(--gold); outline-offset: 3px; }
+        .glass { background: var(--glass); border: 1px solid var(--line); backdrop-filter: blur(18px) saturate(1.3); -webkit-backdrop-filter: blur(18px) saturate(1.3); box-shadow: var(--shadow), inset 0 1px 0 rgba(255, 255, 255, 0.1); }
+        .kicker { font-size: 11px; font-weight: 600; letter-spacing: 0.36em; color: var(--gold); text-transform: uppercase; }
+        .btn { display: inline-flex; align-items: center; justify-content: center; gap: 8px; height: 48px; padding: 0 24px; border-radius: 14px; font-weight: 600; font-size: 15px; border: 1px solid var(--line); background: var(--glass2); transition: background .15s, transform .15s, box-shadow .2s; }
+        .btn:hover:not(:disabled) { background: rgba(255, 255, 255, 0.14); transform: translateY(-1px); }
+        .btn.gold { color: #3a2208; border: 0; background: linear-gradient(180deg, #fff1c9, #ffd58a 45%, #f0a94e); box-shadow: 0 12px 34px rgba(240, 169, 78, 0.38), inset 0 1px 0 rgba(255, 255, 255, 0.8); }
+        .btn.gold:hover { box-shadow: 0 16px 40px rgba(240, 169, 78, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.8); }
+        .btn.lg { height: 58px; padding: 0 38px; font-size: 16.5px; border-radius: 16px; }
+        .iconbtn { width: 46px; height: 46px; border-radius: 14px; display: grid; place-items: center; }
+        .iconbtn svg { width: 20px; height: 20px; fill: var(--text); }
+
+        #loading { position: fixed; inset: 0; z-index: 50; display: grid; place-items: center; background: radial-gradient(ellipse at 50% 30%, #f6b79a 0%, #8a6aa8 35%, #141a33 80%); transition: opacity .7s; }
+        #loading.out { opacity: 0; pointer-events: none; }
+        #loading .orb { width: 64px; height: 64px; border-radius: 50%; background: radial-gradient(circle at 35% 30%, #fff, #bfe6ff 30%, #3a6fb0 70%, #142048); box-shadow: 0 0 40px rgba(180, 220, 255, 0.6); animation: bob 1.4s ease-in-out infinite; }
+        @keyframes bob { 50% { transform: translateY(-14px); } }
+
+        /* title */
+        #title { position: fixed; inset: 0; z-index: 10; display: grid; place-items: start center; padding: max(9vh, 70px) 20px 20px; background: radial-gradient(ellipse at 50% 55%, rgba(20, 26, 51, 0) 20%, rgba(20, 26, 51, 0.55) 90%); overflow-y: auto; touch-action: pan-y; }
+        .t-top { position: absolute; top: calc(16px + env(safe-area-inset-top)); left: 20px; right: 20px; display: flex; justify-content: space-between; }
+        .back { display: inline-flex; align-items: center; gap: 8px; height: 42px; padding: 0 16px; border-radius: 14px; color: var(--text); text-decoration: none; font-weight: 600; font-size: 13.5px; }
+        .tcard { width: min(620px, 100%); text-align: center; }
+        .logo { margin: 0; font-family: var(--display); font-weight: 800; font-size: clamp(46px, 9vw, 104px); line-height: 0.95; letter-spacing: 0.02em; background: linear-gradient(180deg, #fffaf0 10%, #ffe2a8 50%, #f0a94e 95%); -webkit-background-clip: text; background-clip: text; color: transparent; filter: drop-shadow(0 6px 24px rgba(80, 40, 90, 0.55)); }
+        .logo small { display: block; font-size: 0.34em; letter-spacing: 0.5em; font-weight: 500; margin-bottom: 10px; padding-left: 0.5em; }
+        .tag { color: #f2ecf6; margin: 18px auto 30px; max-width: 470px; line-height: 1.6; font-weight: 300; font-size: 16.5px; text-shadow: 0 2px 12px rgba(20, 10, 40, 0.6); }
+        .tbtns { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+        .tstats { margin-top: 22px; display: inline-flex; gap: 18px; padding: 10px 20px; border-radius: 14px; font-size: 14px; color: var(--muted); }
+        .tstats b { color: var(--gold); font-weight: 600; }
+        .hint { margin-top: 16px; font-size: 13px; color: rgba(255, 248, 238, 0.75); text-shadow: 0 1px 8px rgba(0, 0, 0, 0.5); }
+
+        /* level select */
+        #levels { position: fixed; inset: 0; z-index: 10; padding: calc(78px + env(safe-area-inset-top)) 20px 24px; overflow-y: auto; touch-action: pan-y; background: rgba(14, 16, 36, 0.35); }
+        #levels .t-top { position: fixed; z-index: 2; }
+        #levels h2 { margin: 0 0 18px; text-align: center; font-family: var(--display); font-size: clamp(28px, 4vw, 40px); font-weight: 700; text-shadow: 0 3px 18px rgba(20, 10, 40, 0.6); }
+        .isles { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 16px; max-width: 1180px; margin: 0 auto; }
+        .isle { position: relative; border-radius: 22px; padding: 18px; overflow: hidden; border: 1px solid var(--line); box-shadow: var(--shadow); }
+        .isle::before { content: ""; position: absolute; inset: 0; background: var(--art); opacity: 0.95; }
+        .isle::after { content: ""; position: absolute; inset: 0; background: linear-gradient(180deg, rgba(10, 10, 30, 0) 0%, rgba(10, 10, 30, 0.55) 100%); }
+        .isle > * { position: relative; z-index: 1; }
+        .isle .num { font-family: var(--display); font-size: 12px; letter-spacing: 0.3em; color: rgba(255, 255, 255, 0.85); }
+        .isle h3 { margin: 4px 0 2px; font-family: var(--display); font-size: 24px; font-weight: 700; text-shadow: 0 2px 10px rgba(0, 0, 0, 0.35); }
+        .isle p { margin: 0 0 14px; font-size: 13px; color: rgba(255, 255, 255, 0.85); }
+        .isle .cnt { position: absolute; top: 18px; right: 18px; font-size: 13px; font-weight: 600; padding: 4px 10px; border-radius: 10px; background: rgba(0, 0, 0, 0.28); }
+        .lv { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
+        .lv button { height: 66px; border-radius: 14px; background: rgba(20, 22, 50, 0.45); border: 1px solid rgba(255, 255, 255, 0.16); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 3px; transition: transform .15s, background .15s; }
+        .lv button:hover:not(:disabled) { transform: translateY(-2px); background: rgba(40, 40, 80, 0.55); }
+        .lv button b { font-family: var(--display); font-size: 20px; line-height: 1; }
+        .lv button .st { font-size: 11px; letter-spacing: 1px; color: rgba(255, 255, 255, 0.3); }
+        .lv button .st i { font-style: normal; color: var(--gold); text-shadow: 0 0 8px rgba(255, 213, 138, 0.7); }
+        .lv button:disabled { opacity: 0.45; cursor: default; }
+        .lv button.next { border-color: var(--gold); box-shadow: 0 0 0 1px rgba(255, 213, 138, 0.4), 0 0 22px rgba(255, 213, 138, 0.3); }
+
+        /* HUD */
+        #hud { position: fixed; inset: 0; pointer-events: none; z-index: 5; }
+        #hud .pe { pointer-events: auto; }
+        #b-menu { position: absolute; top: calc(14px + env(safe-area-inset-top)); left: calc(14px + env(safe-area-inset-left)); }
+        #b-restart { position: absolute; top: calc(14px + env(safe-area-inset-top)); right: calc(14px + env(safe-area-inset-right)); }
+        #plate { position: absolute; top: calc(12px + env(safe-area-inset-top)); left: 50%; transform: translateX(-50%); display: flex; align-items: center; gap: 16px; padding: 8px 18px 8px 16px; border-radius: 18px; white-space: nowrap; }
+        #plate .lvl { display: flex; flex-direction: column; line-height: 1.15; }
+        #plate .lvl small { font-size: 10.5px; letter-spacing: 0.24em; color: var(--gold); text-transform: uppercase; font-weight: 600; }
+        #plate .lvl span { font-family: var(--display); font-weight: 700; font-size: 16px; }
+        #plate .sep { width: 1px; align-self: stretch; background: var(--line2); }
+        #plate .time { display: flex; flex-direction: column; align-items: center; line-height: 1.1; min-width: 70px; }
+        #plate .time b { font-variant-numeric: tabular-nums; font-size: 22px; font-weight: 600; }
+        #plate .time small { font-size: 11px; color: var(--muted); }
+        #plate .time.over b { color: #ffb4a4; }
+        .gems { display: flex; gap: 6px; }
+        .gem { width: 18px; height: 22px; clip-path: polygon(50% 0, 100% 35%, 50% 100%, 0 35%); background: rgba(255, 255, 255, 0.16); transition: background .3s, transform .3s; }
+        .gem.on { transform: scale(1.15); }
+        .gem.on.g0 { background: linear-gradient(160deg, #e9fdff, #66e6ff 50%, #1f8fb8); }
+        .gem.on.g1 { background: linear-gradient(160deg, #ffe9f8, #ff73d4 50%, #b0278a); }
+        .gem.on.g2 { background: linear-gradient(160deg, #f3ffe6, #9cff6e 50%, #3d9a1e); }
+        #falls { font-size: 13px; color: var(--muted); display: flex; align-items: center; gap: 5px; }
+        #falls svg { width: 14px; height: 14px; fill: currentColor; }
+        #gimbal { position: absolute; right: calc(18px + env(safe-area-inset-right)); bottom: calc(18px + env(safe-area-inset-bottom)); width: 86px; height: 86px; border-radius: 50%; }
+        #gimbal::before, #gimbal::after { content: ""; position: absolute; background: rgba(255, 255, 255, 0.12); }
+        #gimbal::before { left: 50%; top: 12px; bottom: 12px; width: 1px; } #gimbal::after { top: 50%; left: 12px; right: 12px; height: 1px; }
+        #gimbal i { position: absolute; left: 50%; top: 50%; width: 18px; height: 18px; margin: -9px; border-radius: 50%; background: radial-gradient(circle at 35% 30%, #fff, #ffd58a 50%, #c07a2a); box-shadow: 0 0 14px rgba(255, 213, 138, 0.7); }
+        #joy { position: fixed; width: 120px; height: 120px; margin: -60px; border-radius: 50%; border: 2px solid rgba(255, 255, 255, 0.35); background: rgba(255, 255, 255, 0.06); pointer-events: none; z-index: 4; }
+        #joy i { position: absolute; left: 50%; top: 50%; width: 46px; height: 46px; margin: -23px; border-radius: 50%; background: rgba(255, 255, 255, 0.35); }
+        #banner { position: fixed; left: 50%; top: 24%; transform: translate(-50%, -50%); text-align: center; z-index: 6; pointer-events: none; transition: opacity .6s, transform .6s; }
+        #banner.out { opacity: 0; transform: translate(-50%, -60%); }
+        #banner small { display: block; font-size: 12px; letter-spacing: 0.4em; color: var(--gold); font-weight: 600; text-transform: uppercase; text-shadow: 0 2px 10px rgba(0, 0, 0, 0.5); }
+        #banner b { display: block; font-family: var(--display); font-size: clamp(34px, 6vw, 64px); font-weight: 800; margin-top: 6px; text-shadow: 0 4px 30px rgba(30, 10, 50, 0.7); }
+        #banner span { display: block; margin-top: 8px; font-size: 15px; color: #f4eef8; font-weight: 300; text-shadow: 0 2px 10px rgba(0, 0, 0, 0.6); }
+        #toast { position: fixed; bottom: calc(26px + env(safe-area-inset-bottom)); left: 50%; transform: translate(-50%, 10px); padding: 10px 20px; border-radius: 14px; font-weight: 600; font-size: 14px; opacity: 0; transition: opacity .25s, transform .25s; z-index: 8; pointer-events: none; white-space: nowrap; }
+        #toast.show { opacity: 1; transform: translate(-50%, 0); }
+
+        .scrim { position: fixed; inset: 0; z-index: 20; display: grid; place-items: center; padding: 16px; background: rgba(12, 10, 32, 0.4); backdrop-filter: blur(4px); -webkit-backdrop-filter: blur(4px); animation: fade .3s both; overflow-y: auto; touch-action: pan-y; }
+        @keyframes fade { from { opacity: 0; } }
+        .modal { position: relative; width: min(440px, 100%); border-radius: 26px; padding: 30px 26px 24px; text-align: center; animation: pop .45s cubic-bezier(.2, 1.3, .4, 1) both; background: linear-gradient(180deg, rgba(48, 40, 88, 0.88), rgba(22, 22, 52, 0.94)); }
+        @keyframes pop { from { opacity: 0; transform: translateY(14px) scale(0.95); } }
+        .modal h2 { margin: 6px 0 4px; font-family: var(--display); font-weight: 800; font-size: 34px; }
+        .modal p { margin: 0; color: #e0dcef; font-size: 14.5px; line-height: 1.55; font-weight: 300; }
+        .modal .col { display: grid; gap: 10px; margin-top: 22px; }
+        .modal .btns { display: flex; gap: 10px; justify-content: center; margin-top: 24px; flex-wrap: wrap; }
+        .modal .x { position: absolute; top: 14px; right: 14px; width: 36px; height: 36px; border-radius: 10px; display: grid; place-items: center; }
+        .modal .x svg { width: 14px; height: 14px; fill: var(--muted); }
+        .stars { display: flex; justify-content: center; gap: 12px; margin: 18px 0 8px; }
+        .star { width: 64px; height: 64px; clip-path: polygon(50% 0, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%); background: rgba(255, 255, 255, 0.12); transform: scale(0.9); transition: transform .5s cubic-bezier(.2, 1.8, .4, 1), background .3s; }
+        .star:nth-child(2) { transform: translateY(-10px) scale(0.9); }
+        .star.on { background: linear-gradient(170deg, #fffbe9, #ffd58a 45%, #f0a94e); transform: scale(1.12); filter: drop-shadow(0 0 14px rgba(255, 200, 120, 0.8)); }
+        .star:nth-child(2).on { transform: translateY(-10px) scale(1.12); }
+        .stats { display: grid; gap: 2px; margin-top: 12px; text-align: left; }
+        .stats div { display: flex; justify-content: space-between; align-items: center; padding: 9px 4px; border-top: 1px solid var(--line2); font-size: 14.5px; }
+        .stats div span { color: var(--muted); }
+        .stats div b { font-weight: 600; font-variant-numeric: tabular-nums; }
+        .stats .ok { color: #9ff0b8; } .stats .no { color: #ffb4a4; }
+        .newbest { display: inline-block; margin-top: 6px; padding: 3px 10px; border-radius: 8px; font-size: 11px; font-weight: 700; letter-spacing: 0.2em; color: #3a2208; background: var(--gold); }
+        .setrow { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 13px 0; border-top: 1px solid var(--line2); text-align: left; font-weight: 500; font-size: 14.5px; }
+        .setrow:first-of-type { border-top: 0; }
+        .setrow small { display: block; color: var(--muted); font-size: 12px; font-weight: 300; }
+        .switch { width: 48px; height: 28px; border-radius: 14px; background: rgba(255, 255, 255, 0.16); position: relative; transition: background .2s; flex: none; }
+        .switch::after { content: ""; position: absolute; top: 3px; left: 3px; width: 22px; height: 22px; border-radius: 50%; background: #fff; transition: transform .25s cubic-bezier(.3, 1.5, .5, 1); }
+        .switch[aria-checked="true"] { background: linear-gradient(90deg, #f0a94e, #ffd58a); } .switch[aria-checked="true"]::after { transform: translateX(20px); }
+        input[type=range] { -webkit-appearance: none; appearance: none; width: 150px; height: 4px; border-radius: 2px; background: linear-gradient(90deg, var(--gold) var(--v, 80%), rgba(255, 255, 255, 0.18) var(--v, 80%)); }
+        input[type=range]::-webkit-slider-thumb { -webkit-appearance: none; width: 18px; height: 18px; border-radius: 50%; background: #fff; cursor: pointer; }
+        input[type=range]::-moz-range-thumb { width: 18px; height: 18px; border: 0; border-radius: 50%; background: #fff; }
+        .help { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-top: 16px; }
+        .help div { padding: 10px 6px; border-radius: 12px; background: rgba(255, 255, 255, 0.05); font-size: 11.5px; color: var(--muted); line-height: 1.35; }
+        .help div b { display: block; color: var(--text); font-size: 13px; margin-bottom: 2px; }
+        @media (max-width: 640px) {
+            #plate { gap: 10px; padding: 7px 12px; top: calc(70px + env(safe-area-inset-top)); }
+            #plate .lvl span { font-size: 14px; max-width: 120px; overflow: hidden; text-overflow: ellipsis; }
+            #gimbal { width: 64px; height: 64px; }
+        }
+    </style>
+</head>
+
+<body>
+    <canvas id="view"></canvas>
+    <div id="loading"><div class="orb"></div></div>
+
+    <div id="title" class="hidden">
+        <div class="t-top">
+            <a class="back glass" href="/"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M15.4 4.6 14 3.2 5.2 12l8.8 8.8 1.4-1.4L8 12z" /></svg>All games</a>
+            <button class="iconbtn glass" id="t-set" aria-label="Settings"><svg viewBox="0 0 24 24"><path d="M19.4 13a7.6 7.6 0 0 0 0-2l2.1-1.6-2-3.4-2.5 1a7.4 7.4 0 0 0-1.7-1L15 3.3h-4l-.4 2.7a7.4 7.4 0 0 0-1.7 1l-2.5-1-2 3.4L6.6 11a7.6 7.6 0 0 0 0 2l-2.1 1.6 2 3.4 2.5-1c.5.4 1.1.8 1.7 1l.4 2.7h4l.4-2.7c.6-.2 1.2-.6 1.7-1l2.5 1 2-3.4zM13 15.5a3.5 3.5 0 1 1 0-7 3.5 3.5 0 0 1 0 7z" /></svg></button>
+        </div>
+        <div class="tcard">
+            <h1 class="logo"><small>The</small>Sky Labyrinth</h1>
+            <p class="tag">Tilt a carved stone tablet above a sea of clouds. Guide the glass marble past holes, ice and crumbling tiles to the golden well.</p>
+            <div class="tbtns"><button class="btn gold lg" id="t-play">Play</button><button class="btn lg" id="t-levels">Levels</button></div>
+            <div class="tstats glass" id="t-stats"></div>
+            <div class="hint" id="t-hint">Move the mouse to tilt · or WASD / arrow keys</div>
+        </div>
+    </div>
+
+    <div id="levels" class="hidden">
+        <div class="t-top">
+            <button class="back glass" id="l-back"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M15.4 4.6 14 3.2 5.2 12l8.8 8.8 1.4-1.4L8 12z" /></svg>Back</button>
+        </div>
+        <h2>Choose a level</h2>
+        <div class="isles" id="isles"></div>
+    </div>
+
+    <div id="hud" class="hidden">
+        <button class="iconbtn glass pe" id="b-menu" aria-label="Pause"><svg viewBox="0 0 24 24"><path d="M7 5h3.5v14H7zm6.5 0H17v14h-3.5z" /></svg></button>
+        <button class="iconbtn glass pe" id="b-restart" aria-label="Restart"><svg viewBox="0 0 24 24"><path d="M12 5V2L7.5 6.5 12 11V8a5 5 0 1 1-5 5H5a7 7 0 1 0 7-8z" /></svg></button>
+        <div id="plate" class="glass">
+            <div class="lvl"><small id="h-isle">Dawn Terrace · 1</small><span id="h-name">First Light</span></div>
+            <div class="sep"></div>
+            <div class="time" id="h-timebox"><b id="h-time">0:00.0</b><small id="h-par">par 0:30</small></div>
+            <div class="sep"></div>
+            <div class="gems"><i class="gem g0" id="g0"></i><i class="gem g1" id="g1"></i><i class="gem g2" id="g2"></i></div>
+            <div id="falls"><svg viewBox="0 0 24 24"><path d="M12 22a6 6 0 0 1-6-6c0-4 6-12 6-12s6 8 6 12a6 6 0 0 1-6 6z" /></svg><span id="h-falls">0</span></div>
+        </div>
+        <div id="gimbal" class="glass"><i id="gimbal-dot"></i></div>
+    </div>
+    <div id="joy" class="hidden"><i id="joy-dot"></i></div>
+    <div id="banner" class="out"><small id="bn-k">Dawn Terrace · Level 1</small><b id="bn-t">First Light</b><span id="bn-s">Collect the crystals and find the golden well</span></div>
+    <div id="toast" class="glass"></div>
+
+    <div class="scrim hidden" id="m-done"><div class="modal glass">
+        <div class="kicker" id="d-k">Level complete</div><h2 id="d-t">First Light</h2>
+        <div class="stars"><i class="star" id="s0"></i><i class="star" id="s1"></i><i class="star" id="s2"></i></div>
+        <div id="d-best"></div>
+        <div class="stats">
+            <div><span>Time</span><b id="d-time">0:00.0</b></div>
+            <div><span>Par</span><b id="d-par">0:00</b></div>
+            <div><span>Crystals</span><b id="d-gems">0 / 3</b></div>
+            <div><span>Falls</span><b id="d-falls">0</b></div>
+        </div>
+        <div class="btns"><button class="btn" id="d-retry">Retry</button><button class="btn" id="d-levels">Levels</button><button class="btn gold" id="d-next">Next level</button></div>
+    </div></div>
+    <div class="scrim hidden" id="m-pause"><div class="modal glass"><div class="kicker">Paused</div><h2 id="p-t">Resting</h2><p id="p-s"></p>
+        <div class="help"><div><b>Holes</b>drop you back to the last lantern</div><div><b>Crystals</b>three per level, one star</div><div><b>Par</b>beat it for the third star</div></div>
+        <div class="col"><button class="btn gold" id="p-resume">Resume</button><button class="btn" id="p-restart">Restart level</button><button class="btn" id="p-levels">Levels</button><button class="btn" id="p-set">Settings</button><button class="btn" id="p-title">Title screen</button></div></div></div>
+    <div class="scrim hidden" id="m-set"><div class="modal glass"><button class="x" id="ms-x" aria-label="Close"><svg viewBox="0 0 24 24"><path d="M19 6.4 17.6 5 12 10.6 6.4 5 5 6.4 10.6 12 5 17.6 6.4 19l5.6-5.6 5.6 5.6 1.4-1.4-5.6-5.6z" /></svg></button><div class="kicker">Settings</div><h2>Preferences</h2>
+        <div style="margin-top:12px">
+            <div class="setrow"><span>Sound</span><input type="range" id="s-vol" min="0" max="100" value="80" aria-label="Sound"></div>
+            <div class="setrow"><span>Music</span><input type="range" id="s-mus" min="0" max="100" value="50" aria-label="Music"></div>
+            <div class="setrow"><span>Tilt sensitivity</span><input type="range" id="s-sens" min="40" max="160" value="100" aria-label="Tilt sensitivity"></div>
+            <div class="setrow"><span>Invert tilt</span><button class="switch" id="s-inv" role="switch" aria-checked="false" aria-label="Invert tilt"></button></div>
+            <div class="setrow" id="row-motion"><span>Motion controls<small>Tilt your phone to tilt the board</small></span><button class="switch" id="s-motion" role="switch" aria-checked="false" aria-label="Motion controls"></button></div>
+        </div></div></div>
+
+    <script type="module" src="main.js"></script>
+</body>
+
+</html>

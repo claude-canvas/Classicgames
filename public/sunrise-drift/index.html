@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+<title>Sunrise Drift – Play Free Online | Classic Games Arcade</title>
+<!-- seo:head -->
+<meta name="description" content="Fly a hot-air balloon at sunrise over a valley of fairy-chimney rock towers. Rise and sink to find the right wind, drop markers on targets and land softly. Free 3D browser game." />
+<link rel="canonical" href="https://classicgames-flame.vercel.app/sunrise-drift/" />
+<meta name="robots" content="index, follow, max-image-preview:large" />
+<meta name="theme-color" content="#0b0a14" />
+<link rel="icon" href="/favicon.ico" sizes="32x32" />
+<link rel="icon" href="/icon.svg" type="image/svg+xml" />
+<link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+<link rel="manifest" href="/manifest.webmanifest" />
+<meta property="og:site_name" content="Classic Games Arcade" />
+<meta property="og:type" content="website" />
+<meta property="og:title" content="Sunrise Drift – Play Free Online | Classic Games Arcade" />
+<meta property="og:description" content="Fly a hot-air balloon at sunrise over a valley of fairy-chimney rock towers. Rise and sink to find the right wind, drop markers on targets and land softly. Free 3D browser game." />
+<meta property="og:url" content="https://classicgames-flame.vercel.app/sunrise-drift/" />
+<meta property="og:image" content="https://classicgames-flame.vercel.app/og/sunrise-drift.jpg" />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+<meta property="og:image:alt" content="Sunrise Drift gameplay" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="Sunrise Drift – Play Free Online | Classic Games Arcade" />
+<meta name="twitter:description" content="Fly a hot-air balloon at sunrise over a valley of fairy-chimney rock towers. Rise and sink to find the right wind, drop markers on targets and land softly. Free 3D browser game." />
+<meta name="twitter:image" content="https://classicgames-flame.vercel.app/og/sunrise-drift.jpg" />
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "VideoGame",
+      "name": "Sunrise Drift",
+      "description": "Fly a hot-air balloon at sunrise over a valley of fairy-chimney rock towers. Rise and sink to find the right wind, drop markers on targets and land softly. Free 3D browser game.",
+      "url": "https://classicgames-flame.vercel.app/sunrise-drift/",
+      "image": "https://classicgames-flame.vercel.app/thumbs/sunrise-drift.webp",
+      "genre": [
+        "Simulation",
+        "Arcade"
+      ],
+      "gamePlatform": "Web browser",
+      "applicationCategory": "Game",
+      "operatingSystem": "Any",
+      "playMode": "SinglePlayer",
+      "isAccessibleForFree": true,
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "USD",
+        "availability": "https://schema.org/InStock"
+      },
+      "isPartOf": {
+        "@type": "WebSite",
+        "name": "Classic Games Arcade",
+        "url": "https://classicgames-flame.vercel.app/"
+      }
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Games",
+          "item": "https://classicgames-flame.vercel.app/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Sunrise Drift",
+          "item": "https://classicgames-flame.vercel.app/sunrise-drift/"
+        }
+      ]
+    }
+  ]
+}
+</script>
+<!-- /seo:head -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,700;9..144,800&family=Outfit:wght@300;400;600;700&display=swap" rel="stylesheet">
+<style>
+  :root { --ink: #fff8f0; --muted: #f0dccb; --dim: #c4a896; --glass: rgba(40, 22, 30, 0.42); --line: rgba(255, 225, 200, 0.22); --sun: #ffb35c; --rose: #ff7a6b; --display: "Fraunces", Georgia, serif; --ui: "Outfit", system-ui, sans-serif; }
+  * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+  html, body { margin: 0; height: 100%; overflow: hidden; background: #2a1a24; color: var(--ink); font-family: var(--ui); user-select: none; -webkit-user-select: none; touch-action: none; }
+  #view { position: fixed; inset: 0; width: 100%; height: 100%; display: block; cursor: grab; }
+  .hidden { display: none !important; }
+  button { font: inherit; color: inherit; background: none; border: 0; padding: 0; cursor: pointer; }
+  .glass { background: var(--glass); border: 1px solid var(--line); backdrop-filter: blur(14px) saturate(1.3); -webkit-backdrop-filter: blur(14px) saturate(1.3); box-shadow: 0 16px 50px rgba(30, 10, 20, 0.35); }
+  .btn { display: inline-flex; align-items: center; justify-content: center; gap: 8px; height: 48px; padding: 0 26px; border-radius: 999px; font-weight: 600; font-size: 15px; letter-spacing: 0.05em; border: 1px solid var(--line); background: rgba(255, 255, 255, 0.08); transition: background .15s, transform .15s; }
+  .btn:hover { background: rgba(255, 255, 255, 0.16); transform: translateY(-1px); }
+  .btn.pri { border: 0; color: #3a160c; background: linear-gradient(135deg, #ffd27a, #ff9a5a 55%, #ff6f7a); box-shadow: 0 10px 34px rgba(255, 140, 80, 0.45), inset 0 1px 0 rgba(255, 255, 255, 0.55); }
+  .btn.lg { height: 56px; padding: 0 40px; font-size: 17px; }
+  .kicker { font-size: 11px; letter-spacing: 0.4em; color: var(--sun); text-transform: uppercase; font-weight: 600; }
+  #loading { position: fixed; inset: 0; z-index: 50; display: grid; place-items: center; background: #2a1a24; transition: opacity .8s; font-family: var(--display); letter-spacing: .3em; color: var(--muted); }
+  #loading.out { opacity: 0; pointer-events: none; }
+
+  #title { position: fixed; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 16px; text-align: center; pointer-events: none; background: radial-gradient(ellipse at 50% 50%, rgba(40, 15, 25, 0.35), transparent 65%); }
+  #title > * { pointer-events: auto; }
+  .logo { font-family: var(--display); font-weight: 800; font-size: clamp(56px, 11vw, 136px); line-height: .92; margin: 12px 0 8px; letter-spacing: -0.01em; background: linear-gradient(180deg, #fff6e0 15%, #ffc77a 55%, #ff7f6b 100%); -webkit-background-clip: text; background-clip: text; color: transparent; filter: drop-shadow(0 6px 30px rgba(255, 140, 80, 0.4)); }
+  .logo em { font-style: italic; font-weight: 500; }
+  .tag { color: var(--muted); font-size: 16px; max-width: 540px; line-height: 1.5; margin: 0 0 26px; font-weight: 300; text-shadow: 0 2px 12px rgba(0, 0, 0, .4); }
+  .row { display: flex; gap: 12px; flex-wrap: wrap; justify-content: center; }
+  #t-foot { margin-top: 22px; color: var(--muted); font-size: 12px; opacity: .85; text-shadow: 0 1px 8px #000; }
+
+  #flights { position: fixed; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 16px; background: rgba(30, 14, 22, 0.45); }
+  #flights h2 { font-family: var(--display); font-size: 40px; margin: 6px 0 20px; font-weight: 700; }
+  #grid { display: grid; grid-template-columns: repeat(3, minmax(0, 220px)); gap: 14px; max-width: 100%; }
+  .card { position: relative; height: 150px; border-radius: 18px; padding: 16px; text-align: left; display: flex; flex-direction: column; justify-content: flex-end; background: var(--art); border: 1px solid var(--line); overflow: hidden; transition: transform .15s; box-shadow: 0 12px 30px rgba(0, 0, 0, .3); }
+  .card:hover:not([disabled]) { transform: translateY(-3px); }
+  .card[disabled] { filter: grayscale(.7) brightness(.6); cursor: default; }
+  .card .num { position: absolute; top: 10px; left: 14px; font-family: var(--display); font-size: 34px; opacity: .55; }
+  .card .lock { position: absolute; top: 12px; right: 14px; }
+  .card b { font-family: var(--display); font-size: 20px; text-shadow: 0 2px 10px rgba(0, 0, 0, .5); }
+  .card .best { font-size: 12px; color: var(--muted); }
+  .card .st { position: absolute; top: 14px; right: 14px; letter-spacing: 2px; color: rgba(255, 255, 255, .3); }
+  .card .st i { font-style: normal; color: #ffd27a; }
+  @media (max-width: 720px) { #grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } .card { height: 120px; } }
+
+  #brief { position: fixed; inset: 0; display: grid; place-items: center; padding: 16px; }
+  #brief .card2 { border-radius: 24px; padding: 30px 36px; text-align: center; max-width: 520px; }
+  #b-name { font-family: var(--display); font-size: 44px; font-weight: 700; margin: 8px 0; }
+  #b-tasks { color: var(--sun); font-size: 14px; margin-bottom: 12px; }
+  #b-tip { color: var(--muted); line-height: 1.5; margin: 0 0 22px; }
+
+  #hud { position: fixed; inset: 0; pointer-events: none; }
+  #hud > * { pointer-events: auto; }
+  #tasks { position: absolute; top: max(14px, env(safe-area-inset-top)); left: 14px; border-radius: 16px; padding: 10px 14px; display: flex; flex-direction: column; gap: 6px; min-width: 200px; font-size: 13px; }
+  #tasks div { display: flex; align-items: center; gap: 8px; color: var(--muted); }
+  #tasks i { font-style: normal; width: 20px; height: 20px; border-radius: 50%; display: grid; place-items: center; font-size: 11px; background: rgba(255, 255, 255, .12); }
+  #tasks span { flex: 1; } #tasks b { letter-spacing: 2px; color: var(--sun); font-weight: 600; }
+  #tasks .ok { color: #fff; } #tasks .ok i { background: #6fd39a; color: #062; }
+  #compass { position: absolute; top: max(14px, env(safe-area-inset-top)); left: 50%; transform: translateX(-50%); border-radius: 999px; padding: 8px 18px 8px 10px; display: flex; align-items: center; gap: 10px; }
+  #cmp-a { width: 34px; height: 34px; display: grid; place-items: center; font-size: 22px; color: var(--sun); transition: transform .1s; }
+  #cmp-l { font-size: 10px; letter-spacing: .3em; color: var(--dim); } #cmp-d { font-family: var(--display); font-size: 20px; font-weight: 700; }
+  #b-pause { position: absolute; top: 14px; right: 14px; width: 42px; height: 42px; border-radius: 50%; }
+  #altbox { position: absolute; right: 14px; top: 70px; border-radius: 16px; padding: 8px; width: 118px; display: flex; flex-direction: column; align-items: center; gap: 4px; }
+  #alt { width: 100px; height: min(40vh, 300px); }
+  #alt-v { font-family: var(--display); font-size: 20px; font-weight: 700; }
+  #vario { font-size: 12px; color: var(--muted); } #vario.up { color: #8ff0b5; } #vario.dn { color: #ffb0a0; }
+  .gauge { position: absolute; left: 14px; border-radius: 14px; padding: 8px 12px; width: 220px; font-size: 11px; letter-spacing: .2em; color: var(--dim); }
+  .gauge .bar { position: relative; height: 8px; border-radius: 4px; background: rgba(255, 255, 255, .12); margin-top: 6px; overflow: hidden; }
+  .gauge .bar i { position: absolute; inset: 0 auto 0 0; border-radius: 4px; }
+  .gauge b { float: right; color: #fff; letter-spacing: 0; font-size: 13px; }
+  #fuel { bottom: 76px; } #fuel-i { background: linear-gradient(90deg, #ff9a5a, #ffd27a); } #fuel.low #fuel-i { background: #ff5a4a; }
+  #temp { bottom: 18px; } #temp-i { background: linear-gradient(90deg, #6ea8ff, #ffb35c 50%, #ff5a4a); }
+  #temp-h { position: absolute; top: -3px; bottom: -3px; width: 2px; background: #fff; }
+  #ctrls { position: absolute; right: 14px; bottom: 18px; display: flex; gap: 10px; align-items: flex-end; }
+  .cbtn { width: 74px; height: 74px; border-radius: 50%; font-weight: 700; font-size: 12px; letter-spacing: .15em; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2px; }
+  .cbtn small { font-weight: 400; font-size: 10px; color: var(--dim); letter-spacing: .1em; }
+  #c-burn { width: 104px; height: 104px; font-size: 15px; background: rgba(255, 140, 60, .25); border-color: rgba(255, 180, 100, .5); }
+  .cbtn.on { transform: scale(.94); background: rgba(255, 170, 80, .5) !important; }
+  .cbtn.dis { opacity: .35; }
+  #pop { position: absolute; top: 26%; left: 50%; transform: translate(-50%, 10px); text-align: center; opacity: 0; transition: opacity .3s, transform .3s; pointer-events: none; text-shadow: 0 2px 16px rgba(0, 0, 0, .6); }
+  #pop.show { opacity: 1; transform: translate(-50%, 0); }
+  #pop-t { font-family: var(--display); font-size: 40px; font-weight: 700; } #pop-s { color: var(--muted); font-size: 16px; }
+  #toast { position: absolute; bottom: 140px; left: 50%; transform: translateX(-50%); padding: 10px 18px; border-radius: 999px; background: rgba(30, 14, 22, .55); font-size: 14px; opacity: 0; transition: opacity .3s; pointer-events: none; white-space: nowrap; }
+  #toast.show { opacity: 1; }
+
+  .modal { position: fixed; inset: 0; display: grid; place-items: center; background: rgba(30, 12, 20, .5); z-index: 20; padding: 16px; }
+  .mcard { border-radius: 24px; padding: 28px 34px; text-align: center; min-width: min(380px, 92vw); max-width: 92vw; }
+  .mcard h2 { font-family: var(--display); font-size: 34px; margin: 8px 0 12px; }
+  .mcard .col { display: flex; flex-direction: column; gap: 10px; margin-top: 18px; }
+  .stars { font-size: 40px; letter-spacing: 8px; color: rgba(255, 255, 255, .2); }
+  .stars span { transition: color .3s, transform .3s; display: inline-block; } .stars span.on { color: #ffd27a; transform: scale(1.15); text-shadow: 0 0 20px #ffb35c; }
+  #d-rows div { display: flex; justify-content: space-between; gap: 30px; padding: 4px 0; color: var(--muted); border-bottom: 1px solid rgba(255, 255, 255, .06); }
+  #d-score { font-family: var(--display); font-size: 48px; font-weight: 800; margin: 10px 0 0; }
+  .set-row { display: flex; align-items: center; justify-content: space-between; gap: 16px; margin: 12px 0; color: var(--muted); }
+  .seg { display: inline-flex; border-radius: 999px; border: 1px solid var(--line); overflow: hidden; }
+  .seg button { padding: 8px 14px; font-size: 13px; color: var(--muted); } .seg button.on { background: rgba(255, 180, 100, .25); color: #fff; }
+  input[type=range] { accent-color: #ffb35c; width: 160px; }
+  @media (max-width: 640px) {
+    #tasks { min-width: 0; font-size: 11px; padding: 8px 10px; top: 66px; }
+    #compass { top: 10px; } #altbox { top: 64px; width: 96px; } #alt { width: 80px; height: 30vh; }
+    .gauge { width: 150px; } #fuel { bottom: 64px; }
+    .cbtn { width: 62px; height: 62px; } #c-burn { width: 88px; height: 88px; }
+    #ctrls { flex-wrap: wrap; justify-content: flex-end; width: 170px; }
+  }
+</style>
+</head>
+<body>
+<canvas id="view"></canvas>
+<div id="loading">SUNRISE DRIFT</div>
+
+<div id="title" class="hidden">
+  <div class="kicker">A balloon festival over the fairy chimneys</div>
+  <div class="logo">Sunrise <em>Drift</em></div>
+  <p class="tag">You can't steer a balloon — only rise and sink. Find the wind that carries you, drop your marker on the X, and land soft before the propane runs out.</p>
+  <div class="row"><button class="btn pri lg" id="t-play">Fly</button><button class="btn lg" id="t-flights">Flights</button><button class="btn lg" id="t-set" aria-label="Settings">⚙</button></div>
+  <div id="t-foot"></div>
+</div>
+
+<div id="flights" class="hidden"><div class="kicker">Choose a flight</div><h2>Flights</h2><div id="grid"></div><div style="margin-top:20px"><button class="btn" id="f-back">Back</button></div></div>
+
+<div id="brief" class="hidden"><div class="card2 glass"><div class="kicker" id="b-num"></div><div id="b-name"></div><div id="b-tasks"></div><p id="b-tip"></p><button class="btn pri lg" id="b-go">Take off</button></div></div>
+
+<div id="hud" class="hidden">
+  <div id="tasks" class="glass"></div>
+  <div id="compass" class="glass"><div id="cmp-a">➤</div><div><div id="cmp-l"></div><div id="cmp-d"></div></div></div>
+  <button id="b-pause" class="glass" aria-label="Pause">❚❚</button>
+  <div id="altbox" class="glass"><canvas id="alt" width="200" height="600"></canvas><div id="alt-v"></div><div id="vario"></div></div>
+  <div class="gauge glass" id="fuel">PROPANE <b id="fuel-v"></b><div class="bar"><i id="fuel-i"></i></div></div>
+  <div class="gauge glass" id="temp">ENVELOPE <b id="temp-v"></b><div class="bar"><i id="temp-i"></i><span id="temp-h"></span></div></div>
+  <div id="ctrls">
+    <button class="cbtn glass" id="c-cam">VIEW<small>C</small></button>
+    <button class="cbtn glass" id="c-drop">DROP<small>M</small></button>
+    <button class="cbtn glass" id="c-vent">VENT<small>V</small></button>
+    <button class="cbtn glass" id="c-burn">BURN<small>SPACE</small></button>
+  </div>
+  <div id="pop"><div id="pop-t"></div><div id="pop-s"></div></div>
+  <div id="toast"></div>
+</div>
+
+<div class="modal hidden" id="m-pause"><div class="mcard glass"><div class="kicker">Paused</div><h2>Sunrise Drift</h2>
+  <div class="col"><button class="btn pri" id="p-resume">Resume</button><button class="btn" id="p-restart">Restart flight</button><button class="btn" id="p-set">Settings</button><button class="btn" id="p-title">Quit to title</button></div></div></div>
+<div class="modal hidden" id="m-done"><div class="mcard glass"><div class="kicker" id="d-k"></div><h2 id="d-t"></h2>
+  <div class="stars"><span id="s0">★</span><span id="s1">★</span><span id="s2">★</span></div>
+  <div id="d-rows"></div><div id="d-score"></div>
+  <div class="col"><button class="btn pri" id="d-next">Next flight</button><button class="btn" id="d-retry">Fly again</button><button class="btn" id="d-flights">Flights</button></div></div></div>
+<div class="modal hidden" id="m-set"><div class="mcard glass"><div class="kicker">Settings</div><h2>Settings</h2>
+  <div class="set-row">Sound <input type="range" id="st-vol" min="0" max="100"></div>
+  <div class="set-row">Music <input type="range" id="st-mus" min="0" max="100"></div>
+  <div class="set-row">Wind motes <div class="seg" id="st-motes"><button data-v="1">On</button><button data-v="0">Off</button></div></div>
+  <div class="col"><button class="btn pri" id="st-close">Done</button></div></div></div>
+
+<script type="module" src="./main.js"></script>
+</body>
+</html>

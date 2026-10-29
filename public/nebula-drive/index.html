@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+<title>Nebula Drive – Play Free Online | Classic Games Arcade</title>
+<!-- seo:head -->
+<meta name="description" content="A 3D rhythm game on a glowing highway through space. Hit D F J K to the beat of five synthwave tracks composed live in your browser, with holds, combos and overdrive. Free online." />
+<link rel="canonical" href="https://classicgames-flame.vercel.app/nebula-drive/" />
+<meta name="robots" content="index, follow, max-image-preview:large" />
+<meta name="theme-color" content="#0b0a14" />
+<link rel="icon" href="/favicon.ico" sizes="32x32" />
+<link rel="icon" href="/icon.svg" type="image/svg+xml" />
+<link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+<link rel="manifest" href="/manifest.webmanifest" />
+<meta property="og:site_name" content="Classic Games Arcade" />
+<meta property="og:type" content="website" />
+<meta property="og:title" content="Nebula Drive – Play Free Online | Classic Games Arcade" />
+<meta property="og:description" content="A 3D rhythm game on a glowing highway through space. Hit D F J K to the beat of five synthwave tracks composed live in your browser, with holds, combos and overdrive. Free online." />
+<meta property="og:url" content="https://classicgames-flame.vercel.app/nebula-drive/" />
+<meta property="og:image" content="https://classicgames-flame.vercel.app/og/nebula-drive.jpg" />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+<meta property="og:image:alt" content="Nebula Drive gameplay" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="Nebula Drive – Play Free Online | Classic Games Arcade" />
+<meta name="twitter:description" content="A 3D rhythm game on a glowing highway through space. Hit D F J K to the beat of five synthwave tracks composed live in your browser, with holds, combos and overdrive. Free online." />
+<meta name="twitter:image" content="https://classicgames-flame.vercel.app/og/nebula-drive.jpg" />
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "VideoGame",
+      "name": "Nebula Drive",
+      "description": "A 3D rhythm game on a glowing highway through space. Hit D F J K to the beat of five synthwave tracks composed live in your browser, with holds, combos and overdrive. Free online.",
+      "url": "https://classicgames-flame.vercel.app/nebula-drive/",
+      "image": "https://classicgames-flame.vercel.app/thumbs/nebula-drive.webp",
+      "genre": [
+        "Music",
+        "Arcade"
+      ],
+      "gamePlatform": "Web browser",
+      "applicationCategory": "Game",
+      "operatingSystem": "Any",
+      "playMode": "SinglePlayer",
+      "isAccessibleForFree": true,
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "USD",
+        "availability": "https://schema.org/InStock"
+      },
+      "isPartOf": {
+        "@type": "WebSite",
+        "name": "Classic Games Arcade",
+        "url": "https://classicgames-flame.vercel.app/"
+      }
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Games",
+          "item": "https://classicgames-flame.vercel.app/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Nebula Drive",
+          "item": "https://classicgames-flame.vercel.app/nebula-drive/"
+        }
+      ]
+    }
+  ]
+}
+</script>
+<!-- /seo:head -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Audiowide&family=Outfit:wght@300;400;600;800&display=swap" rel="stylesheet">
+<style>
+  :root { --ink: #f4f0ff; --muted: #c2b8e6; --dim: #8579b0; --glass: rgba(10, 6, 26, 0.5); --line: rgba(200, 180, 255, 0.2); --display: "Audiowide", sans-serif; --ui: "Outfit", system-ui, sans-serif; }
+  * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+  html, body { margin: 0; height: 100%; overflow: hidden; background: #03020a; color: var(--ink); font-family: var(--ui); user-select: none; -webkit-user-select: none; touch-action: none; }
+  #view { position: fixed; inset: 0; width: 100%; height: 100%; display: block; }
+  .hidden { display: none !important; }
+  button { font: inherit; color: inherit; background: none; border: 0; padding: 0; cursor: pointer; }
+  .glass { background: var(--glass); border: 1px solid var(--line); backdrop-filter: blur(12px) saturate(1.4); -webkit-backdrop-filter: blur(12px) saturate(1.4); box-shadow: 0 16px 50px rgba(0, 0, 0, .5); }
+  .btn { display: inline-flex; align-items: center; justify-content: center; gap: 8px; height: 50px; padding: 0 28px; border-radius: 12px; font-family: var(--display); font-size: 15px; letter-spacing: .1em; border: 1px solid var(--line); background: rgba(255, 255, 255, .06); transition: background .15s, transform .15s; }
+  .btn:hover { background: rgba(255, 255, 255, .14); transform: translateY(-1px); }
+  .btn.pri { border: 0; color: #12002a; background: linear-gradient(90deg, #ff4fa8, #ffb84a 33%, #3ff0ff 66%, #a46bff); box-shadow: 0 0 34px rgba(160, 100, 255, .5); }
+  .btn.lg { height: 58px; padding: 0 46px; font-size: 18px; }
+  #loading { position: fixed; inset: 0; z-index: 50; display: grid; place-items: center; background: #03020a; transition: opacity .8s; font-family: var(--display); letter-spacing: .4em; color: var(--muted); }
+  #loading.out { opacity: 0; pointer-events: none; }
+  #title { position: fixed; inset: 0; display: grid; grid-template-columns: 1fr minmax(300px, 420px); align-items: center; gap: 30px; padding: 16px 6vw; pointer-events: none; background: linear-gradient(90deg, rgba(3, 2, 10, .7), transparent 50%, rgba(3, 2, 10, .6)); }
+  #title > * { pointer-events: auto; }
+  .logo { font-family: var(--display); font-size: clamp(48px, 8vw, 110px); line-height: .95; background: linear-gradient(100deg, #ff4fa8, #ffb84a 30%, #3ff0ff 60%, #a46bff); -webkit-background-clip: text; background-clip: text; color: transparent; filter: drop-shadow(0 0 30px rgba(160, 100, 255, .5)); }
+  .tag { color: var(--muted); font-size: 16px; max-width: 460px; line-height: 1.5; margin: 14px 0 0; }
+  .keys { margin-top: 18px; display: flex; gap: 8px; } .keys kbd { font-family: var(--display); width: 40px; height: 40px; display: grid; place-items: center; border-radius: 8px; border: 1px solid var(--line); background: rgba(255, 255, 255, .06); font-size: 15px; }
+  .keys kbd:nth-child(1) { color: #ff4fa8; } .keys kbd:nth-child(2) { color: #ffb84a; } .keys kbd:nth-child(3) { color: #3ff0ff; } .keys kbd:nth-child(4) { color: #a46bff; }
+  .panel { border-radius: 18px; padding: 16px; display: flex; flex-direction: column; gap: 10px; }
+  #songs { display: flex; flex-direction: column; gap: 8px; }
+  .song { position: relative; display: flex; flex-direction: column; align-items: flex-start; padding: 12px 16px; border-radius: 12px; border: 1px solid var(--line); background: rgba(255, 255, 255, .04); text-align: left; transition: transform .12s, border-color .12s; overflow: hidden; }
+  .song::before { content: ""; position: absolute; inset: 0; background: linear-gradient(90deg, var(--a), var(--b)); opacity: 0; transition: opacity .2s; }
+  .song.on::before { opacity: .22; } .song.on { border-color: rgba(255, 255, 255, .5); } .song:hover { transform: translateX(3px); }
+  .song b { font-family: var(--display); font-size: 17px; position: relative; } .song span { font-size: 12px; color: var(--muted); position: relative; }
+  .song em { position: absolute; right: 14px; top: 50%; transform: translateY(-50%); font-style: normal; font-family: var(--display); font-size: 24px; color: var(--dim); }
+  .gS { color: #ffe27a !important; text-shadow: 0 0 12px #ffb84a; } .gA { color: #3ff0ff !important; } .gB { color: #8affa0 !important; } .gC { color: #ffb84a !important; } .gD, .gF { color: #ff6a6a !important; }
+  .seg { display: flex; border-radius: 10px; border: 1px solid var(--line); overflow: hidden; } .seg button { flex: 1; padding: 10px; font-family: var(--display); font-size: 12px; letter-spacing: .1em; color: var(--muted); } .seg button.on { background: rgba(160, 100, 255, .3); color: #fff; }
+  .prow { display: flex; gap: 8px; } .prow .btn { flex: 1; }
+  @media (max-width: 800px) { #title { grid-template-columns: 1fr; align-content: center; padding: 16px; gap: 14px; } .tag, .keys { display: none; } .logo { text-align: center; } }
+
+  #hud { position: fixed; inset: 0; pointer-events: none; }
+  #hud > * { pointer-events: auto; }
+  #top { position: absolute; top: max(12px, env(safe-area-inset-top)); left: 16px; right: 16px; display: flex; justify-content: space-between; align-items: flex-start; pointer-events: none; }
+  #h-song { font-family: var(--display); font-size: 14px; letter-spacing: .15em; } #h-diff { font-size: 11px; letter-spacing: .3em; color: var(--muted); }
+  #h-score { font-family: var(--display); font-size: 34px; text-align: right; text-shadow: 0 0 16px rgba(160, 100, 255, .6); }
+  #prog { position: absolute; top: 0; left: 0; right: 0; height: 3px; background: rgba(255, 255, 255, .08); } #prog-i { height: 100%; background: linear-gradient(90deg, #ff4fa8, #3ff0ff); }
+  #comboBox { position: absolute; top: 22%; left: 50%; transform: translateX(-50%); text-align: center; pointer-events: none; }
+  #h-combo { font-family: var(--display); font-size: 56px; line-height: 1; text-shadow: 0 0 20px rgba(160, 100, 255, .8); } #h-mult { font-family: var(--display); font-size: 20px; color: #ffe27a; }
+  #countdown { position: absolute; top: 40%; left: 50%; transform: translate(-50%, -50%); font-family: var(--display); font-size: 100px; pointer-events: none; text-shadow: 0 0 30px #a46bff; }
+  .bar { height: 8px; border-radius: 4px; background: rgba(255, 255, 255, .1); overflow: hidden; }
+  #energy { position: absolute; left: 16px; bottom: 20px; width: 160px; } #energy-i { height: 100%; background: linear-gradient(90deg, #ff4fa8, #3ff0ff); border-radius: 4px; transition: width .15s; } #energy.low #energy-i { background: #ff4a4a; }
+  #energy small, #od small { font-size: 9px; letter-spacing: .3em; color: var(--dim); display: block; margin-bottom: 4px; }
+  #od { position: absolute; right: 16px; bottom: 20px; width: 160px; text-align: right; } #od-i { height: 100%; background: #ffe27a; border-radius: 4px; } #od.ready small { color: #ffe27a; } #od.ready .bar { box-shadow: 0 0 14px #ffb84a; } #od.active #od-i { background: linear-gradient(90deg, #ffe27a, #fff); }
+  #b-od { position: absolute; right: 16px; bottom: 50px; height: 40px; padding: 0 14px; border-radius: 10px; font-family: var(--display); font-size: 11px; letter-spacing: .15em; display: none; }
+  @media (pointer: coarse) { #b-od { display: block; } }
+  #b-quit { position: absolute; top: 60px; right: 16px; width: 38px; height: 38px; border-radius: 50%; font-size: 13px; }
+  #pops { position: absolute; left: 0; right: 0; bottom: 30%; height: 60px; pointer-events: none; }
+  .jpop { position: absolute; transform: translateX(-50%); font-family: var(--display); font-size: 18px; letter-spacing: .08em; animation: jp .65s ease-out forwards; text-shadow: 0 0 12px currentColor; white-space: nowrap; }
+  @keyframes jp { from { opacity: 1; transform: translate(-50%, 10px) scale(1.2); } to { opacity: 0; transform: translate(-50%, -30px) scale(1); } }
+  .modal { position: fixed; inset: 0; display: grid; place-items: center; background: rgba(3, 2, 10, .55); z-index: 20; padding: 16px; }
+  .mcard { border-radius: 20px; padding: 26px 34px; text-align: center; min-width: min(360px, 92vw); max-width: 92vw; }
+  .mcard h2 { font-family: var(--display); font-size: 26px; margin: 4px 0 6px; }
+  .mcard .col { display: flex; flex-direction: column; gap: 10px; margin-top: 16px; }
+  .kicker { font-size: 11px; letter-spacing: .4em; color: #3ff0ff; text-transform: uppercase; }
+  #r-grade { font-family: var(--display); font-size: 96px; line-height: 1; }
+  #r-score { font-family: var(--display); font-size: 30px; } #r-acc, #r-best { color: var(--muted); font-size: 14px; margin-top: 4px; }
+  #r-counts { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; margin-top: 14px; } #r-counts div { display: flex; flex-direction: column; font-size: 10px; letter-spacing: .15em; color: var(--dim); } #r-counts b { font-family: var(--display); font-size: 20px; color: var(--ink); }
+  .set-row { display: flex; align-items: center; justify-content: space-between; gap: 16px; margin: 12px 0; color: var(--muted); }
+  input[type=range] { accent-color: #a46bff; width: 150px; }
+</style>
+</head>
+<body>
+<canvas id="view"></canvas>
+<div id="loading">NEBULA DRIVE</div>
+
+<div id="title" class="hidden">
+  <div>
+    <div class="kicker">A rhythm highway through the stars</div>
+    <div class="logo">NEBULA<br>DRIVE</div>
+    <p class="tag">Every track is composed and played live in your browser — and the gems you hit are written from the same score. Hit them as they cross the line; hold the trails.</p>
+    <div class="keys"><kbd>D</kbd><kbd>F</kbd><kbd>J</kbd><kbd>K</kbd><span style="align-self:center;color:var(--dim);font-size:12px;margin-left:8px">· Space overdrive · tap lanes on touch</span></div>
+  </div>
+  <div class="panel glass">
+    <div id="songs"></div>
+    <div class="seg" id="diff"><button data-v="easy">EASY</button><button data-v="normal">NORMAL</button><button data-v="hard">HARD</button></div>
+    <div class="prow"><button class="btn pri lg" id="t-play">PLAY</button><button class="btn lg" id="t-set" style="flex:0 0 60px;padding:0">⚙</button></div>
+  </div>
+</div>
+
+<div id="hud" class="hidden">
+  <div id="prog"><div id="prog-i"></div></div>
+  <div id="top"><div><div id="h-song"></div><div id="h-diff"></div></div><div id="h-score">0</div></div>
+  <button id="b-quit" class="glass" aria-label="Quit">✕</button>
+  <div id="comboBox"><div id="h-combo"></div><div id="h-mult"></div></div>
+  <div id="countdown"></div>
+  <div id="pops"></div>
+  <div id="energy"><small>ENERGY</small><div class="bar"><div id="energy-i"></div></div></div>
+  <div id="od"><small>OVERDRIVE · SPACE</small><div class="bar"><div id="od-i"></div></div></div>
+  <button id="b-od" class="glass">OVERDRIVE</button>
+</div>
+
+<div class="modal hidden" id="m-res"><div class="mcard glass"><div class="kicker" id="r-k"></div><h2 id="r-song"></h2><div id="r-grade"></div><div id="r-score"></div><div id="r-acc"></div><div id="r-counts"></div><div id="r-best"></div>
+  <div class="col"><button class="btn pri" id="r-again">PLAY AGAIN</button><button class="btn" id="r-next">NEXT TRACK</button><button class="btn" id="r-title">TRACKS</button></div></div></div>
+<div class="modal hidden" id="m-set"><div class="mcard glass"><div class="kicker">Settings</div><h2>SETTINGS</h2>
+  <div class="set-row">Sound <input type="range" id="st-vol" min="0" max="100"></div>
+  <div class="set-row">Music <input type="range" id="st-mus" min="0" max="100"></div>
+  <div class="set-row">Audio offset <span><input type="range" id="st-off" min="-150" max="150" step="5"> <small id="st-off-v"></small></span></div>
+  <div class="set-row">Note speed <span><input type="range" id="st-spd" min="1" max="5" step="0.5"> <small id="st-spd-v"></small></span></div>
+  <div class="set-row">No-fail <div class="seg" id="st-nf" style="width:140px"><button data-v="0">OFF</button><button data-v="1">ON</button></div></div>
+  <div class="col"><button class="btn pri" id="st-close">DONE</button></div></div></div>
+
+<script type="module" src="./main.js"></script>
+</body>
+</html>
