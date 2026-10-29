@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+<title>Neon Strike – Play Free Online | Classic Games Arcade</title>
+<!-- seo:head -->
+<meta name="description" content="Bowl in a neon synthwave alley. Swipe to throw and curve the swipe to hook. Real pin physics, slow-motion strikes, a full 10-frame scoresheet and a CPU opponent. Free 3D bowling game." />
+<link rel="canonical" href="https://classicgames-flame.vercel.app/neon-strike/" />
+<meta name="robots" content="index, follow, max-image-preview:large" />
+<meta name="theme-color" content="#0b0a14" />
+<link rel="icon" href="/favicon.ico" sizes="32x32" />
+<link rel="icon" href="/icon.svg" type="image/svg+xml" />
+<link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+<link rel="manifest" href="/manifest.webmanifest" />
+<meta property="og:site_name" content="Classic Games Arcade" />
+<meta property="og:type" content="website" />
+<meta property="og:title" content="Neon Strike – Play Free Online | Classic Games Arcade" />
+<meta property="og:description" content="Bowl in a neon synthwave alley. Swipe to throw and curve the swipe to hook. Real pin physics, slow-motion strikes, a full 10-frame scoresheet and a CPU opponent. Free 3D bowling game." />
+<meta property="og:url" content="https://classicgames-flame.vercel.app/neon-strike/" />
+<meta property="og:image" content="https://classicgames-flame.vercel.app/og/neon-strike.jpg" />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+<meta property="og:image:alt" content="Neon Strike gameplay" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="Neon Strike – Play Free Online | Classic Games Arcade" />
+<meta name="twitter:description" content="Bowl in a neon synthwave alley. Swipe to throw and curve the swipe to hook. Real pin physics, slow-motion strikes, a full 10-frame scoresheet and a CPU opponent. Free 3D bowling game." />
+<meta name="twitter:image" content="https://classicgames-flame.vercel.app/og/neon-strike.jpg" />
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "VideoGame",
+      "name": "Neon Strike",
+      "description": "Bowl in a neon synthwave alley. Swipe to throw and curve the swipe to hook. Real pin physics, slow-motion strikes, a full 10-frame scoresheet and a CPU opponent. Free 3D bowling game.",
+      "url": "https://classicgames-flame.vercel.app/neon-strike/",
+      "image": "https://classicgames-flame.vercel.app/thumbs/neon-strike.webp",
+      "genre": [
+        "Sports",
+        "Arcade"
+      ],
+      "gamePlatform": "Web browser",
+      "applicationCategory": "Game",
+      "operatingSystem": "Any",
+      "playMode": "SinglePlayer",
+      "isAccessibleForFree": true,
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "USD",
+        "availability": "https://schema.org/InStock"
+      },
+      "isPartOf": {
+        "@type": "WebSite",
+        "name": "Classic Games Arcade",
+        "url": "https://classicgames-flame.vercel.app/"
+      }
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Games",
+          "item": "https://classicgames-flame.vercel.app/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Neon Strike",
+          "item": "https://classicgames-flame.vercel.app/neon-strike/"
+        }
+      ]
+    }
+  ]
+}
+</script>
+<!-- /seo:head -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Monoton&family=Orbitron:wght@500;700;900&family=Outfit:wght@300;400;600;700&display=swap" rel="stylesheet">
+<style>
+  :root { --ink: #f6eeff; --muted: #c5b4e0; --dim: #8a7aa8; --glass: rgba(18, 8, 32, 0.55); --line: rgba(230, 160, 255, 0.22); --cy: #3ff3ff; --mg: #ff3fd6; --display: "Monoton", "Orbitron", sans-serif; --hud: "Orbitron", sans-serif; --ui: "Outfit", system-ui, sans-serif; }
+  * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+  html, body { margin: 0; height: 100%; overflow: hidden; background: #07020e; color: var(--ink); font-family: var(--ui); user-select: none; -webkit-user-select: none; touch-action: none; }
+  #view { position: fixed; inset: 0; width: 100%; height: 100%; display: block; }
+  .hidden { display: none !important; }
+  button { font: inherit; color: inherit; background: none; border: 0; padding: 0; cursor: pointer; }
+  kbd { font-family: var(--ui); font-size: 11px; padding: 1px 6px; border-radius: 4px; border: 1px solid var(--line); background: rgba(255, 255, 255, .08); margin: 0 1px; }
+  .glass { background: var(--glass); border: 1px solid var(--line); backdrop-filter: blur(12px) saturate(1.3); -webkit-backdrop-filter: blur(12px) saturate(1.3); box-shadow: 0 16px 50px rgba(0, 0, 0, .5); }
+  .btn { display: inline-flex; align-items: center; justify-content: center; gap: 8px; height: 50px; padding: 0 28px; border-radius: 10px; font-family: var(--hud); font-weight: 700; font-size: 14px; letter-spacing: 0.12em; border: 1px solid var(--line); background: rgba(255, 255, 255, .05); transition: background .15s, transform .15s, box-shadow .15s; }
+  .btn:hover { background: rgba(255, 255, 255, .12); transform: translateY(-1px); box-shadow: 0 0 24px rgba(255, 63, 214, .35); }
+  .btn.pri { border: 0; color: #12001c; background: linear-gradient(90deg, var(--cy), #b06bff 50%, var(--mg)); box-shadow: 0 0 34px rgba(255, 63, 214, .45), inset 0 1px 0 rgba(255, 255, 255, .5); }
+  .btn.lg { height: 58px; padding: 0 40px; font-size: 15px; }
+  #loading { position: fixed; inset: 0; z-index: 50; display: grid; place-items: center; background: #07020e; transition: opacity .8s; font-family: var(--hud); letter-spacing: .4em; color: var(--muted); }
+  #loading.out { opacity: 0; pointer-events: none; }
+  #title { position: fixed; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 16px; text-align: center; pointer-events: none; background: radial-gradient(ellipse at 50% 45%, rgba(7, 2, 14, .55), transparent 70%); }
+  #title > * { pointer-events: auto; }
+  .logo { font-family: var(--display); font-size: clamp(54px, 11vw, 140px); line-height: 1; color: #fff; text-shadow: 0 0 8px #fff, 0 0 22px var(--mg), 0 0 46px var(--mg), 0 0 80px #b06bff; margin: 0 0 4px; animation: buzz 6s infinite; }
+  .logo span { color: #fff; text-shadow: 0 0 8px #fff, 0 0 22px var(--cy), 0 0 46px var(--cy), 0 0 80px #36a; }
+  @keyframes buzz { 0%, 92%, 100% { opacity: 1; } 93% { opacity: .55; } 94% { opacity: 1; } 96% { opacity: .7; } }
+  .tag { font-family: var(--hud); font-size: 12px; letter-spacing: .5em; color: var(--muted); margin: 6px 0 30px; }
+  .row { display: flex; gap: 12px; flex-wrap: wrap; justify-content: center; }
+  .seg { display: inline-flex; border-radius: 10px; border: 1px solid var(--line); overflow: hidden; margin-top: 16px; }
+  .seg button { padding: 9px 16px; font-size: 12px; font-family: var(--hud); letter-spacing: .1em; color: var(--muted); }
+  .seg button.on { background: rgba(255, 63, 214, .22); color: #fff; }
+  #t-best { margin-top: 18px; color: var(--dim); font-size: 13px; }
+
+  #hud { position: fixed; inset: 0; pointer-events: none; }
+  #hud > * { pointer-events: auto; }
+  #sheetbox { position: absolute; top: max(10px, env(safe-area-inset-top)); left: 50%; transform: translateX(-50%); border-radius: 12px; padding: 6px 8px; max-width: calc(100vw - 80px); overflow-x: auto; }
+  #sheet { border-collapse: collapse; font-family: var(--hud); }
+  #sheet th { font-size: 11px; padding: 0 8px; color: var(--muted); letter-spacing: .1em; }
+  #sheet tr.me th { color: var(--cy); text-shadow: 0 0 10px var(--cy); }
+  #sheet td { border: 1px solid rgba(230, 160, 255, .18); width: 46px; padding: 0; vertical-align: top; }
+  #sheet td.tenth { width: 62px; }
+  #sheet td.cur { background: rgba(255, 63, 214, .14); box-shadow: inset 0 0 12px rgba(255, 63, 214, .4); }
+  .rolls { display: flex; justify-content: flex-end; } .rolls i { font-style: normal; width: 17px; height: 17px; font-size: 11px; display: grid; place-items: center; border-left: 1px solid rgba(230, 160, 255, .15); border-bottom: 1px solid rgba(230, 160, 255, .15); color: #fff; }
+  .tot { text-align: center; font-size: 13px; height: 19px; line-height: 19px; color: #fff; }
+  #sheet td.sum { width: 52px; text-align: center; vertical-align: middle; font-size: 18px; font-weight: 900; color: var(--mg); text-shadow: 0 0 10px var(--mg); }
+  #b-pause { position: absolute; top: 12px; right: 12px; width: 42px; height: 42px; border-radius: 50%; }
+  #prompt { position: absolute; bottom: calc(20vh + 10px); left: 50%; transform: translateX(-50%); width: min(92vw, 700px); text-align: center; color: var(--muted); font-size: 13px; text-shadow: 0 2px 10px #000; pointer-events: none; }
+  #strip { position: absolute; left: 0; right: 0; bottom: 0; height: 20vh; pointer-events: none; opacity: 0; transition: opacity .3s; background: linear-gradient(0deg, rgba(63, 243, 255, .1), transparent); border-top: 1px dashed rgba(63, 243, 255, .35); display: grid; place-items: center; font-family: var(--hud); font-size: 10px; letter-spacing: .4em; color: rgba(63, 243, 255, .7); }
+  #strip.on { opacity: 1; }
+  #meter { position: absolute; bottom: 24vh; left: 50%; transform: translateX(-50%); width: 260px; height: 12px; border-radius: 6px; overflow: hidden; background: rgba(255, 255, 255, .1); opacity: 0; transition: opacity .2s; pointer-events: none; }
+  #meter.on { opacity: 1; } #meter-i { height: 100%; background: linear-gradient(90deg, var(--cy), var(--mg)); box-shadow: 0 0 12px var(--mg); }
+  #hookv { position: absolute; left: 16px; bottom: calc(20vh + 10px); font-family: var(--hud); font-size: 11px; letter-spacing: .15em; color: var(--cy); text-shadow: 0 0 8px var(--cy); pointer-events: none; }
+  #spd { position: absolute; right: 16px; bottom: calc(20vh + 10px); font-family: var(--hud); font-size: 16px; color: var(--mg); text-shadow: 0 0 10px var(--mg); opacity: 0; transition: opacity .3s; pointer-events: none; }
+  #spd.show { opacity: 1; }
+
+  .modal { position: fixed; inset: 0; display: grid; place-items: center; background: rgba(7, 2, 14, .55); z-index: 20; padding: 16px; }
+  .mcard { border-radius: 16px; padding: 28px 34px; text-align: center; min-width: min(360px, 92vw); max-width: 92vw; }
+  .mcard h2 { font-family: var(--hud); font-size: 26px; letter-spacing: .1em; margin: 6px 0 12px; }
+  .mcard .col { display: flex; flex-direction: column; gap: 10px; margin-top: 18px; }
+  .kicker { font-family: var(--hud); font-size: 11px; letter-spacing: .4em; color: var(--cy); text-transform: uppercase; }
+  #r-score { font-family: var(--display); font-size: 80px; color: #fff; text-shadow: 0 0 10px #fff, 0 0 30px var(--mg); line-height: 1.1; }
+  #r-best, #r-stats, #r-vs { color: var(--muted); margin-top: 4px; }
+  .set-row { display: flex; align-items: center; justify-content: space-between; gap: 16px; margin: 12px 0; color: var(--muted); }
+  .set-row .seg { margin: 0; }
+  input[type=range] { accent-color: #ff3fd6; width: 160px; }
+  @media (max-width: 700px) { #sheet td { width: 28px; } #sheet td.tenth { width: 40px; } .rolls i { width: 13px; height: 14px; font-size: 9px; } .tot { font-size: 10px; } #sheet th { font-size: 9px; padding: 0 4px; } #sheet td.sum { width: 34px; font-size: 13px; } }
+</style>
+</head>
+<body>
+<canvas id="view"></canvas>
+<div id="loading">NEON STRIKE</div>
+
+<div id="title" class="hidden">
+  <div class="logo">NEON <span>STRIKE</span></div>
+  <div class="tag">MIDNIGHT · TEN PIN · SYNTHWAVE</div>
+  <div class="row"><button class="btn pri lg" id="t-solo">Solo game</button><button class="btn lg" id="t-cpu">Vs CPU</button><button class="btn lg" id="t-set" aria-label="Settings">⚙</button></div>
+  <div class="seg" id="t-skill"><button data-v="0">ROOKIE</button><button data-v="1">LEAGUE</button><button data-v="2">PRO</button></div>
+  <div id="t-best"></div>
+</div>
+
+<div id="hud" class="hidden">
+  <div id="sheetbox" class="glass"><table id="sheet"></table></div>
+  <button id="b-pause" class="glass" aria-label="Pause">❚❚</button>
+  <div id="strip">DRAG HERE TO MOVE</div>
+  <div id="prompt"></div>
+  <div id="meter"><div id="meter-i"></div></div>
+  <div id="hookv"></div>
+  <div id="spd"></div>
+</div>
+
+<div class="modal hidden" id="m-pause"><div class="mcard glass"><div class="kicker">Paused</div><h2>NEON STRIKE</h2>
+  <div class="col"><button class="btn pri" id="p-resume">Resume</button><button class="btn" id="p-restart">New game</button><button class="btn" id="p-set">Settings</button><button class="btn" id="p-title">Quit to title</button></div></div></div>
+<div class="modal hidden" id="m-done"><div class="mcard glass"><div class="kicker" id="r-k"></div><div id="r-score"></div><div id="r-vs"></div><div id="r-stats"></div><div id="r-best"></div>
+  <div class="col"><button class="btn pri" id="r-again">Play again</button><button class="btn" id="r-title">Title</button></div></div></div>
+<div class="modal hidden" id="m-set"><div class="mcard glass"><div class="kicker">Settings</div><h2>SETTINGS</h2>
+  <div class="set-row">Sound <input type="range" id="st-vol" min="0" max="100"></div>
+  <div class="set-row">Music <input type="range" id="st-mus" min="0" max="100"></div>
+  <div class="set-row">Aim preview <div class="seg" id="st-prev"><button data-v="off">OFF</button><button data-v="short">SHORT</button><button data-v="full">FULL</button></div></div>
+  <div class="col"><button class="btn pri" id="st-close">Done</button></div></div></div>
+
+<script type="module" src="./main.js"></script>
+</body>
+</html>

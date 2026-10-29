@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+<title>Echoes of the Hollow</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;800&family=Nunito:wght@400;700;800&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
+<style>
+  :root { --ink: #f6f1e4; --muted: #d9ceb6; --gold: #f2c86e; --glass: rgba(16, 20, 14, 0.5); --line: rgba(240, 225, 190, 0.22); }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; height: 100%; overflow: hidden; background: #0d110b; color: var(--ink); font-family: "Nunito", system-ui, sans-serif; user-select: none; -webkit-user-select: none; touch-action: none; }
+  #view { position: fixed; inset: 0; width: 100%; height: 100%; display: block; cursor: pointer; }
+  .hide { display: none !important; }
+  .glass { background: var(--glass); border: 1px solid var(--line); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); border-radius: 12px; }
+  #loading { position: fixed; inset: 0; z-index: 10; display: grid; place-items: center; text-align: center; background: radial-gradient(circle at 50% 40%, #22301c, #0b0e09 70%); transition: opacity 1s; }
+  #loading.out { opacity: 0; pointer-events: none; }
+  .logo { font-family: "Cinzel", Georgia, serif; font-weight: 800; font-size: clamp(34px, 6vw, 72px); letter-spacing: .06em; background: linear-gradient(180deg, #fff6dc, #f2c86e 60%, #c98a3a); -webkit-background-clip: text; background-clip: text; color: transparent; filter: drop-shadow(0 0 22px rgba(242, 200, 110, .45)); }
+  #loading .sub { color: var(--muted); letter-spacing: .3em; font-size: 12px; text-transform: uppercase; margin-top: 8px; }
+  #loading .bar { width: 240px; height: 3px; border-radius: 3px; background: rgba(255, 255, 255, .12); margin: 22px auto 0; overflow: hidden; } #ld-bar { display: block; height: 100%; width: 0; background: var(--gold); transition: width .2s; }
+  #hud { position: fixed; inset: 0; pointer-events: none; }
+  #title { position: absolute; top: max(14px, env(safe-area-inset-top)); left: 16px; padding: 10px 16px; }
+  #title b { font-family: "Cinzel", serif; letter-spacing: .08em; font-size: 18px; color: var(--gold); }
+  #title div { font-size: 12px; color: var(--muted); margin-top: 2px; }
+  #help { position: absolute; left: 16px; bottom: max(16px, env(safe-area-inset-bottom)); padding: 12px 16px; font-size: 13px; line-height: 1.9; color: var(--muted); }
+  #help kbd { display: inline-block; min-width: 22px; text-align: center; font: 800 11px "Nunito", sans-serif; padding: 1px 6px; border: 1px solid var(--line); border-radius: 5px; color: var(--ink); background: rgba(255, 255, 255, .06); margin-right: 2px; }
+  #assets { position: absolute; right: 16px; bottom: max(16px, env(safe-area-inset-bottom)); max-width: min(440px, 60vw); padding: 10px 14px; font-size: 12px; color: var(--muted); text-align: right; line-height: 1.5; } #assets b { color: var(--ink); } #assets .warn { color: #ffb38a; }
+  #fps { position: absolute; top: max(16px, env(safe-area-inset-top)); right: 16px; font-size: 12px; color: var(--muted); padding: 6px 10px; }
+  #lockhint { position: absolute; top: 50%; left: 50%; transform: translate(-50%, 70px); padding: 8px 14px; font-size: 13px; color: var(--ink); animation: pulse 2.4s infinite; }
+  @keyframes pulse { 50% { opacity: .55; } }
+  #t-jump { display: none; } @media (pointer: coarse) { #t-jump { display: block; position: absolute; right: 22px; bottom: 120px; width: 80px; height: 80px; border-radius: 50%; color: var(--ink); font: 800 13px "Nunito", sans-serif; pointer-events: auto; } #help, #lockhint { display: none; } }
+</style>
+</head>
+<body>
+<canvas id="view"></canvas>
+<div id="loading"><div><div class="logo">Echoes of the Hollow</div><div class="sub">Growing the forest…</div><div class="bar"><i id="ld-bar"></i></div></div></div>
+<div id="hud" class="hide">
+  <div id="title" class="glass"><b>Echoes of the Hollow</b><div>Wander the forest freely</div></div>
+  <div id="fps" class="glass"></div>
+  <div id="help" class="glass"><kbd>W</kbd><kbd>A</kbd><kbd>S</kbd><kbd>D</kbd> move · <kbd>Shift</kbd> sprint · <kbd>Space</kbd> jump<br>Mouse to look (click to capture, <kbd>Esc</kbd> to release) · scroll to zoom · <kbd>H</kbd> hide help</div>
+  <div id="assets" class="glass"></div>
+  <div id="lockhint" class="glass">Click to look around with the mouse</div>
+  <button id="t-jump" class="glass">JUMP</button>
+</div>
+<script type="module" src="./main.js"></script>
+</body>
+</html>

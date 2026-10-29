@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+<title>Storm Beacon – Play Free Online | Classic Games Arcade</title>
+<!-- seo:head -->
+<meta name="description" content="Keep the lighthouse on a stormy night. Sweep the great beam across a heaving sea to guide blind ships past hidden reefs into harbour, with lightning and a fog horn. Free 3D game." />
+<link rel="canonical" href="https://classicgames-flame.vercel.app/storm-beacon/" />
+<meta name="robots" content="index, follow, max-image-preview:large" />
+<meta name="theme-color" content="#0b0a14" />
+<link rel="icon" href="/favicon.ico" sizes="32x32" />
+<link rel="icon" href="/icon.svg" type="image/svg+xml" />
+<link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+<link rel="manifest" href="/manifest.webmanifest" />
+<meta property="og:site_name" content="Classic Games Arcade" />
+<meta property="og:type" content="website" />
+<meta property="og:title" content="Storm Beacon – Play Free Online | Classic Games Arcade" />
+<meta property="og:description" content="Keep the lighthouse on a stormy night. Sweep the great beam across a heaving sea to guide blind ships past hidden reefs into harbour, with lightning and a fog horn. Free 3D game." />
+<meta property="og:url" content="https://classicgames-flame.vercel.app/storm-beacon/" />
+<meta property="og:image" content="https://classicgames-flame.vercel.app/og/storm-beacon.jpg" />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+<meta property="og:image:alt" content="Storm Beacon gameplay" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="Storm Beacon – Play Free Online | Classic Games Arcade" />
+<meta name="twitter:description" content="Keep the lighthouse on a stormy night. Sweep the great beam across a heaving sea to guide blind ships past hidden reefs into harbour, with lightning and a fog horn. Free 3D game." />
+<meta name="twitter:image" content="https://classicgames-flame.vercel.app/og/storm-beacon.jpg" />
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "VideoGame",
+      "name": "Storm Beacon",
+      "description": "Keep the lighthouse on a stormy night. Sweep the great beam across a heaving sea to guide blind ships past hidden reefs into harbour, with lightning and a fog horn. Free 3D game.",
+      "url": "https://classicgames-flame.vercel.app/storm-beacon/",
+      "image": "https://classicgames-flame.vercel.app/thumbs/storm-beacon.webp",
+      "genre": [
+        "Strategy",
+        "Arcade"
+      ],
+      "gamePlatform": "Web browser",
+      "applicationCategory": "Game",
+      "operatingSystem": "Any",
+      "playMode": "SinglePlayer",
+      "isAccessibleForFree": true,
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "USD",
+        "availability": "https://schema.org/InStock"
+      },
+      "isPartOf": {
+        "@type": "WebSite",
+        "name": "Classic Games Arcade",
+        "url": "https://classicgames-flame.vercel.app/"
+      }
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Games",
+          "item": "https://classicgames-flame.vercel.app/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Storm Beacon",
+          "item": "https://classicgames-flame.vercel.app/storm-beacon/"
+        }
+      ]
+    }
+  ]
+}
+</script>
+<!-- /seo:head -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Outfit:wght@300;400;600;700&display=swap" rel="stylesheet">
+<style>
+  :root { --ink: #eef3f8; --muted: #b6c3cf; --dim: #7d8a96; --glass: rgba(8, 14, 20, 0.5); --line: rgba(200, 220, 240, 0.16); --beam: #ffe3a8; --red: #ff5a48; --display: "Cormorant Garamond", Georgia, serif; --ui: "Outfit", system-ui, sans-serif; }
+  * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+  html, body { margin: 0; height: 100%; overflow: hidden; background: #04070b; color: var(--ink); font-family: var(--ui); user-select: none; -webkit-user-select: none; touch-action: none; }
+  #view { position: fixed; inset: 0; width: 100%; height: 100%; display: block; cursor: crosshair; }
+  .hidden { display: none !important; }
+  button { font: inherit; color: inherit; background: none; border: 0; padding: 0; cursor: pointer; }
+  .glass { background: var(--glass); border: 1px solid var(--line); backdrop-filter: blur(12px) saturate(1.2); -webkit-backdrop-filter: blur(12px) saturate(1.2); box-shadow: 0 16px 50px rgba(0, 0, 0, 0.45); }
+  .btn { display: inline-flex; align-items: center; justify-content: center; gap: 8px; height: 48px; padding: 0 26px; border-radius: 6px; font-weight: 600; font-size: 15px; letter-spacing: 0.08em; border: 1px solid var(--line); background: rgba(255, 255, 255, 0.06); transition: background .15s, transform .15s; }
+  .btn:hover { background: rgba(255, 255, 255, 0.14); transform: translateY(-1px); }
+  .btn.pri { border: 0; color: #1d1405; background: linear-gradient(180deg, #ffeab8, #f2b85a); box-shadow: 0 0 40px rgba(255, 210, 130, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.6); }
+  .btn.lg { height: 56px; padding: 0 40px; font-size: 16px; }
+  .kicker { font-size: 11px; letter-spacing: 0.45em; color: var(--beam); text-transform: uppercase; font-weight: 600; }
+  #loading { position: fixed; inset: 0; z-index: 50; display: grid; place-items: center; background: #04070b; transition: opacity .8s; font-family: var(--display); letter-spacing: .35em; color: var(--muted); font-size: 22px; }
+  #loading.out { opacity: 0; pointer-events: none; }
+
+  #title { position: fixed; inset: 0; display: flex; flex-direction: column; align-items: flex-start; justify-content: center; padding: 0 8vw; pointer-events: none; background: linear-gradient(90deg, rgba(2, 5, 9, 0.75), transparent 60%); }
+  #title > * { pointer-events: auto; }
+  .logo { font-family: var(--display); font-weight: 700; font-size: clamp(56px, 10vw, 128px); line-height: .9; margin: 14px 0 10px; color: #f4f1ea; text-shadow: 0 0 40px rgba(255, 220, 150, 0.35); }
+  .tag { color: var(--muted); font-size: 16px; max-width: 460px; line-height: 1.55; margin: 0 0 28px; font-weight: 300; }
+  .row { display: flex; gap: 12px; flex-wrap: wrap; }
+  #t-foot { margin-top: 22px; color: var(--dim); font-size: 12px; }
+  @media (max-width: 640px) { #title { align-items: center; text-align: center; padding: 16px; background: rgba(2, 5, 9, .45); } .row { justify-content: center; } }
+
+  #nights { position: fixed; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 16px; background: rgba(2, 5, 9, 0.55); }
+  #nights h2 { font-family: var(--display); font-size: 44px; margin: 6px 0 20px; }
+  #grid { display: grid; grid-template-columns: repeat(5, minmax(0, 170px)); gap: 12px; max-width: 100%; }
+  .card { position: relative; height: 170px; border-radius: 12px; padding: 14px; text-align: left; display: flex; flex-direction: column; justify-content: flex-end; background: linear-gradient(180deg, #0b1520, #050a10); border: 1px solid var(--line); overflow: hidden; transition: transform .15s, border-color .15s; }
+  .card::before { content: ""; position: absolute; left: 50%; top: -30%; width: 6px; height: 140%; background: linear-gradient(180deg, rgba(255, 230, 170, .5), transparent); transform: rotate(35deg); filter: blur(6px); }
+  .card:hover:not([disabled]) { transform: translateY(-3px); border-color: rgba(255, 220, 150, .5); }
+  .card[disabled] { opacity: .45; cursor: default; }
+  .card .num { position: absolute; top: 10px; left: 14px; font-family: var(--display); font-size: 30px; color: var(--beam); opacity: .8; }
+  .card .lock { position: absolute; top: 12px; right: 14px; }
+  .card b { font-family: var(--display); font-size: 22px; }
+  .card .best { font-size: 12px; color: var(--muted); }
+  .card .st { position: absolute; top: 14px; right: 12px; letter-spacing: 2px; color: rgba(255, 255, 255, .25); font-size: 13px; }
+  .card .st i { font-style: normal; color: var(--beam); }
+  @media (max-width: 900px) { #grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } .card { height: 120px; } }
+
+  #brief { position: fixed; inset: 0; display: grid; place-items: center; padding: 16px; }
+  .card2 { border-radius: 16px; padding: 30px 36px; text-align: center; max-width: 520px; }
+  #b-name { font-family: var(--display); font-size: 48px; font-weight: 700; margin: 6px 0; }
+  #b-tasks { color: var(--beam); font-size: 14px; margin-bottom: 12px; letter-spacing: .1em; }
+  #b-tip { color: var(--muted); line-height: 1.55; margin: 0 0 22px; }
+
+  #hud { position: fixed; inset: 0; pointer-events: none; }
+  #hud > * { pointer-events: auto; }
+  #bar { position: absolute; top: max(12px, env(safe-area-inset-top)); left: 50%; transform: translateX(-50%); border-radius: 12px; padding: 8px 18px; display: flex; gap: 22px; align-items: center; white-space: nowrap; }
+  #h-name { font-size: 11px; letter-spacing: .3em; color: var(--dim); }
+  .stat { display: flex; flex-direction: column; align-items: center; } .stat small { font-size: 9px; letter-spacing: .25em; color: var(--dim); } .stat b { font-family: var(--display); font-size: 24px; line-height: 1; }
+  #lives { display: flex; gap: 6px; } #lives i { width: 18px; height: 18px; border-radius: 50%; border: 4px solid #ff6b50; box-shadow: 0 0 10px rgba(255, 100, 70, .5), inset 0 0 0 2px #fff; } #lives i.lost { opacity: .18; box-shadow: none; }
+  #b-pause { position: absolute; top: 12px; right: 12px; width: 42px; height: 42px; border-radius: 50%; }
+  #ctrls { position: absolute; right: 16px; bottom: 18px; display: flex; gap: 12px; align-items: flex-end; }
+  .cbtn { width: 78px; height: 78px; border-radius: 50%; font-weight: 700; font-size: 11px; letter-spacing: .15em; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2px; position: relative; }
+  .cbtn small { font-weight: 400; font-size: 10px; color: var(--dim); letter-spacing: .1em; }
+  .cbtn.on { background: rgba(255, 220, 150, .3); border-color: var(--beam); }
+  .cbtn.dis { opacity: .5; }
+  #c-horn { width: 96px; height: 96px; }
+  #horn-i { position: absolute; inset: -3px; border-radius: 50%; background: conic-gradient(var(--beam) var(--p, 360deg), transparent 0); -webkit-mask: radial-gradient(circle, transparent 62%, #000 64%); mask: radial-gradient(circle, transparent 62%, #000 64%); pointer-events: none; }
+  #edges i { position: fixed; pointer-events: none; }
+  #edges .edge { width: 0; height: 0; border-left: 16px solid rgba(255, 230, 170, .85); border-top: 9px solid transparent; border-bottom: 9px solid transparent; filter: drop-shadow(0 0 6px rgba(255, 220, 150, .6)); }
+  #edges .edge.warn { border-left-color: var(--red); animation: pulse .6s infinite alternate; }
+  #edges .ring { width: 54px; height: 54px; border: 2px solid var(--red); border-radius: 50%; transform: translate(-50%, -50%); animation: pulse .6s infinite alternate; }
+  @keyframes pulse { from { opacity: .35; } to { opacity: 1; } }
+  #pop { position: absolute; top: 24%; left: 50%; transform: translate(-50%, 10px); text-align: center; opacity: 0; transition: opacity .3s, transform .3s; pointer-events: none; text-shadow: 0 2px 16px #000; }
+  #pop.show { opacity: 1; transform: translate(-50%, 0); }
+  #pop-t { font-family: var(--display); font-size: 46px; font-weight: 700; } #pop-s { color: var(--muted); }
+  #toast { position: absolute; bottom: 130px; left: 50%; transform: translateX(-50%); padding: 9px 18px; border-radius: 999px; background: rgba(4, 8, 12, .6); font-size: 14px; opacity: 0; transition: opacity .3s; pointer-events: none; white-space: nowrap; }
+  #toast.show { opacity: 1; }
+  #hint { position: absolute; left: 16px; bottom: 18px; color: var(--dim); font-size: 12px; max-width: 280px; line-height: 1.5; pointer-events: none; }
+
+  .modal { position: fixed; inset: 0; display: grid; place-items: center; background: rgba(2, 5, 9, .55); z-index: 20; padding: 16px; }
+  .mcard { border-radius: 16px; padding: 28px 34px; text-align: center; min-width: min(380px, 92vw); max-width: 92vw; }
+  .mcard h2 { font-family: var(--display); font-size: 38px; margin: 8px 0 10px; }
+  .mcard .col { display: flex; flex-direction: column; gap: 10px; margin-top: 18px; }
+  .stars { font-size: 40px; letter-spacing: 8px; color: rgba(255, 255, 255, .15); }
+  .stars span { transition: color .3s, transform .3s; display: inline-block; } .stars span.on { color: var(--beam); transform: scale(1.15); text-shadow: 0 0 20px #ffd27a; }
+  .drow { display: flex; justify-content: space-between; gap: 40px; padding: 5px 0; color: var(--muted); border-bottom: 1px solid rgba(255, 255, 255, .06); }
+  #d-score { font-family: var(--display); font-size: 50px; font-weight: 700; margin-top: 8px; }
+  .set-row { display: flex; align-items: center; justify-content: space-between; gap: 16px; margin: 12px 0; color: var(--muted); }
+  input[type=range] { accent-color: #f2b85a; width: 160px; }
+  @media (max-width: 640px) { #bar { gap: 12px; padding: 6px 12px; } #h-name { display: none; } .cbtn { width: 64px; height: 64px; } #c-horn { width: 80px; height: 80px; } #hint { display: none; } }
+</style>
+</head>
+<body>
+<canvas id="view"></canvas>
+<div id="loading">STORM BEACON</div>
+
+<div id="title" class="hidden">
+  <div class="kicker">A lighthouse keeper's longest night</div>
+  <div class="logo">Storm<br>Beacon</div>
+  <p class="tag">Ships are running for harbour blind through the storm, and the reefs are invisible to them. Sweep the great light across the sea and bring every crew home.</p>
+  <div class="row"><button class="btn pri lg" id="t-play">Light the lamp</button><button class="btn lg" id="t-nights">Nights</button><button class="btn lg" id="t-set" aria-label="Settings">⚙</button></div>
+  <div id="t-foot"></div>
+</div>
+<div id="nights" class="hidden"><div class="kicker">Choose a night</div><h2>Nights</h2><div id="grid"></div><div style="margin-top:20px"><button class="btn" id="n-back">Back</button></div></div>
+<div id="brief" class="hidden"><div class="card2 glass"><div class="kicker" id="b-num"></div><div id="b-name"></div><div id="b-tasks"></div><p id="b-tip"></p><button class="btn pri lg" id="b-go">Light the lamp</button></div></div>
+
+<div id="hud" class="hidden">
+  <div id="bar" class="glass"><div id="h-name"></div><div class="stat"><small>SAVED</small><b id="h-saved"></b></div><div id="lives"></div><div class="stat"><small>SCORE</small><b id="h-score"></b></div></div>
+  <button id="b-pause" class="glass" aria-label="Pause">❚❚</button>
+  <div id="ctrls">
+    <button class="cbtn glass" id="c-view">VIEW<small>C</small></button>
+    <button class="cbtn glass" id="c-focus">FOCUS<small>HOLD</small></button>
+    <button class="cbtn glass" id="c-horn"><span id="horn-i"></span>HORN<small>SPACE</small></button>
+  </div>
+  <div id="hint">Point at the sea to swing the beam. Ships in the light steer for the channel. Red markers: a ship in the dark near the rocks.</div>
+  <div id="edges"></div>
+  <div id="pop"><div id="pop-t"></div><div id="pop-s"></div></div>
+  <div id="toast"></div>
+</div>
+
+<div class="modal hidden" id="m-pause"><div class="mcard glass"><div class="kicker">Paused</div><h2>Storm Beacon</h2>
+  <div class="col"><button class="btn pri" id="p-resume">Resume</button><button class="btn" id="p-restart">Restart night</button><button class="btn" id="p-set">Settings</button><button class="btn" id="p-title">Quit to title</button></div></div></div>
+<div class="modal hidden" id="m-done"><div class="mcard glass"><div class="kicker" id="d-k"></div><h2 id="d-t"></h2>
+  <div class="stars"><span id="s0">★</span><span id="s1">★</span><span id="s2">★</span></div>
+  <div class="drow"><span>Ships saved</span><b id="d-saved"></b></div><div class="drow"><span>Wrecked</span><b id="d-lost"></b></div><div id="d-score"></div>
+  <div class="col"><button class="btn pri" id="d-next">Next night</button><button class="btn" id="d-retry">Try again</button><button class="btn" id="d-nights">Nights</button></div></div></div>
+<div class="modal hidden" id="m-set"><div class="mcard glass"><div class="kicker">Settings</div><h2>Settings</h2>
+  <div class="set-row">Sound <input type="range" id="st-vol" min="0" max="100"></div>
+  <div class="set-row">Music <input type="range" id="st-mus" min="0" max="100"></div>
+  <div class="set-row">Rain density <input type="range" id="st-rain" min="0" max="100"></div>
+  <div class="col"><button class="btn pri" id="st-close">Done</button></div></div></div>
+
+<script type="module" src="./main.js"></script>
+</body>
+</html>

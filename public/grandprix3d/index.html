@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <title>Grand Prix 3D</title>
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Titillium+Web:ital,wght@0,400;0,600;0,700;0,900;1,700;1,900&display=swap" rel="stylesheet">
+    <style>
+        * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+        html, body { margin: 0; height: 100%; overflow: hidden; background: #0d1018; color: #fff; font-family: "Titillium Web", "Segoe UI", system-ui, sans-serif; user-select: none; -webkit-user-select: none; touch-action: none; overscroll-behavior: none; }
+        #view { position: fixed; inset: 0; width: 100%; height: 100%; display: block; }
+        .hidden { display: none !important; }
+        button { font: inherit; color: inherit; cursor: pointer; border: 0; background: none; }
+        :focus-visible { outline: 3px solid #fff; outline-offset: 3px; }
+        .num { font-variant-numeric: tabular-nums; font-weight: 700; }
+        .glass { background: rgba(12, 14, 22, 0.62); border: 1px solid rgba(255, 255, 255, 0.08); }
+
+        .corner { position: fixed; top: calc(12px + env(safe-area-inset-top)); z-index: 6; width: 44px; height: 44px; border-radius: 10px; display: grid; place-items: center; }
+        .corner svg { width: 21px; height: 21px; fill: #fff; }
+        #pause { left: calc(12px + env(safe-area-inset-left)); }
+        #mute { right: calc(12px + env(safe-area-inset-right)); }
+        #cam { right: calc(62px + env(safe-area-inset-right)); }
+        #mute[aria-pressed="true"] .on, #mute[aria-pressed="false"] .off { display: none; }
+        body[data-state="title"] #pause, body[data-state="results"] #pause, body[data-state="title"] #cam, body[data-state="results"] #cam { display: none; }
+        .home { position: fixed; top: calc(12px + env(safe-area-inset-top)); left: calc(12px + env(safe-area-inset-left)); z-index: 7; height: 44px; padding: 0 16px; border-radius: 10px; display: flex; align-items: center; color: #fff; text-decoration: none; font-weight: 600; }
+
+        /* ---------- HUD ---------- */
+        #hud { position: fixed; inset: 0; pointer-events: none; text-shadow: 0 1px 3px rgba(0, 0, 0, 0.4); }
+        body[data-state="title"] #hud, body[data-state="results"] #hud, body[data-state="paused"] #hud { display: none; }
+        #posbox { position: absolute; top: calc(12px + env(safe-area-inset-top)); left: calc(64px + env(safe-area-inset-left)); display: flex; align-items: stretch; border-radius: 10px; overflow: hidden; }
+        #posbox .p { padding: 2px 12px 4px; background: #e10600; display: flex; align-items: baseline; gap: 2px; font-style: italic; }
+        #posbox .p small { font-size: 13px; font-weight: 700; opacity: 0.85; margin-right: 2px; }
+        #pos { font-size: 34px; line-height: 1.1; font-weight: 900; }
+        #posbox .p span { font-size: 16px; font-weight: 700; opacity: 0.85; }
+        #posbox .l { padding: 4px 12px; display: flex; flex-direction: column; justify-content: center; }
+        #posbox .l small, #timebox small { font-size: 10px; font-weight: 700; letter-spacing: 0.16em; opacity: 0.7; }
+        #lap { font-size: 20px; line-height: 1; font-weight: 700; }
+        #mapbox { position: absolute; top: calc(66px + env(safe-area-inset-top)); left: calc(12px + env(safe-area-inset-left)); width: 112px; padding: 8px; border-radius: 12px; }
+        #map { width: 100%; height: auto; display: block; overflow: visible; }
+        #timebox { position: absolute; top: calc(12px + env(safe-area-inset-top)); right: calc(114px + env(safe-area-inset-right)); padding: 5px 12px 6px; border-radius: 10px; text-align: right; min-width: 132px; }
+        #timebox div { display: flex; justify-content: space-between; gap: 10px; align-items: baseline; }
+        #time { font-size: 21px; line-height: 1.1; }
+        #bestlap, #total { font-size: 14px; color: #c9b8ff; }
+        #total { color: #ddd; }
+        #speedo { position: absolute; left: 50%; bottom: calc(16px + env(safe-area-inset-bottom)); transform: translateX(-50%); padding: 8px 16px 6px; border-radius: 16px; text-align: center; min-width: 200px; }
+        #rev { display: flex; gap: 3px; justify-content: center; margin-bottom: 4px; }
+        #rev i { width: 9px; height: 9px; border-radius: 50%; background: rgba(255, 255, 255, 0.12); }
+        #rev i.g.on { background: #2bff6a; box-shadow: 0 0 8px #2bff6a; }
+        #rev i.r.on { background: #ff2b3a; box-shadow: 0 0 8px #ff2b3a; }
+        #rev i.b.on { background: #3b8cff; box-shadow: 0 0 8px #3b8cff; }
+        #speedrow { display: flex; align-items: center; justify-content: center; gap: 12px; }
+        #kmh { font-size: 44px; line-height: 0.95; font-weight: 900; font-style: italic; min-width: 92px; text-align: right; }
+        #speedrow .u { font-size: 11px; letter-spacing: 0.18em; opacity: 0.7; font-weight: 700; text-align: left; line-height: 1.2; }
+        #gear { width: 42px; height: 46px; border-radius: 8px; display: grid; place-items: center; font-size: 32px; font-weight: 900; background: rgba(255, 255, 255, 0.1); }
+        #lights { position: absolute; top: calc(18% + env(safe-area-inset-top)); left: 50%; transform: translateX(-50%); display: flex; gap: 10px; padding: 12px 14px; border-radius: 16px; background: #0b0b0e; box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5); opacity: 0; transition: opacity .2s; }
+        #lights.show { opacity: 1; }
+        #lights div { width: 44px; display: grid; gap: 8px; }
+        #lights div::before, #lights div::after { content: ""; width: 44px; height: 44px; border-radius: 50%; background: #2a0a0a; box-shadow: inset 0 0 0 3px #1a1a1e; }
+        #lights div.on::before, #lights div.on::after { background: radial-gradient(circle at 40% 35%, #ff8a8a, #ff1010 45%, #b00000); box-shadow: 0 0 22px #ff1a1a, inset 0 0 0 3px #1a1a1e; }
+        #msg { position: absolute; top: 24%; left: 0; right: 0; text-align: center; opacity: 0; }
+        #msg.show { animation: msg 2.4s ease-out forwards; }
+        #msg-big { font-size: clamp(38px, 8vw, 72px); font-weight: 900; font-style: italic; letter-spacing: 0.02em; line-height: 1; }
+        #msg-small { margin-top: 6px; font-size: clamp(16px, 3vw, 22px); font-weight: 700; }
+        #msg.purple #msg-small { color: #d6a8ff; } #msg.gold #msg-big { color: #ffd54a; } #msg.go #msg-big { color: #2bff6a; }
+        @keyframes msg { 0% { opacity: 0; transform: scale(1.4); } 10% { opacity: 1; transform: scale(1); } 75% { opacity: 1; } 100% { opacity: 0; transform: translateY(-14px); } }
+        #pop { position: absolute; top: 38%; left: 0; right: 0; text-align: center; font-size: clamp(20px, 3.6vw, 30px); font-weight: 900; font-style: italic; color: #ffe04a; opacity: 0; }
+        #pop.up { color: #2bff6a; }
+        #pop.show { animation: pop 1.2s ease-out forwards; }
+        @keyframes pop { 0% { opacity: 0; transform: scale(0.6); } 15% { opacity: 1; transform: scale(1.12); } 30% { transform: scale(1); } 75% { opacity: 1; } 100% { opacity: 0; transform: translateY(-20px); } }
+        #drift { position: absolute; left: 50%; bottom: calc(118px + env(safe-area-inset-bottom)); transform: translateX(-50%) scale(0.8); padding: 4px 16px; border-radius: 30px; background: linear-gradient(90deg, #ff5a1f, #ffb21f); font-weight: 900; font-style: italic; font-size: 20px; opacity: 0; transition: opacity .15s, transform .15s; white-space: nowrap; }
+        #drift.show { opacity: 1; transform: translateX(-50%) scale(1); }
+        #wrong { position: absolute; top: 46%; left: 50%; transform: translate(-50%, -50%); padding: 8px 22px; border-radius: 12px; background: #e10600; font-size: 28px; font-weight: 900; font-style: italic; opacity: 0; }
+        #wrong.show { opacity: 1; animation: blink .6s steps(2) infinite; }
+        @keyframes blink { 50% { opacity: 0.35; } }
+        #toast { position: fixed; top: calc(70px + env(safe-area-inset-top)); left: 50%; transform: translateX(-50%); padding: 7px 18px; border-radius: 30px; background: rgba(10, 10, 20, 0.7); font-weight: 700; letter-spacing: 0.06em; opacity: 0; transition: opacity .25s; pointer-events: none; z-index: 8; }
+        #toast.show { opacity: 1; }
+
+        /* ---------- touch controls ---------- */
+        .ctl { position: fixed; z-index: 5; display: none; place-items: center; border-radius: 22px; background: rgba(12, 14, 22, 0.42); box-shadow: inset 0 0 0 2px rgba(255, 255, 255, 0.22); touch-action: none; font-weight: 900; font-size: 13px; letter-spacing: 0.1em; }
+        .ctl svg { width: 34px; height: 34px; fill: #fff; }
+        .ctl.on { background: rgba(255, 255, 255, 0.3); transform: scale(0.95); }
+        .ctl[data-c="l"], .ctl[data-c="r"] { bottom: calc(20px + env(safe-area-inset-bottom)); width: 78px; height: 78px; }
+        .ctl[data-c="l"] { left: calc(14px + env(safe-area-inset-left)); }
+        .ctl[data-c="r"] { left: calc(102px + env(safe-area-inset-left)); }
+        .ctl[data-c="brake"], .ctl[data-c="gas"] { bottom: calc(20px + env(safe-area-inset-bottom)); }
+        .ctl[data-c="brake"] { right: calc(102px + env(safe-area-inset-right)); width: 78px; height: 78px; color: #ffb3b3; }
+        .ctl[data-c="gas"] { right: calc(14px + env(safe-area-inset-right)); width: 78px; height: 112px; color: #b6ffcb; }
+        .ctl[data-c="gas"].on { background: rgba(43, 255, 106, 0.35); } .ctl[data-c="brake"].on { background: rgba(255, 60, 60, 0.4); }
+        @media (pointer: coarse) {
+            body[data-state="hud"] .ctl { display: grid; }
+            #speedo { bottom: calc(146px + env(safe-area-inset-bottom)); }
+            #drift { bottom: calc(246px + env(safe-area-inset-bottom)); }
+        }
+
+        /* ---------- cards ---------- */
+        .overlay { position: fixed; inset: 0; display: grid; place-items: center; z-index: 7; padding: 16px; background: radial-gradient(ellipse at 50% 60%, rgba(5, 8, 15, 0.05), rgba(5, 8, 15, 0.6)); overflow-y: auto; }
+        .card { width: min(410px, 100%); text-align: center; padding: 22px 22px 18px; border-radius: 22px; background: linear-gradient(165deg, rgba(22, 26, 38, 0.94), rgba(10, 12, 20, 0.97)); border: 1px solid rgba(255, 255, 255, 0.1); box-shadow: 0 30px 80px rgba(0, 0, 0, 0.55); animation: rise .45s cubic-bezier(.2, 1.4, .4, 1) both; position: relative; overflow: hidden; }
+        .card::before { content: ""; position: absolute; left: 0; right: 0; top: 0; height: 5px; background: linear-gradient(90deg, #e10600 0 40%, #fff 40% 44%, #e10600 44% 56%, #fff 56% 60%, #e10600 60%); }
+        @keyframes rise { from { transform: translateY(40px) scale(0.94); opacity: 0; } }
+        .logo { margin: 4px 0 0; font-weight: 900; font-style: italic; font-size: clamp(40px, 11vw, 60px); line-height: 0.9; letter-spacing: -0.01em; }
+        .logo span { color: #e10600; }
+        .logo small { display: block; font-size: 0.32em; letter-spacing: 0.5em; margin-top: 6px; color: #9aa3b8; font-style: normal; font-weight: 700; }
+        .sub { margin: 12px 0 6px; font-size: 15px; color: #c2c8d6; line-height: 1.4; }
+        .opt { display: grid; grid-template-columns: 70px 1fr; align-items: center; gap: 8px; margin-top: 8px; text-align: left; }
+        .opt > span { font-size: 11px; font-weight: 700; letter-spacing: 0.14em; color: #8d96aa; }
+        .seg { display: flex; gap: 4px; padding: 3px; border-radius: 12px; background: rgba(255, 255, 255, 0.06); }
+        .seg button { flex: 1; height: 34px; border-radius: 9px; font-weight: 700; font-size: 14px; color: #c8cede; }
+        .seg button[aria-pressed="true"] { background: #fff; color: #10131c; }
+        .stats { display: flex; justify-content: center; gap: 18px; margin-top: 12px; font-size: 13px; color: #9aa3b8; }
+        .stats b { color: #fff; font-size: 15px; }
+        .big { width: 100%; height: 56px; margin-top: 14px; border-radius: 14px; font-weight: 900; font-style: italic; font-size: 24px; letter-spacing: 0.06em; color: #fff; background: linear-gradient(180deg, #ff3b2f, #c40500); box-shadow: 0 5px 0 #7d0300, 0 12px 30px rgba(225, 6, 0, 0.35); transition: transform .1s; position: relative; overflow: hidden; }
+        .big:active { transform: translateY(3px); }
+        .big.arm::before { content: ""; position: absolute; inset: 0; background: rgba(255, 255, 255, 0.3); transform-origin: left; animation: arm .7s linear forwards; }
+        @keyframes arm { from { transform: scaleX(1); } to { transform: scaleX(0); } }
+        .row { display: flex; gap: 8px; margin-top: 10px; }
+        .row button, .row a { flex: 1; height: 44px; border-radius: 12px; display: grid; place-items: center; font-weight: 700; color: #dfe4ef; text-decoration: none; background: rgba(255, 255, 255, 0.08); }
+        .keys { margin-top: 12px; font-size: 12px; color: #8790a4; line-height: 1.7; }
+        kbd { display: inline-block; padding: 0 6px; border-radius: 5px; background: rgba(255, 255, 255, 0.12); font: inherit; font-weight: 700; color: #dfe4ef; }
+        .touch-only { display: none; }
+        @media (pointer: coarse) { .keys { display: none; } .touch-only { display: block; } }
+        #r-pos { font-size: 72px; }
+        #r-pos.gold { color: #ffd54a; } #r-pos.podium { color: #e8e8f0; }
+        #r-title { margin: 4px 0 10px; color: #c2c8d6; font-weight: 600; }
+        #r-table { width: 100%; border-collapse: collapse; font-size: 15px; }
+        #r-table td { padding: 5px 6px; border-top: 1px solid rgba(255, 255, 255, 0.06); text-align: left; }
+        #r-table td:first-child { width: 28px; font-weight: 900; color: #8d96aa; }
+        #r-table td:last-child { text-align: right; color: #c2c8d6; }
+        #r-table i { display: inline-block; width: 4px; height: 14px; margin-right: 8px; vertical-align: -2px; border-radius: 2px; }
+        #r-table tr.me td { background: rgba(225, 6, 0, 0.18); color: #fff; font-weight: 700; }
+        .grid3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; margin-top: 12px; }
+        .grid3 div { padding: 7px 4px; border-radius: 12px; background: rgba(255, 255, 255, 0.06); font-size: 10px; font-weight: 700; letter-spacing: 0.12em; color: #8d96aa; }
+        .grid3 b { display: block; font-size: 16px; color: #fff; letter-spacing: 0; }
+        @media (max-width: 520px) {
+            #pos { font-size: 28px; } #lap { font-size: 17px; } #time { font-size: 17px; } #timebox { min-width: 112px; padding: 4px 9px; } #bestlap, #total { font-size: 12px; }
+            #mapbox { width: 74px; padding: 6px; } #timebox { top: calc(64px + env(safe-area-inset-top)); right: calc(12px + env(safe-area-inset-right)); } #kmh { font-size: 36px; min-width: 76px; } #gear { width: 36px; height: 40px; font-size: 26px; } #speedo { min-width: 0; padding: 6px 12px 5px; }
+            #rev i { width: 7px; height: 7px; } #lights div { width: 34px; } #lights div::before, #lights div::after { width: 34px; height: 34px; }
+        }
+        @media (max-height: 560px) { .card { padding: 14px 18px 12px; } .sub { display: none; } .big { height: 48px; margin-top: 10px; } }
+        @media (prefers-reduced-motion: reduce) { #wrong.show { animation: none; } }
+    </style>
+</head>
+
+<body data-state="title">
+    <canvas id="view" aria-label="Grand Prix 3D"></canvas>
+
+    <div id="hud">
+        <div id="posbox" class="glass">
+            <div class="p"><small>P</small><b id="pos" class="num">6</b><span>/6</span></div>
+            <div class="l"><small>LAP</small><b id="lap" class="num">1/3</b></div>
+        </div>
+        <div id="mapbox" class="glass">
+            <svg id="map" aria-hidden="true">
+                <path id="map-edge" fill="none" stroke="rgba(0,0,0,0.55)" stroke-width="6" stroke-linejoin="round"/>
+                <path id="map-road" fill="none" stroke="rgba(255,255,255,0.85)" stroke-width="2.6" stroke-linejoin="round"/>
+                <circle id="map-start" r="2" fill="#e10600"/>
+            </svg>
+        </div>
+        <div id="timebox" class="glass">
+            <div><small>LAP</small><b id="time" class="num">0:00.000</b></div>
+            <div><small id="bestlabel">BEST</small><b id="bestlap" class="num">–</b></div>
+            <div><small>RACE</small><b id="total" class="num">0:00.000</b></div>
+        </div>
+        <div id="speedo" class="glass">
+            <div id="rev"></div>
+            <div id="speedrow"><b id="kmh" class="num">0</b><div class="u">KM/H</div><b id="gear" class="num">N</b></div>
+        </div>
+        <div id="lights"><div></div><div></div><div></div><div></div><div></div></div>
+        <div id="msg"><div id="msg-big"></div><div id="msg-small" class="num"></div></div>
+        <div id="pop"></div>
+        <div id="drift">DRIFT <span id="drift-n" class="num">0</span></div>
+        <div id="wrong">WRONG WAY</div>
+    </div>
+    <div id="toast"></div>
+
+    <button class="ctl" data-c="l" aria-label="Steer left"><svg viewBox="0 0 24 24"><path d="M15 5 L7 12 L15 19 Z"/></svg></button>
+    <button class="ctl" data-c="r" aria-label="Steer right"><svg viewBox="0 0 24 24"><path d="M9 5 L17 12 L9 19 Z"/></svg></button>
+    <button class="ctl" data-c="brake" aria-label="Brake">BRAKE</button>
+    <button class="ctl" data-c="gas" aria-label="Accelerate">GAS</button>
+
+    <button id="pause" class="corner glass" title="Pause (P)" aria-label="Pause"><svg viewBox="0 0 24 24"><path d="M7 5h3.5v14H7zM13.5 5H17v14h-3.5z"/></svg></button>
+    <button id="cam" class="corner glass" title="Camera (C)" aria-label="Change camera"><svg viewBox="0 0 24 24"><path d="M4 7h3l1.5-2h7L17 7h3v12H4zM12 9.5a3.5 3.5 0 1 0 0 7 3.5 3.5 0 0 0 0-7z"/></svg></button>
+    <button id="mute" class="corner glass" aria-label="Sound" aria-pressed="false"><svg class="on" viewBox="0 0 24 24"><path d="M4 9h4l5-4v14l-5-4H4zM16 8.5a5 5 0 0 1 0 7l-1.4-1.4a3 3 0 0 0 0-4.2zM18.5 6a8.5 8.5 0 0 1 0 12l-1.4-1.4a6.5 6.5 0 0 0 0-9.2z"/></svg><svg class="off" viewBox="0 0 24 24"><path d="M4 9h4l5-4v14l-5-4H4zM15.5 9.9l1.4-1.4 2.1 2.1 2.1-2.1 1.4 1.4-2.1 2.1 2.1 2.1-1.4 1.4-2.1-2.1-2.1 2.1-1.4-1.4 2.1-2.1z"/></svg></button>
+
+    <div id="title" class="overlay">
+        <a class="home glass" href="/" aria-label="All games">← Games</a>
+        <div class="card">
+            <h1 class="logo">GRAND PRIX <span>3D</span><small>CIRCUIT RACING</small></h1>
+            <p class="sub">Start from the back of the grid when the lights go out. Brake late, drift through the hairpins and fight your way to the win.</p>
+            <div class="opt"><span>SESSION</span><div class="seg"><button data-k="session" data-v="day">Day</button><button data-k="session" data-v="sunset">Sunset</button><button data-k="session" data-v="night">Night</button></div></div>
+            <div class="opt"><span>LAPS</span><div class="seg"><button data-k="laps" data-v="1">1</button><button data-k="laps" data-v="3">3</button><button data-k="laps" data-v="5">5</button></div></div>
+            <div class="opt"><span>RIVALS</span><div class="seg"><button data-k="level" data-v="easy">Easy</button><button data-k="level" data-v="pro">Pro</button><button data-k="level" data-v="legend">Legend</button></div></div>
+            <div class="stats"><span>Lap record <b class="num" id="t-record">–</b></span><span>Wins <b class="num" id="t-wins">0</b></span></div>
+            <button id="play" class="big">RACE</button>
+            <div class="keys"><kbd>↑</kbd> gas · <kbd>↓</kbd> brake · <kbd>←</kbd><kbd>→</kbd> steer · <kbd>Space</kbd> handbrake drift<br>Brake + steer at speed to drift · <kbd>C</kbd> camera · <kbd>R</kbd> reset · <kbd>P</kbd> pause · <kbd>M</kbd> sound</div>
+            <div class="keys touch-only">Hold GAS, steer with the arrows. Hit BRAKE while turning to drift.</div>
+        </div>
+    </div>
+
+    <div id="paused" class="overlay hidden">
+        <div class="card">
+            <h2 class="logo" style="font-size:46px">PAUSED</h2>
+            <button id="resume" class="big">RESUME</button>
+            <div class="row"><button id="restart">Restart</button><button id="quit">Menu</button></div>
+        </div>
+    </div>
+
+    <div id="results" class="overlay hidden">
+        <a class="home glass" href="/" aria-label="All games">← Games</a>
+        <div class="card">
+            <h2 id="r-pos" class="logo">1ST</h2>
+            <div id="r-title"></div>
+            <table id="r-table"></table>
+            <div class="grid3">
+                <div>BEST LAP<b class="num" id="r-best">–</b></div>
+                <div>DRIFT<b class="num" id="r-drift">0</b></div>
+                <div>RECORD<b class="num" id="r-record">–</b></div>
+            </div>
+            <button id="again" class="big">RACE AGAIN</button>
+            <div class="row"><button id="share">Share</button><button id="menu">Menu</button><a href="/">All games</a></div>
+        </div>
+    </div>
+
+    <script type="module" src="main.js"></script>
+</body>
+
+</html>

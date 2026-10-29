@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <title>Tideglow – Play Free Online | Classic Games Arcade</title>
+<!-- seo:head -->
+<meta name="description" content="Swim a glowing jellyfish up through a deep-sea canyon. Dodge stinger curtains, urchins, eels and barracuda, and collect light on the way to the surface. Free 3D game." />
+<link rel="canonical" href="https://classicgames-flame.vercel.app/tideglow/" />
+<meta name="robots" content="index, follow, max-image-preview:large" />
+<meta name="theme-color" content="#0b0a14" />
+<link rel="icon" href="/favicon.ico" sizes="32x32" />
+<link rel="icon" href="/icon.svg" type="image/svg+xml" />
+<link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+<link rel="manifest" href="/manifest.webmanifest" />
+<meta property="og:site_name" content="Classic Games Arcade" />
+<meta property="og:type" content="website" />
+<meta property="og:title" content="Tideglow – Play Free Online | Classic Games Arcade" />
+<meta property="og:description" content="Swim a glowing jellyfish up through a deep-sea canyon. Dodge stinger curtains, urchins, eels and barracuda, and collect light on the way to the surface. Free 3D game." />
+<meta property="og:url" content="https://classicgames-flame.vercel.app/tideglow/" />
+<meta property="og:image" content="https://classicgames-flame.vercel.app/og/tideglow.jpg" />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+<meta property="og:image:alt" content="Tideglow gameplay" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="Tideglow – Play Free Online | Classic Games Arcade" />
+<meta name="twitter:description" content="Swim a glowing jellyfish up through a deep-sea canyon. Dodge stinger curtains, urchins, eels and barracuda, and collect light on the way to the surface. Free 3D game." />
+<meta name="twitter:image" content="https://classicgames-flame.vercel.app/og/tideglow.jpg" />
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "VideoGame",
+      "name": "Tideglow",
+      "description": "Swim a glowing jellyfish up through a deep-sea canyon. Dodge stinger curtains, urchins, eels and barracuda, and collect light on the way to the surface. Free 3D game.",
+      "url": "https://classicgames-flame.vercel.app/tideglow/",
+      "image": "https://classicgames-flame.vercel.app/thumbs/tideglow.webp",
+      "genre": [
+        "Arcade",
+        "Adventure"
+      ],
+      "gamePlatform": "Web browser",
+      "applicationCategory": "Game",
+      "operatingSystem": "Any",
+      "playMode": "SinglePlayer",
+      "isAccessibleForFree": true,
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "USD",
+        "availability": "https://schema.org/InStock"
+      },
+      "isPartOf": {
+        "@type": "WebSite",
+        "name": "Classic Games Arcade",
+        "url": "https://classicgames-flame.vercel.app/"
+      }
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Games",
+          "item": "https://classicgames-flame.vercel.app/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Tideglow",
+          "item": "https://classicgames-flame.vercel.app/tideglow/"
+        }
+      ]
+    }
+  ]
+}
+</script>
+<!-- /seo:head -->
+    <link rel="icon" href="/favicon.ico" sizes="32x32">
+    <link rel="icon" href="/icon.svg" type="image/svg+xml">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=Outfit:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+        html, body { margin: 0; height: 100%; overflow: hidden; background: #02040d; color: #e6f3ff; font-family: Outfit, "Segoe UI", system-ui, sans-serif; user-select: none; -webkit-user-select: none; touch-action: none; overscroll-behavior: none; }
+        #view { position: fixed; inset: 0; width: 100%; height: 100%; display: block; cursor: crosshair; }
+        .hidden { display: none !important; }
+        button { font: inherit; color: inherit; cursor: pointer; border: 0; background: none; }
+        :focus-visible { outline: 2px solid #9fe8ff; outline-offset: 3px; }
+        .serif { font-family: "Cormorant Garamond", Georgia, serif; }
+        .glass { background: rgba(6, 14, 30, 0.42); border: 1px solid rgba(160, 220, 255, 0.14); backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px); }
+
+        .corner { position: fixed; top: calc(14px + env(safe-area-inset-top)); z-index: 6; width: 44px; height: 44px; border-radius: 50%; display: grid; place-items: center; }
+        .corner svg { width: 19px; height: 19px; fill: #dff4ff; }
+        #pause { left: calc(14px + env(safe-area-inset-left)); }
+        #mute { right: calc(14px + env(safe-area-inset-right)); }
+        #mute[aria-pressed="true"] .on, #mute[aria-pressed="false"] .off { display: none; }
+        body:not([data-state="hud"]) #pause { display: none; }
+        .home { position: fixed; top: calc(14px + env(safe-area-inset-top)); left: calc(14px + env(safe-area-inset-left)); z-index: 7; height: 44px; padding: 0 18px; border-radius: 22px; display: flex; align-items: center; gap: 8px; color: #dff4ff; text-decoration: none; font-weight: 400; font-size: 14px; letter-spacing: 0.04em; }
+        body:not([data-state="title"]):not([data-state="result"]) .home { display: none; }
+
+        /* ---------- title ---------- */
+        #title { position: fixed; inset: 0; display: grid; place-items: center; text-align: center; cursor: pointer; padding: 24px; background: radial-gradient(ellipse at 50% 42%, rgba(2, 4, 13, 0) 0%, rgba(2, 4, 13, 0.55) 70%, rgba(2, 4, 13, 0.85) 100%); }
+        .kicker { font-size: 12px; letter-spacing: 0.55em; padding-left: 0.55em; color: #7fd9ff; opacity: 0.85; text-transform: uppercase; }
+        .logo { margin: 6px 0 0; font-family: "Cormorant Garamond", serif; font-weight: 500; font-size: clamp(64px, 14vw, 168px); line-height: 0.95; letter-spacing: 0.06em;
+            background: linear-gradient(180deg, #ffffff 0%, #bdf0ff 45%, #b99bff 100%); -webkit-background-clip: text; background-clip: text; color: transparent;
+            filter: drop-shadow(0 0 28px rgba(120, 210, 255, 0.45)) drop-shadow(0 0 70px rgba(170, 120, 255, 0.3)); animation: breathe 5s ease-in-out infinite; }
+        @keyframes breathe { 50% { filter: drop-shadow(0 0 36px rgba(120, 210, 255, 0.7)) drop-shadow(0 0 90px rgba(170, 120, 255, 0.45)); } }
+        .tag { font-family: "Cormorant Garamond", serif; font-style: italic; font-size: clamp(18px, 2.4vw, 25px); color: #b8d3ec; margin: 14px auto 34px; max-width: 560px; }
+        #begin { padding: 14px 38px; border-radius: 40px; font-size: 13px; letter-spacing: 0.32em; font-weight: 600; color: #04121d; background: linear-gradient(135deg, #a8f0ff, #c9b4ff); box-shadow: 0 0 34px rgba(140, 220, 255, 0.45), inset 0 1px 0 rgba(255, 255, 255, 0.6); transition: transform .2s, box-shadow .2s; }
+        #begin:hover { transform: translateY(-2px); box-shadow: 0 0 50px rgba(140, 220, 255, 0.7); }
+        .tmeta { margin-top: 26px; font-size: 13px; color: #7f97b3; letter-spacing: 0.06em; display: flex; gap: 22px; justify-content: center; flex-wrap: wrap; }
+        .tmeta b { color: #dff4ff; font-weight: 600; }
+        .how { margin: 28px auto 0; display: grid; grid-template-columns: repeat(3, minmax(0, 170px)); gap: 14px; justify-content: center; font-size: 13px; color: #9fb6cf; line-height: 1.5; }
+        .how div { padding: 12px 14px; border-radius: 14px; text-align: left; }
+        .how b { display: block; color: #e6f3ff; font-weight: 600; font-size: 12px; letter-spacing: 0.12em; margin-bottom: 4px; text-transform: uppercase; }
+        .how i { font-style: normal; color: #9fe8ff; }
+        @media (max-width: 640px) { .how { grid-template-columns: 1fr; max-width: 300px; } .how div { padding: 9px 12px; } .tag { margin-bottom: 24px; } }
+
+        /* ---------- HUD ---------- */
+        #hud { position: fixed; inset: 0; pointer-events: none; text-shadow: 0 1px 6px rgba(0, 0, 0, 0.6); }
+        #lightbox { position: absolute; top: calc(10px + env(safe-area-inset-top)); left: calc(68px + env(safe-area-inset-left)); width: 56px; height: 56px; }
+        #lightbox svg { width: 100%; height: 100%; transform: rotate(-90deg); overflow: visible; }
+        #lightbox .track { fill: none; stroke: rgba(160, 220, 255, 0.14); stroke-width: 5; }
+        #lightring { fill: none; stroke: url(#lg); stroke-width: 5; stroke-linecap: round; stroke-dasharray: 264 264; filter: drop-shadow(0 0 6px rgba(120, 220, 255, 0.9)); transition: stroke-dasharray .25s; }
+        #lightbox .val { position: absolute; inset: 0; display: grid; place-items: center; font-weight: 600; font-size: 16px; font-variant-numeric: tabular-nums; }
+        #lightbox .lab { position: absolute; top: 60px; left: 0; width: 100%; text-align: center; font-size: 9px; letter-spacing: 0.3em; color: #8fb0cc; padding-left: 0.3em; }
+        #lightbox.low #lightring { stroke: #ff6f8e; filter: drop-shadow(0 0 8px #ff4f7a); animation: lowblink 0.8s ease-in-out infinite; }
+        @keyframes lowblink { 50% { opacity: 0.45; } }
+        #scorebox { position: absolute; top: calc(12px + env(safe-area-inset-top)); left: 50%; transform: translateX(-50%); text-align: center; }
+        #score { font-size: 30px; font-weight: 300; letter-spacing: 0.04em; font-variant-numeric: tabular-nums; line-height: 1; }
+        #halorow { margin-top: 6px; font-size: 13px; color: #ffd9a8; letter-spacing: 0.08em; display: flex; gap: 10px; justify-content: center; align-items: baseline; }
+        #combo { color: #fff1c9; font-weight: 600; text-shadow: 0 0 10px rgba(255, 190, 110, 0.9); }
+        #gauge { position: absolute; right: calc(26px + env(safe-area-inset-right)); top: 50%; transform: translateY(-50%); height: min(46vh, 380px); width: 6px; border-radius: 3px;
+            background: linear-gradient(180deg, #7fe8e0 0%, #2d8fc4 25%, #2a4fa0 50%, #2a2470 75%, #1a0b30 100%); box-shadow: 0 0 12px rgba(100, 200, 255, 0.25); }
+        #gauge::before { content: "0 m"; position: absolute; top: -20px; right: -6px; font-size: 10px; color: #8fb0cc; white-space: nowrap; }
+        #gauge::after { content: "480 m"; position: absolute; bottom: -20px; right: -10px; font-size: 10px; color: #8fb0cc; white-space: nowrap; }
+        #gaugemark { position: absolute; left: 50%; width: 16px; height: 16px; margin: -8px 0 0 -8px; border-radius: 50%; background: radial-gradient(circle, #fff 0%, #9fe8ff 45%, rgba(159, 232, 255, 0) 72%); box-shadow: 0 0 14px #9fe8ff; }
+        #depth { position: absolute; right: 16px; top: 50%; transform: translateY(-50%); font-size: 13px; font-weight: 600; white-space: nowrap; font-variant-numeric: tabular-nums; }
+        #hint { position: absolute; bottom: calc(18px + env(safe-area-inset-bottom)); left: 50%; transform: translateX(-50%); font-size: 13px; color: #8fb0cc; white-space: nowrap; letter-spacing: 0.04em; opacity: 0; animation: hint 9s ease 1s; }
+        @keyframes hint { 10%, 75% { opacity: 1; } }
+
+        #banner { position: fixed; top: 17%; left: 0; right: 0; text-align: center; pointer-events: none; opacity: 0; }
+        #banner.show { animation: banner 4.2s ease forwards; }
+        @keyframes banner { 0% { opacity: 0; transform: translateY(10px); letter-spacing: 0.02em; } 18%, 70% { opacity: 1; transform: none; } 100% { opacity: 0; letter-spacing: 0.09em; } }
+        #bname { font-family: "Cormorant Garamond", serif; font-size: clamp(34px, 6vw, 60px); font-weight: 500; text-shadow: 0 0 30px rgba(120, 200, 255, 0.6); }
+        #bsub { font-size: 13px; letter-spacing: 0.25em; color: #9fc4e0; text-transform: uppercase; margin-top: 4px; }
+        #toast { position: fixed; top: 33%; left: 50%; transform: translate(-50%, 6px); font-family: "Cormorant Garamond", serif; font-style: italic; font-size: 26px; color: #ffe7c2; opacity: 0; transition: opacity .25s, transform .25s; pointer-events: none; text-shadow: 0 0 18px rgba(255, 180, 100, 0.6), 0 2px 8px #000; white-space: nowrap; }
+        #toast.show { opacity: 1; transform: translate(-50%, 0); }
+        #tip { position: fixed; bottom: calc(52px + env(safe-area-inset-bottom)); left: 50%; transform: translate(-50%, 8px); max-width: calc(100% - 32px); text-align: center; padding: 9px 18px; border-radius: 20px; font-size: 14px; color: #ffe1c4; background: rgba(40, 10, 24, 0.5); border: 1px solid rgba(255, 140, 120, 0.35); opacity: 0; transition: opacity .3s, transform .3s; pointer-events: none; backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px); }
+        #tip.show { opacity: 1; transform: translate(-50%, 0); }
+
+        /* ---------- cards ---------- */
+        .overlay { position: fixed; inset: 0; display: grid; place-items: center; padding: 16px; background: rgba(2, 4, 13, 0.35); }
+        .card { text-align: center; padding: 30px 40px 28px; border-radius: 22px; max-width: 440px; width: 100%; background: rgba(6, 14, 30, 0.6); border: 1px solid rgba(160, 220, 255, 0.18); box-shadow: 0 30px 90px rgba(0, 0, 0, 0.55), inset 0 0 60px rgba(120, 200, 255, 0.05); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); }
+        .card h2 { font-family: "Cormorant Garamond", serif; font-weight: 500; font-size: 36px; margin: 4px 0 6px; line-height: 1.1; }
+        #r-stars { font-size: 40px; letter-spacing: 12px; padding-left: 12px; margin: 4px 0 6px; min-height: 8px; }
+        #r-stars b { display: inline-block; color: rgba(255, 255, 255, 0.13); font-weight: 400; animation: pop .7s cubic-bezier(.2, 1.7, .5, 1) both; }
+        #r-stars b.on { color: #ffe0a3; text-shadow: 0 0 18px rgba(255, 190, 100, 0.9); }
+        @keyframes pop { 0% { transform: scale(0) rotate(-60deg); opacity: 0; } 100% { transform: none; opacity: 1; } }
+        .stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin: 16px 0 6px; }
+        .stats div { padding: 10px 4px; border-radius: 12px; background: rgba(160, 220, 255, 0.06); }
+        .stats small { display: block; font-size: 9px; letter-spacing: 0.25em; color: #8fb0cc; margin-bottom: 3px; }
+        .stats span { font-size: 20px; font-weight: 600; font-variant-numeric: tabular-nums; }
+        #r-best { font-size: 12px; color: #ffd9a8; letter-spacing: 0.1em; margin-top: 4px; }
+        #r-msg { font-size: 14px; color: #a9c1d9; margin: 12px 0 0; line-height: 1.5; }
+        .btns { display: flex; gap: 10px; justify-content: center; margin-top: 22px; flex-wrap: wrap; }
+        .btn { padding: 12px 22px; border-radius: 26px; font-size: 12px; font-weight: 600; letter-spacing: 0.2em; text-transform: uppercase; border: 1px solid rgba(160, 220, 255, 0.35); background: rgba(160, 220, 255, 0.06); }
+        .btn.main { color: #04121d; border-color: transparent; background: linear-gradient(135deg, #a8f0ff, #c9b4ff); box-shadow: 0 0 26px rgba(140, 220, 255, 0.4); }
+        #nogl { position: fixed; inset: 0; display: grid; place-items: center; text-align: center; padding: 24px; font-size: 18px; color: #b8d3ec; }
+    </style>
+</head>
+
+<body data-state="title">
+    <canvas id="view"></canvas>
+
+    <a class="home glass" href="/" aria-label="Back to all games">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M15.4 4.6 14 3.2 5.2 12l8.8 8.8 1.4-1.4L8 12z"/></svg> Games
+    </a>
+    <button id="pause" class="corner glass" aria-label="Pause"><svg viewBox="0 0 24 24"><path d="M7 5h4v14H7zM13 5h4v14h-4z"/></svg></button>
+    <button id="mute" class="corner glass" aria-label="Sound" aria-pressed="false">
+        <svg class="on" viewBox="0 0 24 24"><path d="M4 9v6h4l5 4V5L8 9zm12.5 3a4.5 4.5 0 0 0-2.5-4v8a4.5 4.5 0 0 0 2.5-4zM14 3.2v2.1a7 7 0 0 1 0 13.4v2.1a9 9 0 0 0 0-17.6z"/></svg>
+        <svg class="off" viewBox="0 0 24 24"><path d="M4 9v6h4l5 4V5L8 9zm16.6 3 2.1-2.1-1.4-1.4-2.1 2.1-2.1-2.1-1.4 1.4 2.1 2.1-2.1 2.1 1.4 1.4 2.1-2.1 2.1 2.1 1.4-1.4z"/></svg>
+    </button>
+
+    <div id="title">
+        <div>
+            <div class="kicker">an ascent in light</div>
+            <h1 class="logo">Tideglow</h1>
+            <p class="tag">Four hundred and eighty metres of dark water lie between you and the evening sun. You carry the only light.</p>
+            <button id="begin">BEGIN THE ASCENT</button>
+            <div class="tmeta"><span>Best <b id="t-best">—</b></span><span>Stars <b id="t-stars">—</b></span><span>Dives <b id="t-dives">0</b></span></div>
+            <div class="how">
+                <div class="glass"><b>Swim</b><i>Hold</i> where you want to go — or <i>←/→</i> to tilt, <i>Space</i> to pulse.</div>
+                <div class="glass"><b>Glow</b>Your light fades. Eat drifting <i>plankton</i> to keep it alive.</div>
+                <div class="glass"><b>Survive</b>Bloom the <i>coral halos</i>. Dodge anglerfish, stinger curtains, morays and barracuda.</div>
+            </div>
+        </div>
+    </div>
+
+    <div id="hud" class="hidden">
+        <div id="lightbox">
+            <svg viewBox="0 0 100 100" aria-hidden="true">
+                <defs><linearGradient id="lg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#a8f0ff" /><stop offset="1" stop-color="#c9a4ff" /></linearGradient></defs>
+                <circle class="track" cx="50" cy="50" r="42" />
+                <circle id="lightring" cx="50" cy="50" r="42" />
+            </svg>
+            <div class="val" id="lightv">100</div>
+            <div class="lab">GLOW</div>
+        </div>
+        <div id="scorebox"><div id="score">0</div><div id="halorow"><span>✦ <span id="halos">0/16</span></span><span id="combo"></span></div></div>
+        <div id="gauge"><div id="gaugemark"><div id="depth">480 m</div></div></div>
+        <div id="hint">Hold to swim toward your finger · rise up through the halos</div>
+    </div>
+    <div id="banner"><div id="bname"></div><div id="bsub"></div></div>
+    <div id="toast"></div>
+    <div id="tip"></div>
+
+    <div id="paused" class="overlay hidden">
+        <div class="card">
+            <div class="kicker">PAUSED</div>
+            <h2>Drifting in the dark</h2>
+            <p id="r-msg2" style="font-size:14px;color:#a9c1d9;margin:6px 0 0">P / Esc to continue · M to mute</p>
+            <div class="btns"><button class="btn" id="p-restart">New dive</button><button class="btn main" id="p-resume">Continue</button></div>
+        </div>
+    </div>
+
+    <div id="result" class="overlay hidden">
+        <div class="card">
+            <div class="kicker" id="r-kicker">SURFACED</div>
+            <h2 id="r-title"></h2>
+            <div id="r-stars"></div>
+            <div class="stats">
+                <div><small>HALOS</small><span id="r-halos">0</span></div>
+                <div><small>PLANKTON</small><span id="r-plankton">0</span></div>
+                <div><small>SCORE</small><span id="r-score">0</span></div>
+            </div>
+            <div id="r-best"></div>
+            <p id="r-msg"></p>
+            <div class="btns"><button class="btn" id="r-resume">Resume</button><button class="btn main" id="r-again">New dive</button></div>
+        </div>
+    </div>
+
+    <div id="nogl" class="hidden">Tideglow needs WebGL, which this browser doesn't seem to support.</div>
+
+    <script type="module" src="main.js"></script>
+</body>
+
+</html>

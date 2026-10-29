@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <title>Jade Pavilion – Play Free Online | Classic Games Arcade</title>
+<!-- seo:head -->
+<meta name="description" content="Classic mahjong solitaire with carved 3D tiles in a lantern-lit jade pavilion. Match free pairs and clear the layout. Several layouts and themes, free to play online." />
+<link rel="canonical" href="https://classicgames-flame.vercel.app/jade-pavilion/" />
+<meta name="robots" content="index, follow, max-image-preview:large" />
+<meta name="theme-color" content="#0b0a14" />
+<link rel="icon" href="/favicon.ico" sizes="32x32" />
+<link rel="icon" href="/icon.svg" type="image/svg+xml" />
+<link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+<link rel="manifest" href="/manifest.webmanifest" />
+<meta property="og:site_name" content="Classic Games Arcade" />
+<meta property="og:type" content="website" />
+<meta property="og:title" content="Jade Pavilion – Play Free Online | Classic Games Arcade" />
+<meta property="og:description" content="Classic mahjong solitaire with carved 3D tiles in a lantern-lit jade pavilion. Match free pairs and clear the layout. Several layouts and themes, free to play online." />
+<meta property="og:url" content="https://classicgames-flame.vercel.app/jade-pavilion/" />
+<meta property="og:image" content="https://classicgames-flame.vercel.app/og/jade-pavilion.jpg" />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+<meta property="og:image:alt" content="Jade Pavilion gameplay" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="Jade Pavilion – Play Free Online | Classic Games Arcade" />
+<meta name="twitter:description" content="Classic mahjong solitaire with carved 3D tiles in a lantern-lit jade pavilion. Match free pairs and clear the layout. Several layouts and themes, free to play online." />
+<meta name="twitter:image" content="https://classicgames-flame.vercel.app/og/jade-pavilion.jpg" />
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "VideoGame",
+      "name": "Jade Pavilion",
+      "description": "Classic mahjong solitaire with carved 3D tiles in a lantern-lit jade pavilion. Match free pairs and clear the layout. Several layouts and themes, free to play online.",
+      "url": "https://classicgames-flame.vercel.app/jade-pavilion/",
+      "image": "https://classicgames-flame.vercel.app/thumbs/jade-pavilion.webp",
+      "genre": [
+        "Puzzle"
+      ],
+      "gamePlatform": "Web browser",
+      "applicationCategory": "Game",
+      "operatingSystem": "Any",
+      "playMode": "SinglePlayer",
+      "isAccessibleForFree": true,
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "USD",
+        "availability": "https://schema.org/InStock"
+      },
+      "isPartOf": {
+        "@type": "WebSite",
+        "name": "Classic Games Arcade",
+        "url": "https://classicgames-flame.vercel.app/"
+      }
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Games",
+          "item": "https://classicgames-flame.vercel.app/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Jade Pavilion",
+          "item": "https://classicgames-flame.vercel.app/jade-pavilion/"
+        }
+      ]
+    }
+  ]
+}
+</script>
+<!-- /seo:head -->
+    <link rel="icon" href="/favicon.ico" sizes="32x32">
+    <link rel="icon" href="/icon.svg" type="image/svg+xml">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;1,9..144,400&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@700&text=一二三四五六七八九萬東南西北中發白梅蘭菊竹春夏秋冬筒條翠亭園橋塔蓮龜&display=block" rel="stylesheet">
+    <style>
+        :root {
+            --ink: #120c0a; --ink-2: #1c1411; --ivory: #f5ecd8; --ivory-2: #d9ccb0; --muted: #a8977c; --gold: #e1b56b; --gold-2: #b9893f;
+            --jade: #43c08f; --jade-2: #1f8a62; --vermilion: #d9472f; --glass: rgba(24, 16, 13, 0.62); --line: rgba(232, 200, 140, 0.16);
+            --radius: 18px; --shadow: 0 24px 70px rgba(0, 0, 0, 0.5), 0 2px 0 rgba(255, 255, 255, 0.03) inset;
+            --display: "Fraunces", Georgia, serif; --ui: "Manrope", "Segoe UI", system-ui, sans-serif; --cn: "Noto Serif SC", "Songti SC", "SimSun", serif;
+        }
+        * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+        html, body { margin: 0; height: 100%; overflow: hidden; background: var(--ink); color: var(--ivory); font-family: var(--ui); user-select: none; -webkit-user-select: none; touch-action: none; overscroll-behavior: none; }
+        #view { position: fixed; inset: 0; width: 100%; height: 100%; display: block; cursor: grab; }
+        #view.drag { cursor: grabbing; }
+        #view.point { cursor: pointer; }
+        .hidden { display: none !important; }
+        button { font: inherit; color: inherit; cursor: pointer; border: 0; background: none; padding: 0; }
+        :focus-visible { outline: 2px solid var(--gold); outline-offset: 3px; }
+        .glass { background: var(--glass); border: 1px solid var(--line); backdrop-filter: blur(16px) saturate(1.2); -webkit-backdrop-filter: blur(16px) saturate(1.2); box-shadow: var(--shadow); }
+        .cn { font-family: var(--cn); font-weight: 700; }
+        .seal { display: inline-grid; place-items: center; width: 64px; height: 64px; border-radius: 10px; background: radial-gradient(circle at 30% 25%, #e8553a, #b72a1a 70%); color: #fff2e2; font-family: var(--cn); font-size: 25px; line-height: 1.05; letter-spacing: 2px; box-shadow: 0 6px 20px rgba(185, 40, 20, 0.45), inset 0 0 0 3px rgba(255, 225, 200, 0.25), inset 0 0 0 6px #b72a1a, inset 0 0 0 7px rgba(255, 225, 200, 0.35); transform: rotate(-4deg); writing-mode: vertical-rl; }
+        .seal.sm { width: 36px; height: 36px; font-size: 15px; border-radius: 7px; writing-mode: horizontal-tb; box-shadow: 0 3px 10px rgba(185, 40, 20, 0.4), inset 0 0 0 2px rgba(255, 225, 200, 0.3); }
+
+        /* buttons */
+        .btn { display: inline-flex; align-items: center; justify-content: center; gap: 10px; height: 48px; padding: 0 24px; border-radius: 999px; font-weight: 700; font-size: 14px; letter-spacing: 0.06em; border: 1px solid var(--line); background: rgba(245, 236, 216, 0.06); transition: transform .18s, background .18s, box-shadow .18s, border-color .18s; white-space: nowrap; }
+        .btn:hover { background: rgba(245, 236, 216, 0.12); border-color: rgba(232, 200, 140, 0.35); transform: translateY(-1px); }
+        .btn:active { transform: translateY(1px) scale(0.98); }
+        .btn.primary { color: #1b1206; border-color: transparent; background: linear-gradient(135deg, #f3d394, #d39b48); box-shadow: 0 10px 30px rgba(211, 155, 72, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.55); }
+        .btn.primary:hover { box-shadow: 0 14px 40px rgba(211, 155, 72, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.55); }
+        .btn.jade { color: #04170f; border-color: transparent; background: linear-gradient(135deg, #7be0b6, #2fa476); box-shadow: 0 10px 30px rgba(47, 164, 118, 0.35); }
+        .btn.lg { height: 56px; padding: 0 34px; font-size: 15px; }
+        .btn svg { width: 18px; height: 18px; fill: currentColor; flex: none; }
+        .iconbtn { width: 46px; height: 46px; border-radius: 50%; display: grid; place-items: center; }
+        .iconbtn svg { width: 20px; height: 20px; fill: var(--ivory); }
+
+        /* ---------- loading ---------- */
+        #loading { position: fixed; inset: 0; display: grid; place-items: center; background: radial-gradient(ellipse at 50% 40%, #2a1a12, var(--ink) 70%); z-index: 50; transition: opacity .6s; }
+        #loading .seal { animation: spin 2.4s cubic-bezier(.6, 0, .4, 1) infinite; }
+        #loading p { margin: 18px 0 0; color: var(--muted); font-size: 12px; letter-spacing: 0.3em; text-transform: uppercase; text-align: center; }
+        @keyframes spin { 50% { transform: rotate(176deg) scale(0.92); } 100% { transform: rotate(356deg); } }
+        #loading.out { opacity: 0; pointer-events: none; }
+
+        /* ---------- title ---------- */
+        #title { position: fixed; inset: 0; z-index: 10; display: grid; grid-template-rows: 1fr auto; grid-template-columns: minmax(0, 1fr); padding: calc(28px + env(safe-area-inset-top)) 40px calc(28px + env(safe-area-inset-bottom)); background: linear-gradient(90deg, rgba(18, 12, 10, 0.92) 0%, rgba(18, 12, 10, 0.55) 45%, rgba(18, 12, 10, 0.1) 75%), linear-gradient(0deg, rgba(18, 12, 10, 0.95) 0%, rgba(18, 12, 10, 0) 45%); overflow-y: auto; touch-action: pan-y; }
+        .t-top { display: flex; align-items: center; justify-content: space-between; position: absolute; top: calc(22px + env(safe-area-inset-top)); left: 40px; right: 40px; }
+        .back { display: inline-flex; align-items: center; gap: 8px; height: 40px; padding: 0 16px; border-radius: 999px; color: var(--ivory); text-decoration: none; font-weight: 600; font-size: 13px; }
+        .back svg { width: 14px; height: 14px; fill: currentColor; }
+        .t-actions { display: flex; gap: 10px; }
+        .hero { align-self: center; max-width: min(560px, 100%); min-width: 0; padding-top: 60px; animation: rise .9s cubic-bezier(.2, .8, .2, 1) both; }
+        @keyframes rise { from { opacity: 0; transform: translateY(18px); } }
+        .hero .row { display: flex; align-items: center; gap: 22px; }
+        .kicker { font-size: 12px; font-weight: 700; letter-spacing: 0.32em; color: var(--gold); text-transform: uppercase; }
+        .logo { margin: 6px 0 0; font-family: var(--display); font-weight: 400; font-size: clamp(52px, 7.4vw, 104px); line-height: 0.95; letter-spacing: -0.02em; }
+        .logo em { font-style: italic; color: var(--gold); }
+        .tagline { font-family: var(--display); font-size: clamp(17px, 1.6vw, 21px); line-height: 1.5; color: var(--ivory-2); margin: 20px 0 30px; max-width: 470px; }
+        .hero .cta { display: flex; gap: 12px; flex-wrap: wrap; align-items: center; }
+        .selected-note { margin-top: 16px; font-size: 13px; color: var(--muted); }
+        .selected-note b { color: var(--ivory); font-weight: 700; }
+
+        .gallery-head { display: flex; align-items: baseline; justify-content: space-between; margin: 26px 0 12px; }
+        .gallery-head h2 { margin: 0; font-family: var(--display); font-weight: 400; font-size: 22px; }
+        .gallery-head span { font-size: 12px; color: var(--muted); letter-spacing: 0.08em; }
+        #gallery { display: grid; grid-auto-flow: column; grid-auto-columns: minmax(208px, 1fr); gap: 14px; overflow-x: auto; scroll-snap-type: x mandatory; padding: 4px 4px 10px; touch-action: pan-x; scrollbar-width: thin; }
+        .card { position: relative; scroll-snap-align: start; text-align: left; border-radius: var(--radius); padding: 14px 14px 14px; overflow: hidden; transition: transform .2s, border-color .2s, box-shadow .2s; animation: rise .8s cubic-bezier(.2, .8, .2, 1) both; }
+        .card:hover { transform: translateY(-3px); border-color: rgba(232, 200, 140, 0.35); }
+        .card.sel { border-color: var(--gold); box-shadow: 0 0 0 1px var(--gold), 0 18px 50px rgba(225, 181, 107, 0.22); }
+        .card .wm { position: absolute; right: -6px; top: -18px; font-family: var(--cn); font-size: 110px; color: rgba(232, 200, 140, 0.07); pointer-events: none; }
+        .card .pv { height: 92px; display: grid; place-items: center; margin-bottom: 10px; border-radius: 12px; background: radial-gradient(ellipse at 50% 60%, rgba(67, 192, 143, 0.12), rgba(0, 0, 0, 0.18)); }
+        .card .pv svg { max-width: 92%; max-height: 80px; }
+        .card h3 { margin: 0; font-family: var(--display); font-weight: 600; font-size: 19px; display: flex; align-items: center; gap: 8px; }
+        .card h3 .cn { font-size: 15px; color: var(--gold); }
+        .card p { margin: 4px 0 10px; font-size: 12.5px; color: var(--muted); line-height: 1.4; min-height: 34px; }
+        .card .meta { display: flex; justify-content: space-between; align-items: center; font-size: 12px; color: var(--ivory-2); }
+        .pips { display: flex; gap: 3px; }
+        .pips i { width: 14px; height: 4px; border-radius: 2px; background: rgba(232, 200, 140, 0.18); }
+        .pips i.on { background: linear-gradient(90deg, var(--gold), var(--gold-2)); }
+        .card .best { margin-top: 8px; display: flex; justify-content: space-between; font-size: 12px; color: var(--muted); }
+        .stars { color: rgba(232, 200, 140, 0.2); letter-spacing: 2px; }
+        .stars b { color: var(--gold); font-weight: 400; text-shadow: 0 0 10px rgba(225, 181, 107, 0.6); }
+
+        /* ---------- HUD ---------- */
+        #hud { position: fixed; inset: 0; pointer-events: none; z-index: 5; }
+        .topbar { position: absolute; top: calc(14px + env(safe-area-inset-top)); left: 50%; transform: translateX(-50%); width: min(980px, calc(100% - 28px)); height: 64px; border-radius: 20px; display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; padding: 0 12px 0 14px; pointer-events: auto; overflow: hidden; animation: drop .6s cubic-bezier(.2, .8, .2, 1) both; }
+        @keyframes drop { from { opacity: 0; transform: translate(-50%, -16px); } }
+        .tb-left { display: flex; align-items: center; gap: 12px; min-width: 0; }
+        .tb-left .nm { display: flex; flex-direction: column; min-width: 0; }
+        .tb-left small { font-size: 10px; letter-spacing: 0.24em; color: var(--muted); font-weight: 700; text-transform: uppercase; }
+        .tb-left b { font-family: var(--display); font-weight: 600; font-size: 18px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+        .tb-mid { display: flex; align-items: center; gap: 22px; }
+        .stat { display: flex; flex-direction: column; align-items: center; }
+        .stat small { font-size: 9.5px; letter-spacing: 0.24em; color: var(--muted); font-weight: 700; }
+        .stat span { font-size: 22px; font-weight: 700; font-variant-numeric: tabular-nums; line-height: 1.15; }
+        #h-combo { position: absolute; top: 8px; margin-left: 66px; padding: 2px 8px; border-radius: 999px; font-size: 11px; font-weight: 800; color: #1b1206; background: linear-gradient(135deg, #f3d394, #d39b48); opacity: 0; transform: scale(0.6); transition: opacity .2s, transform .25s cubic-bezier(.3, 1.8, .5, 1); }
+        #h-combo.on { opacity: 1; transform: scale(1); }
+        .tb-right { display: flex; justify-content: flex-end; gap: 8px; align-items: center; }
+        .chip { display: inline-flex; align-items: center; gap: 7px; height: 36px; padding: 0 13px; border-radius: 999px; background: rgba(245, 236, 216, 0.06); border: 1px solid var(--line); font-size: 13px; font-weight: 700; font-variant-numeric: tabular-nums; }
+        .chip i { width: 8px; height: 8px; border-radius: 50%; background: var(--jade); box-shadow: 0 0 8px var(--jade); }
+        .chip.warn i { background: var(--vermilion); box-shadow: 0 0 8px var(--vermilion); }
+        .chip .tile-ic { width: 11px; height: 14px; border-radius: 2.5px; background: linear-gradient(#fbf5e6 60%, #2fa476 60%); box-shadow: 0 1px 2px rgba(0, 0, 0, 0.5); }
+        .progress { position: absolute; left: 0; right: 0; bottom: 0; height: 3px; background: rgba(232, 200, 140, 0.08); }
+        #h-progress { height: 100%; width: 0; background: linear-gradient(90deg, var(--jade-2), var(--jade), var(--gold)); box-shadow: 0 0 10px var(--jade); transition: width .5s cubic-bezier(.2, .8, .2, 1); }
+
+        .dock { position: absolute; bottom: calc(16px + env(safe-area-inset-bottom)); left: 50%; transform: translateX(-50%); display: flex; gap: 6px; padding: 7px; border-radius: 26px; pointer-events: auto; animation: up .6s .1s cubic-bezier(.2, .8, .2, 1) both; }
+        @keyframes up { from { opacity: 0; transform: translate(-50%, 16px); } }
+        .dk { position: relative; display: flex; align-items: center; gap: 10px; height: 52px; padding: 0 18px 0 14px; border-radius: 19px; font-weight: 700; font-size: 13.5px; transition: background .15s, transform .15s, opacity .2s; }
+        .dk:hover { background: rgba(245, 236, 216, 0.08); }
+        .dk:active { transform: scale(0.96); }
+        .dk:disabled { opacity: 0.35; cursor: default; background: none; transform: none; }
+        .dk .ic { width: 34px; height: 34px; border-radius: 12px; display: grid; place-items: center; background: rgba(245, 236, 216, 0.07); }
+        .dk .ic svg { width: 18px; height: 18px; fill: var(--ivory); }
+        .dk.hint .ic { background: rgba(67, 192, 143, 0.16); } .dk.hint .ic svg { fill: var(--jade); }
+        .dk.shuffle .ic { background: rgba(225, 181, 107, 0.15); } .dk.shuffle .ic svg { fill: var(--gold); }
+        .dk kbd { font: 700 10px var(--ui); color: var(--muted); border: 1px solid var(--line); border-radius: 5px; padding: 1px 5px; }
+        .badge { position: absolute; top: 6px; left: 36px; min-width: 18px; height: 18px; padding: 0 5px; border-radius: 9px; background: var(--vermilion); color: #fff; font-size: 10.5px; font-weight: 800; display: grid; place-items: center; box-shadow: 0 2px 6px rgba(0, 0, 0, 0.4); }
+        .sep { width: 1px; margin: 10px 2px; background: var(--line); }
+        [data-tip] { position: relative; }
+        [data-tip]:hover::after { content: attr(data-tip); position: absolute; bottom: calc(100% + 12px); left: 50%; transform: translateX(-50%); white-space: nowrap; padding: 7px 11px; border-radius: 9px; font-size: 12px; font-weight: 600; background: #f5ecd8; color: #1c1411; box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4); pointer-events: none; }
+
+        #toast { position: fixed; top: calc(92px + env(safe-area-inset-top)); left: 50%; transform: translate(-50%, -8px); padding: 10px 18px; border-radius: 999px; font-size: 13.5px; font-weight: 600; opacity: 0; pointer-events: none; transition: opacity .25s, transform .25s; z-index: 8; white-space: nowrap; max-width: calc(100% - 32px); overflow: hidden; text-overflow: ellipsis; }
+        #toast.show { opacity: 1; transform: translate(-50%, 0); }
+        #toast b { color: var(--gold); }
+
+        /* ---------- modals ---------- */
+        .scrim { position: fixed; inset: 0; z-index: 20; display: grid; place-items: center; padding: 18px; background: rgba(10, 6, 5, 0.5); backdrop-filter: blur(3px); -webkit-backdrop-filter: blur(3px); animation: fade .25s both; overflow-y: auto; touch-action: pan-y; }
+        @keyframes fade { from { opacity: 0; } }
+        .modal { width: min(460px, 100%); border-radius: 26px; padding: 30px 30px 26px; text-align: center; animation: pop .45s cubic-bezier(.2, 1.4, .4, 1) both; position: relative; overflow: hidden; }
+        .modal::before { content: ""; position: absolute; inset: 0 0 auto 0; height: 120px; background: radial-gradient(ellipse at 50% -20%, rgba(225, 181, 107, 0.2), transparent 70%); pointer-events: none; }
+        @keyframes pop { from { opacity: 0; transform: translateY(14px) scale(0.96); } }
+        .modal h2 { font-family: var(--display); font-weight: 400; font-size: 34px; margin: 8px 0 6px; line-height: 1.1; }
+        .modal p { color: var(--ivory-2); font-size: 14.5px; line-height: 1.55; margin: 0 0 4px; }
+        .modal .btns { display: flex; gap: 10px; justify-content: center; margin-top: 24px; flex-wrap: wrap; }
+        .modal .x { position: absolute; top: 14px; right: 14px; width: 38px; height: 38px; border-radius: 50%; display: grid; place-items: center; }
+        .modal .x:hover { background: rgba(245, 236, 216, 0.08); }
+        .modal .x svg { width: 16px; height: 16px; fill: var(--ivory-2); }
+        .col { display: grid; gap: 10px; margin-top: 22px; }
+        .col .btn { width: 100%; }
+
+        /* settings */
+        .set-sec { text-align: left; margin-top: 22px; }
+        .set-sec h4 { margin: 0 0 10px; font-size: 11px; letter-spacing: 0.24em; color: var(--muted); font-weight: 800; text-transform: uppercase; }
+        #themes { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
+        .theme { border-radius: 14px; padding: 12px 10px 10px; border: 1px solid var(--line); background: rgba(245, 236, 216, 0.04); display: grid; justify-items: center; gap: 8px; font-size: 13px; font-weight: 700; transition: border-color .2s, background .2s; }
+        .theme.sel { border-color: var(--gold); background: rgba(225, 181, 107, 0.1); }
+        .theme .mini { width: 34px; height: 44px; border-radius: 6px; position: relative; box-shadow: 0 6px 14px rgba(0, 0, 0, 0.45); }
+        .theme .mini::after { content: ""; position: absolute; inset: 0 0 32% 0; border-radius: 6px 6px 3px 3px; background: var(--face); box-shadow: inset 0 -1px 0 rgba(0, 0, 0, 0.15); }
+        .row-set { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 12px 0; border-top: 1px solid var(--line); font-size: 14px; }
+        .row-set:first-of-type { border-top: 0; }
+        .row-set span small { display: block; color: var(--muted); font-size: 12px; margin-top: 2px; }
+        .switch { width: 46px; height: 28px; border-radius: 14px; background: rgba(245, 236, 216, 0.14); position: relative; transition: background .2s; flex: none; }
+        .switch::after { content: ""; position: absolute; top: 3px; left: 3px; width: 22px; height: 22px; border-radius: 50%; background: var(--ivory); transition: transform .25s cubic-bezier(.3, 1.5, .5, 1); box-shadow: 0 2px 6px rgba(0, 0, 0, 0.4); }
+        .switch[aria-checked="true"] { background: var(--jade-2); }
+        .switch[aria-checked="true"]::after { transform: translateX(18px); }
+        input[type=range] { -webkit-appearance: none; appearance: none; width: 160px; height: 4px; border-radius: 2px; background: linear-gradient(90deg, var(--gold) var(--v, 80%), rgba(245, 236, 216, 0.15) var(--v, 80%)); outline: none; }
+        input[type=range]::-webkit-slider-thumb { -webkit-appearance: none; width: 18px; height: 18px; border-radius: 50%; background: var(--ivory); box-shadow: 0 2px 8px rgba(0, 0, 0, 0.5); cursor: pointer; }
+        input[type=range]::-moz-range-thumb { width: 18px; height: 18px; border: 0; border-radius: 50%; background: var(--ivory); cursor: pointer; }
+
+        /* help */
+        .help-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; text-align: left; margin-top: 18px; }
+        .help-grid div { padding: 12px; border-radius: 14px; background: rgba(245, 236, 216, 0.05); font-size: 13px; color: var(--ivory-2); line-height: 1.45; }
+        .help-grid b { display: block; color: var(--ivory); font-size: 13px; margin-bottom: 4px; }
+        .help-tiles { display: flex; gap: 6px; justify-content: center; margin: 14px 0 2px; flex-wrap: wrap; }
+        .help-tiles canvas { width: 34px; height: 42px; border-radius: 5px; box-shadow: 0 3px 0 var(--jade-2), 0 6px 12px rgba(0, 0, 0, 0.5); }
+        .keys { display: flex; flex-wrap: wrap; gap: 8px 14px; justify-content: center; margin-top: 16px; font-size: 12.5px; color: var(--muted); }
+        .keys kbd { font: 700 11px var(--ui); color: var(--ivory); border: 1px solid var(--line); border-bottom-width: 2px; border-radius: 6px; padding: 2px 7px; margin-right: 4px; }
+
+        /* win */
+        #m-win .modal { width: min(500px, 100%); }
+        .ribbon { position: absolute; top: 22px; right: -44px; transform: rotate(38deg); width: 170px; padding: 6px 0; background: linear-gradient(135deg, #e8553a, #b72a1a); color: #fff; font-size: 11px; font-weight: 800; letter-spacing: 0.16em; box-shadow: 0 4px 14px rgba(0, 0, 0, 0.4); }
+        #mw-stars { font-size: 46px; letter-spacing: 14px; padding-left: 14px; margin: 6px 0 2px; height: 58px; }
+        #mw-stars b { display: inline-block; color: rgba(232, 200, 140, 0.16); font-weight: 400; animation: star .8s cubic-bezier(.2, 1.8, .4, 1) both; }
+        #mw-stars b.on { color: var(--gold); text-shadow: 0 0 24px rgba(225, 181, 107, 0.85); }
+        @keyframes star { from { transform: scale(0) rotate(-120deg); opacity: 0; } }
+        .stats-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; margin-top: 18px; }
+        .stats-grid div { padding: 12px 6px; border-radius: 14px; background: rgba(245, 236, 216, 0.05); border: 1px solid var(--line); }
+        .stats-grid small { display: block; font-size: 9.5px; letter-spacing: 0.2em; color: var(--muted); font-weight: 800; }
+        .stats-grid span { display: block; margin-top: 4px; font-size: 20px; font-weight: 700; font-variant-numeric: tabular-nums; }
+        .best-line { margin-top: 12px; font-size: 13px; color: var(--muted); }
+        .best-line b { color: var(--gold); }
+
+        @media (max-width: 860px) {
+            #title { padding-left: 20px; padding-right: 20px; }
+            .t-top { left: 20px; right: 20px; }
+            .hero { padding-top: 70px; }
+            .topbar { grid-template-columns: auto 1fr auto; height: 58px; }
+            .tb-left .nm { display: none; }
+            .tb-mid { justify-content: center; gap: 16px; }
+            .stat span { font-size: 19px; }
+            .dk { padding: 0 8px; height: 50px; }
+            .dk .lbl, .dk kbd { display: none; }
+            .badge { left: 30px; }
+            .stats-grid { grid-template-columns: repeat(2, 1fr); }
+            #h-combo { margin-left: 52px; }
+        }
+        @media (max-width: 520px) { .hero .row { gap: 14px; } .hero .seal:not(.sm) { width: 52px; height: 52px; font-size: 20px; } .logo { font-size: 46px; } .t-actions .iconbtn { width: 42px; height: 42px; } }
+        @media (max-width: 420px) { .chip.pairs { display: none; } .tb-mid { gap: 12px; } .modal { padding: 26px 20px 22px; } .help-grid { grid-template-columns: 1fr; } }
+    </style>
+</head>
+
+<body data-state="loading">
+    <canvas id="view"></canvas>
+
+    <div id="loading"><div><span class="seal">翠亭</span><p>Setting the table</p></div></div>
+
+    <!-- ===== title ===== -->
+    <div id="title" class="hidden">
+        <div class="t-top">
+            <a class="back glass" href="/"><svg viewBox="0 0 24 24"><path d="M15.4 4.6 14 3.2 5.2 12l8.8 8.8 1.4-1.4L8 12z" /></svg>All games</a>
+            <div class="t-actions">
+                <button class="iconbtn glass" id="t-help" aria-label="How to play"><svg viewBox="0 0 24 24"><path d="M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20zm1 17h-2v-2h2zm2.1-7.7-.9.9C13.4 13 13 13.5 13 15h-2v-.5c0-1.1.4-2.1 1.2-2.8l1.2-1.3A2 2 0 1 0 10 9H8a4 4 0 1 1 7.1 2.3z" /></svg></button>
+                <button class="iconbtn glass" id="t-settings" aria-label="Settings"><svg viewBox="0 0 24 24"><path d="M19.4 13a7.6 7.6 0 0 0 0-2l2.1-1.6-2-3.4-2.5 1a7.4 7.4 0 0 0-1.7-1L15 3.3h-4l-.4 2.7a7.4 7.4 0 0 0-1.7 1l-2.5-1-2 3.4L6.6 11a7.6 7.6 0 0 0 0 2l-2.1 1.6 2 3.4 2.5-1c.5.4 1.1.8 1.7 1l.4 2.7h4l.4-2.7c.6-.2 1.2-.6 1.7-1l2.5 1 2-3.4zM13 15.5a3.5 3.5 0 1 1 0-7 3.5 3.5 0 0 1 0 7z" /></svg></button>
+            </div>
+        </div>
+        <div class="hero">
+            <div class="row"><span class="seal">翠亭</span>
+                <div><div class="kicker">Mahjong solitaire</div><h1 class="logo">Jade <em>Pavilion</em></h1></div>
+            </div>
+            <p class="tagline">Carved jade, warm lanterns and a quiet pot of tea. Match the free tiles in pairs until the table is clear.</p>
+            <div class="cta">
+                <button class="btn primary lg" id="t-play"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z" /></svg>Play <span id="t-play-name">Garden</span></button>
+                <button class="btn lg" id="t-howto">How to play</button>
+            </div>
+            <div class="selected-note" id="t-note">Every deal is guaranteed solvable.</div>
+        </div>
+        <div>
+            <div class="gallery-head"><h2>Choose a layout</h2><span>5 LAYOUTS · 3 THEMES</span></div>
+            <div id="gallery"></div>
+        </div>
+    </div>
+
+    <!-- ===== HUD ===== -->
+    <div id="hud" class="hidden">
+        <div class="topbar glass">
+            <div class="tb-left"><span class="seal sm" id="h-cn">園</span><div class="nm"><small>Layout</small><b id="h-name">Garden</b></div></div>
+            <div class="tb-mid">
+                <div class="stat"><small>TIME</small><span id="h-time">0:00</span></div>
+                <div class="stat"><small>SCORE</small><span id="h-score">0</span></div>
+                <span id="h-combo">×2</span>
+            </div>
+            <div class="tb-right">
+                <span class="chip pairs" id="h-pairs-chip" title="Matching pairs available"><i></i><span id="h-pairs">0</span> pairs</span>
+                <span class="chip" title="Tiles left"><span class="tile-ic"></span><span id="h-left">0</span></span>
+            </div>
+            <div class="progress"><div id="h-progress"></div></div>
+        </div>
+        <div class="dock glass">
+            <button class="dk" id="b-undo" data-tip="Undo last match · −20"><span class="ic"><svg viewBox="0 0 24 24"><path d="M12.5 8c-2.6 0-5 1-6.9 2.6L2 7v9h9l-3.6-3.6A8 8 0 0 1 20.1 16l2.4-.8A10.5 10.5 0 0 0 12.5 8z" /></svg></span><span class="lbl">Undo</span><kbd>U</kbd></button>
+            <button class="dk hint" id="b-hint" data-tip="Show a matching pair · −50"><span class="ic"><svg viewBox="0 0 24 24"><path d="M9 21h6v-1H9zm3-19a7 7 0 0 0-4 12.7V17a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1v-2.3A7 7 0 0 0 12 2z" /></svg></span><span class="lbl">Hint</span><kbd>H</kbd><span class="badge" id="b-hint-n">3</span></button>
+            <button class="dk shuffle" id="b-shuffle" data-tip="Re-deal the remaining tiles · −100"><span class="ic"><svg viewBox="0 0 24 24"><path d="M10.6 9.2 5.4 4 4 5.4l5.2 5.2zM14.5 4l2 2L4 18.6 5.4 20 18 7.5l2 2V4zm.3 9.4-1.4 1.4 3.1 3.1-2 2.1H20v-5.5l-2 2z" /></svg></span><span class="lbl">Shuffle</span><kbd>S</kbd><span class="badge" id="b-shuffle-n">2</span></button>
+            <span class="sep"></span>
+            <button class="dk" id="b-pause" data-tip="Pause"><span class="ic"><svg viewBox="0 0 24 24"><path d="M7 5h4v14H7zm6 0h4v14h-4z" /></svg></span><span class="lbl">Pause</span><kbd>P</kbd></button>
+        </div>
+    </div>
+    <div id="toast" class="glass"></div>
+
+    <!-- ===== modals ===== -->
+    <div class="scrim hidden" id="m-pause">
+        <div class="modal glass">
+            <div class="kicker">Paused</div>
+            <h2>The tea is still warm</h2>
+            <p id="mp-sub">Take your time.</p>
+            <div class="col">
+                <button class="btn primary" id="mp-resume">Resume</button>
+                <button class="btn" id="mp-restart">New deal</button>
+                <button class="btn" id="mp-settings">Settings</button>
+                <button class="btn" id="mp-menu">Main menu</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="scrim hidden" id="m-settings">
+        <div class="modal glass">
+            <button class="x" id="ms-close" aria-label="Close"><svg viewBox="0 0 24 24"><path d="M19 6.4 17.6 5 12 10.6 6.4 5 5 6.4 10.6 12 5 17.6 6.4 19l5.6-5.6 5.6 5.6 1.4-1.4-5.6-5.6z" /></svg></button>
+            <div class="kicker">Settings</div>
+            <h2>Make it yours</h2>
+            <div class="set-sec"><h4>Theme</h4><div id="themes"></div></div>
+            <div class="set-sec">
+                <h4>Play</h4>
+                <div class="row-set"><span>Highlight free tiles<small>Dim tiles that can't be picked yet</small></span><button class="switch" id="s-free" role="switch" aria-checked="true" aria-label="Highlight free tiles"></button></div>
+                <div class="row-set"><span>Tile numbers<small>Small corner index on every face</small></span><button class="switch" id="s-index" role="switch" aria-checked="false" aria-label="Tile numbers"></button></div>
+                <div class="row-set"><span>Sound</span><input type="range" id="s-vol" min="0" max="100" value="80" aria-label="Volume"></div>
+                <div class="row-set"><span>Camera<small>Drag to turn · wheel or pinch to zoom</small></span><button class="btn" id="s-cam" style="height:38px;padding:0 16px">Reset view</button></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="scrim hidden" id="m-help">
+        <div class="modal glass" style="width:min(540px,100%)">
+            <button class="x" id="mh-close" aria-label="Close"><svg viewBox="0 0 24 24"><path d="M19 6.4 17.6 5 12 10.6 6.4 5 5 6.4 10.6 12 5 17.6 6.4 19l5.6-5.6 5.6 5.6 1.4-1.4-5.6-5.6z" /></svg></button>
+            <div class="kicker">How to play</div>
+            <h2>Clear the table</h2>
+            <p>Pick two identical tiles that are <b>free</b> to remove them. Clear every tile to win.</p>
+            <div class="help-tiles" id="help-tiles"></div>
+            <div class="help-grid">
+                <div><b>A tile is free</b>when nothing sits on top of it and its left <i>or</i> right side is open.</div>
+                <div><b>Flowers &amp; Seasons</b>any Flower matches any Flower; any Season matches any Season.</div>
+                <div><b>Combos</b>match again within 4 seconds to multiply your points, up to ×8.</div>
+                <div><b>Stuck?</b>use a Hint, Undo, or Shuffle the remaining tiles — every deal can be solved.</div>
+            </div>
+            <div class="keys"><span><kbd>U</kbd>Undo</span><span><kbd>H</kbd>Hint</span><span><kbd>S</kbd>Shuffle</span><span><kbd>P</kbd>Pause</span><span><kbd>R</kbd>Reset view</span><span><kbd>M</kbd>Mute</span></div>
+            <div class="btns"><button class="btn primary" id="mh-ok">Got it</button></div>
+        </div>
+    </div>
+
+    <div class="scrim hidden" id="m-nomoves">
+        <div class="modal glass">
+            <div class="kicker" style="color:var(--vermilion)">No more matches</div>
+            <h2>The board is locked</h2>
+            <p><span id="mn-left">0</span> tiles remain, but no free pair matches.</p>
+            <div class="col">
+                <button class="btn jade" id="mn-shuffle">Shuffle remaining tiles <span id="mn-shuffle-n"></span></button>
+                <button class="btn" id="mn-undo">Undo last match</button>
+                <button class="btn" id="mn-new">New deal</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="scrim hidden" id="m-win">
+        <div class="modal glass">
+            <div class="ribbon hidden" id="mw-ribbon">NEW BEST</div>
+            <div class="kicker">Board cleared</div>
+            <h2 id="mw-title">Garden</h2>
+            <div id="mw-stars"></div>
+            <p id="mw-msg"></p>
+            <div class="stats-grid">
+                <div><small>TIME</small><span id="mw-time">0:00</span></div>
+                <div><small>SCORE</small><span id="mw-score">0</span></div>
+                <div><small>BEST COMBO</small><span id="mw-combo">×1</span></div>
+                <div><small>HINTS</small><span id="mw-hints">0</span></div>
+            </div>
+            <div class="best-line" id="mw-best"></div>
+            <div class="btns">
+                <button class="btn" id="mw-menu">Menu</button>
+                <button class="btn" id="mw-replay">Replay</button>
+                <button class="btn primary" id="mw-next">Next layout</button>
+            </div>
+        </div>
+    </div>
+
+    <script type="module" src="main.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <title>Crystal Keep – Play Free Online | Classic Games Arcade</title>
+<!-- seo:head -->
+<meta name="description" content="A 3D tower defense game: build and upgrade crystal towers along winding paths and stop every wave before it reaches the keep. Several maps and difficulties, free online." />
+<link rel="canonical" href="https://classicgames-flame.vercel.app/crystal-keep/" />
+<meta name="robots" content="index, follow, max-image-preview:large" />
+<meta name="theme-color" content="#0b0a14" />
+<link rel="icon" href="/favicon.ico" sizes="32x32" />
+<link rel="icon" href="/icon.svg" type="image/svg+xml" />
+<link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+<link rel="manifest" href="/manifest.webmanifest" />
+<meta property="og:site_name" content="Classic Games Arcade" />
+<meta property="og:type" content="website" />
+<meta property="og:title" content="Crystal Keep – Play Free Online | Classic Games Arcade" />
+<meta property="og:description" content="A 3D tower defense game: build and upgrade crystal towers along winding paths and stop every wave before it reaches the keep. Several maps and difficulties, free online." />
+<meta property="og:url" content="https://classicgames-flame.vercel.app/crystal-keep/" />
+<meta property="og:image" content="https://classicgames-flame.vercel.app/og/crystal-keep.jpg" />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+<meta property="og:image:alt" content="Crystal Keep gameplay" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="Crystal Keep – Play Free Online | Classic Games Arcade" />
+<meta name="twitter:description" content="A 3D tower defense game: build and upgrade crystal towers along winding paths and stop every wave before it reaches the keep. Several maps and difficulties, free online." />
+<meta name="twitter:image" content="https://classicgames-flame.vercel.app/og/crystal-keep.jpg" />
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "VideoGame",
+      "name": "Crystal Keep",
+      "description": "A 3D tower defense game: build and upgrade crystal towers along winding paths and stop every wave before it reaches the keep. Several maps and difficulties, free online.",
+      "url": "https://classicgames-flame.vercel.app/crystal-keep/",
+      "image": "https://classicgames-flame.vercel.app/thumbs/crystal-keep.webp",
+      "genre": [
+        "Strategy",
+        "Tower Defense"
+      ],
+      "gamePlatform": "Web browser",
+      "applicationCategory": "Game",
+      "operatingSystem": "Any",
+      "playMode": "SinglePlayer",
+      "isAccessibleForFree": true,
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "USD",
+        "availability": "https://schema.org/InStock"
+      },
+      "isPartOf": {
+        "@type": "WebSite",
+        "name": "Classic Games Arcade",
+        "url": "https://classicgames-flame.vercel.app/"
+      }
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Games",
+          "item": "https://classicgames-flame.vercel.app/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Crystal Keep",
+          "item": "https://classicgames-flame.vercel.app/crystal-keep/"
+        }
+      ]
+    }
+  ]
+}
+</script>
+<!-- /seo:head -->
+    <link rel="icon" href="/favicon.ico" sizes="32x32">
+    <link rel="icon" href="/icon.svg" type="image/svg+xml">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700;800&family=Nunito+Sans:opsz,wght@6..12,400;6..12,600;6..12,700;6..12,800;6..12,900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #12141b; --glass: rgba(16, 19, 28, 0.66); --glass-2: rgba(28, 32, 46, 0.7); --line: rgba(240, 196, 106, 0.18); --line-2: rgba(255, 255, 255, 0.08);
+            --text: #f3ead6; --muted: #a69e8c; --gold: #f0c46a; --gold-2: #c8913a; --ember: #ff8a3d; --ice: #8fe0ff; --violet: #b78cff; --emerald: #6fe08a; --danger: #ff5a4f;
+            --display: "Cinzel", Georgia, serif; --ui: "Nunito Sans", "Segoe UI", system-ui, sans-serif;
+            --shadow: 0 18px 50px rgba(0, 0, 0, 0.45);
+        }
+        * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+        html, body { margin: 0; height: 100%; overflow: hidden; background: var(--bg); color: var(--text); font-family: var(--ui); user-select: none; -webkit-user-select: none; touch-action: none; overscroll-behavior: none; }
+        #view { position: fixed; inset: 0; width: 100%; height: 100%; display: block; }
+        #view.build { cursor: copy; } #view.drag { cursor: grabbing; } #view.point { cursor: pointer; }
+        .hidden { display: none !important; }
+        button { font: inherit; color: inherit; cursor: pointer; border: 0; background: none; padding: 0; }
+        :focus-visible { outline: 2px solid var(--gold); outline-offset: 3px; }
+        .glass { background: var(--glass); border: 1px solid var(--line); backdrop-filter: blur(14px) saturate(1.3); -webkit-backdrop-filter: blur(14px) saturate(1.3); box-shadow: var(--shadow), inset 0 1px 0 rgba(255, 255, 255, 0.05); }
+        .ic { width: 18px; height: 18px; flex: none; }
+        .num { font-variant-numeric: tabular-nums; }
+
+        .btn { display: inline-flex; align-items: center; justify-content: center; gap: 9px; height: 46px; padding: 0 22px; border-radius: 12px; font-weight: 800; font-size: 14px; letter-spacing: 0.04em; border: 1px solid var(--line); background: rgba(255, 255, 255, 0.04); transition: transform .15s, background .15s, box-shadow .15s, border-color .15s, opacity .2s; white-space: nowrap; }
+        .btn:hover:not(:disabled) { background: rgba(255, 255, 255, 0.09); border-color: rgba(240, 196, 106, 0.4); transform: translateY(-1px); }
+        .btn:active:not(:disabled) { transform: translateY(1px); }
+        .btn:disabled { opacity: 0.4; cursor: default; }
+        .btn.gold { color: #2a1a05; border-color: rgba(255, 230, 170, 0.6); background: linear-gradient(180deg, #ffd98a, #e0a544 60%, #c98a2c); box-shadow: 0 8px 24px rgba(224, 165, 68, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.6), inset 0 -2px 0 rgba(120, 70, 10, 0.35); text-shadow: 0 1px 0 rgba(255, 240, 200, 0.5); }
+        .btn.gold:hover:not(:disabled) { box-shadow: 0 12px 32px rgba(224, 165, 68, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.6), inset 0 -2px 0 rgba(120, 70, 10, 0.35); }
+        .btn.danger { border-color: rgba(255, 90, 79, 0.45); color: #ffb3ad; }
+        .btn.lg { height: 56px; padding: 0 34px; font-size: 16px; border-radius: 14px; }
+        .seg { display: inline-flex; padding: 4px; gap: 3px; border-radius: 12px; background: rgba(0, 0, 0, 0.3); border: 1px solid var(--line-2); }
+        .seg button { height: 34px; padding: 0 14px; border-radius: 9px; font-weight: 800; font-size: 12.5px; color: var(--muted); letter-spacing: 0.03em; transition: background .15s, color .15s; }
+        .seg button:hover { color: var(--text); }
+        .seg button.on { color: #2a1a05; background: linear-gradient(180deg, #ffd98a, #d99a3c); box-shadow: 0 3px 10px rgba(224, 165, 68, 0.35); }
+        .kicker { font-family: var(--display); font-size: 12px; letter-spacing: 0.35em; color: var(--gold); text-transform: uppercase; font-weight: 700; }
+        kbd { font: 800 10px var(--ui); color: var(--muted); border: 1px solid var(--line-2); border-bottom-width: 2px; border-radius: 5px; padding: 1px 5px; background: rgba(0, 0, 0, 0.25); }
+
+        /* ---------- loading ---------- */
+        #loading { position: fixed; inset: 0; z-index: 50; display: grid; place-items: center; background: radial-gradient(ellipse at 50% 35%, #2b2333, var(--bg) 70%); transition: opacity .6s; }
+        #loading.out { opacity: 0; pointer-events: none; }
+        #loading svg { width: 74px; animation: float 2s ease-in-out infinite; filter: drop-shadow(0 0 20px rgba(143, 224, 255, 0.5)); }
+        #loading p { margin: 14px 0 0; font-family: var(--display); letter-spacing: 0.3em; font-size: 12px; color: var(--muted); text-align: center; }
+        @keyframes float { 50% { transform: translateY(-8px); } }
+
+        /* ---------- title ---------- */
+        #title { position: fixed; inset: 0; z-index: 10; display: grid; grid-template-columns: minmax(0, 1fr); grid-template-rows: 1fr auto; padding: calc(24px + env(safe-area-inset-top)) 40px calc(26px + env(safe-area-inset-bottom)); background: linear-gradient(90deg, rgba(18, 20, 27, 0.9) 0%, rgba(18, 20, 27, 0.45) 42%, rgba(18, 20, 27, 0) 70%), linear-gradient(0deg, rgba(18, 20, 27, 0.95) 0%, rgba(18, 20, 27, 0) 45%); overflow-y: auto; touch-action: pan-y; }
+        .t-top { position: absolute; top: calc(20px + env(safe-area-inset-top)); left: 40px; right: 40px; display: flex; justify-content: space-between; }
+        .back { display: inline-flex; align-items: center; gap: 8px; height: 40px; padding: 0 16px; border-radius: 12px; color: var(--text); text-decoration: none; font-weight: 700; font-size: 13px; }
+        .iconbtn { width: 44px; height: 44px; border-radius: 12px; display: grid; place-items: center; }
+        .iconbtn svg { width: 20px; height: 20px; fill: var(--text); }
+        .hero { align-self: center; max-width: min(560px, 100%); padding-top: 64px; animation: rise .9s cubic-bezier(.2, .8, .2, 1) both; }
+        @keyframes rise { from { opacity: 0; transform: translateY(16px); } }
+        .crest { display: flex; align-items: center; gap: 18px; }
+        .crest svg { width: 70px; flex: none; filter: drop-shadow(0 6px 18px rgba(0, 0, 0, 0.5)) drop-shadow(0 0 22px rgba(143, 224, 255, 0.25)); }
+        .logo { margin: 4px 0 0; font-family: var(--display); font-weight: 800; font-size: clamp(46px, 6.6vw, 92px); line-height: 0.95; letter-spacing: 0.02em; background: linear-gradient(180deg, #fff6dc 10%, #f0c46a 55%, #b9802e 100%); -webkit-background-clip: text; background-clip: text; color: transparent; filter: drop-shadow(0 3px 0 rgba(60, 30, 5, 0.5)) drop-shadow(0 10px 30px rgba(0, 0, 0, 0.45)); }
+        .tagline { font-size: clamp(15px, 1.4vw, 18px); line-height: 1.6; color: #d8cdb6; margin: 18px 0 24px; max-width: 470px; }
+        .row { display: flex; gap: 12px; flex-wrap: wrap; align-items: center; }
+        .diffline { margin-top: 18px; display: flex; align-items: center; gap: 14px; flex-wrap: wrap; font-size: 13px; color: var(--muted); }
+        .gal-head { display: flex; align-items: baseline; justify-content: space-between; margin: 24px 0 12px; }
+        .gal-head h2 { margin: 0; font-family: var(--display); font-weight: 700; font-size: 20px; letter-spacing: 0.04em; }
+        .gal-head span { font-size: 12px; color: var(--muted); letter-spacing: 0.08em; }
+        #maps { display: grid; grid-template-columns: repeat(3, minmax(240px, 1fr)); gap: 14px; overflow-x: auto; scroll-snap-type: x mandatory; padding: 4px 4px 8px; touch-action: pan-x; }
+        .map { position: relative; text-align: left; border-radius: 18px; padding: 12px; scroll-snap-align: start; transition: transform .2s, border-color .2s, box-shadow .2s; animation: rise .8s cubic-bezier(.2, .8, .2, 1) both; }
+        .map:hover { transform: translateY(-3px); border-color: rgba(240, 196, 106, 0.45); }
+        .map.sel { border-color: var(--gold); box-shadow: 0 0 0 1px var(--gold), 0 16px 44px rgba(240, 196, 106, 0.22); }
+        .map .pv { border-radius: 12px; overflow: hidden; aspect-ratio: 18 / 11; box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.4); }
+        .map .pv svg { display: block; width: 100%; height: 100%; }
+        .map h3 { margin: 12px 2px 2px; font-family: var(--display); font-weight: 700; font-size: 17px; display: flex; justify-content: space-between; align-items: center; }
+        .map p { margin: 0 2px 10px; font-size: 12.5px; color: var(--muted); line-height: 1.4; }
+        .map .foot { display: flex; justify-content: space-between; align-items: center; margin: 0 2px; font-size: 12px; color: var(--muted); }
+        .skulls { display: flex; gap: 3px; } .skulls i { width: 9px; height: 9px; border-radius: 2px; transform: rotate(45deg); background: rgba(255, 255, 255, 0.12); } .skulls i.on { background: var(--ember); box-shadow: 0 0 6px var(--ember); }
+        .stars { letter-spacing: 2px; color: rgba(255, 255, 255, 0.15); font-size: 14px; } .stars b { color: var(--gold); font-weight: 400; text-shadow: 0 0 8px rgba(240, 196, 106, 0.6); }
+
+        /* ---------- HUD ---------- */
+        #hud { position: fixed; inset: 0; pointer-events: none; z-index: 5; }
+        #hud > * { pointer-events: auto; }
+        .tl { position: absolute; top: calc(14px + env(safe-area-inset-top)); left: calc(14px + env(safe-area-inset-left)); display: flex; gap: 8px; animation: drop .5s both; }
+        @keyframes drop { from { opacity: 0; transform: translateY(-12px); } }
+        .pill { height: 50px; padding: 0 18px 0 12px; border-radius: 14px; display: flex; align-items: center; gap: 10px; font-weight: 900; font-size: 20px; }
+        .pill .lab { display: block; font-size: 9.5px; letter-spacing: 0.2em; color: var(--muted); font-weight: 800; line-height: 1; margin-bottom: 2px; }
+        .pill .v { line-height: 1; }
+        .pill svg { width: 28px; height: 28px; }
+        .pill.bump .v { animation: bump .35s; }
+        .pill.hurt { animation: shake .4s; border-color: rgba(255, 90, 79, 0.7); }
+        @keyframes bump { 40% { transform: scale(1.18); color: var(--gold); } }
+        @keyframes shake { 20%, 60% { transform: translateX(-4px); } 40%, 80% { transform: translateX(4px); } }
+        .tc { position: absolute; top: calc(14px + env(safe-area-inset-top)); left: 50%; transform: translateX(-50%); display: flex; align-items: stretch; gap: 8px; animation: drop .5s .05s both; }
+        .wavebox { border-radius: 14px; padding: 7px 16px 8px; min-width: 132px; display: flex; flex-direction: column; justify-content: center; }
+        .wavebox .lab { font-size: 9.5px; letter-spacing: 0.22em; color: var(--muted); font-weight: 800; }
+        .wavebox .big { font-family: var(--display); font-weight: 800; font-size: 22px; line-height: 1.05; }
+        .wavebox .big small { font-family: var(--ui); font-size: 13px; color: var(--muted); font-weight: 700; }
+        .wbar { height: 4px; border-radius: 2px; background: rgba(255, 255, 255, 0.08); margin-top: 5px; overflow: hidden; }
+        #h-wbar { height: 100%; width: 0; background: linear-gradient(90deg, var(--gold-2), var(--gold)); transition: width .4s; }
+        .nextbox { border-radius: 14px; padding: 7px 10px 8px 14px; display: flex; align-items: center; gap: 12px; }
+        .nextbox .lab { font-size: 9.5px; letter-spacing: 0.22em; color: var(--muted); font-weight: 800; }
+        #h-next { display: flex; gap: 6px; margin-top: 4px; }
+        .echip { display: inline-flex; align-items: center; gap: 5px; height: 24px; padding: 0 8px; border-radius: 7px; background: rgba(255, 255, 255, 0.06); font-size: 12px; font-weight: 800; }
+        .echip i { width: 9px; height: 9px; border-radius: 50%; box-shadow: 0 0 6px currentColor; }
+        .echip.boss { background: rgba(255, 138, 61, 0.18); color: #ffc49b; }
+        #b-call { position: relative; height: 44px; padding: 0 14px 0 10px; gap: 8px; border-radius: 11px; }
+        #b-call .ring { width: 26px; height: 26px; transform: rotate(-90deg); }
+        #b-call .ring circle { fill: none; stroke-width: 3.5; }
+        #b-call .ring .bg { stroke: rgba(42, 26, 5, 0.25); }
+        #call-arc { stroke: #2a1a05; stroke-linecap: round; transition: stroke-dasharray .3s linear; }
+        #b-call .bonus { font-size: 11px; font-weight: 900; padding: 2px 6px; border-radius: 6px; background: rgba(42, 26, 5, 0.18); }
+        .tr { position: absolute; top: calc(14px + env(safe-area-inset-top)); right: calc(14px + env(safe-area-inset-right)); display: flex; gap: 8px; align-items: center; animation: drop .5s .1s both; }
+        .tr .seg { height: 50px; align-items: center; border-radius: 14px; background: var(--glass); border: 1px solid var(--line); backdrop-filter: blur(14px); }
+        .tr .iconbtn { width: 50px; height: 50px; border-radius: 14px; }
+
+        #boss { position: absolute; top: calc(78px + env(safe-area-inset-top)); left: 50%; transform: translateX(-50%); width: min(460px, 70vw); text-align: center; pointer-events: none; }
+        #boss .nm { font-family: var(--display); font-weight: 800; font-size: 14px; letter-spacing: 0.2em; color: #ffc49b; text-shadow: 0 2px 8px #000; }
+        #boss .bar { margin-top: 5px; height: 12px; border-radius: 6px; background: rgba(0, 0, 0, 0.6); border: 1px solid rgba(255, 138, 61, 0.5); overflow: hidden; box-shadow: 0 0 20px rgba(255, 90, 40, 0.3); }
+        #boss-fill { height: 100%; width: 100%; background: linear-gradient(90deg, #ff5a2a, #ffb04d); transition: width .2s; }
+
+        .buildbar { position: absolute; bottom: calc(14px + env(safe-area-inset-bottom)); left: 50%; transform: translateX(-50%); display: flex; gap: 8px; padding: 8px; border-radius: 20px; animation: up .5s .1s both; }
+        @keyframes up { from { opacity: 0; transform: translate(-50%, 14px); } }
+        .tcard { position: relative; width: 108px; padding: 8px 8px 9px; border-radius: 14px; display: flex; flex-direction: column; align-items: center; gap: 4px; background: rgba(255, 255, 255, 0.035); border: 1px solid var(--line-2); transition: transform .15s, background .15s, border-color .15s, opacity .2s; }
+        .tcard:hover:not(.poor) { transform: translateY(-3px); background: rgba(255, 255, 255, 0.07); border-color: var(--tc); }
+        .tcard.on { border-color: var(--tc); background: color-mix(in srgb, var(--tc) 16%, transparent); box-shadow: 0 0 0 1px var(--tc), 0 8px 24px color-mix(in srgb, var(--tc) 30%, transparent); }
+        .tcard.poor { opacity: 0.45; }
+        .tcard .tic { width: 46px; height: 46px; border-radius: 12px; display: grid; place-items: center; background: radial-gradient(circle at 50% 35%, color-mix(in srgb, var(--tc) 40%, transparent), rgba(0, 0, 0, 0.25) 70%); }
+        .tcard .tic svg { width: 32px; height: 32px; }
+        .tcard .nm { font-size: 12px; font-weight: 800; white-space: nowrap; }
+        .tcard .cost { display: flex; align-items: center; gap: 4px; font-size: 13px; font-weight: 900; color: var(--gold); }
+        .tcard .cost svg { width: 13px; height: 13px; }
+        .tcard kbd { position: absolute; top: 6px; right: 6px; }
+        .tcard .tip { position: absolute; bottom: calc(100% + 12px); left: 50%; transform: translateX(-50%) translateY(6px); width: 220px; padding: 12px 14px; border-radius: 14px; text-align: left; opacity: 0; pointer-events: none; transition: opacity .15s, transform .15s; background: #1c2030; border: 1px solid var(--line); box-shadow: var(--shadow); }
+        .tcard:hover .tip { opacity: 1; transform: translateX(-50%); }
+        .tip b { display: block; font-family: var(--display); font-size: 14px; color: var(--tc); margin-bottom: 3px; }
+        .tip p { margin: 0 0 8px; font-size: 12.5px; color: #cfc6b2; line-height: 1.4; }
+        .tip .st { display: grid; grid-template-columns: auto 1fr; gap: 3px 10px; font-size: 12px; } .tip .st span { color: var(--muted); } .tip .st em { font-style: normal; font-weight: 800; text-align: right; }
+
+        #insp { position: absolute; right: calc(14px + env(safe-area-inset-right)); top: 50%; transform: translateY(-50%); width: 290px; border-radius: 20px; padding: 16px; animation: slide .35s cubic-bezier(.2, .9, .3, 1) both; }
+        @keyframes slide { from { opacity: 0; transform: translate(24px, -50%); } }
+        .i-head { display: flex; gap: 12px; align-items: center; }
+        .i-head .tic { width: 54px; height: 54px; border-radius: 14px; display: grid; place-items: center; background: radial-gradient(circle at 50% 35%, color-mix(in srgb, var(--tc) 45%, transparent), rgba(0, 0, 0, 0.3) 70%); border: 1px solid color-mix(in srgb, var(--tc) 40%, transparent); }
+        .i-head .tic svg { width: 36px; height: 36px; }
+        .i-head h3 { margin: 0; font-family: var(--display); font-size: 17px; }
+        .pips { display: flex; gap: 5px; margin-top: 5px; } .pips i { width: 22px; height: 6px; border-radius: 3px; background: rgba(255, 255, 255, 0.12); } .pips i.on { background: linear-gradient(90deg, var(--gold-2), var(--gold)); box-shadow: 0 0 8px rgba(240, 196, 106, 0.5); }
+        #i-close { position: absolute; top: 12px; right: 12px; width: 32px; height: 32px; border-radius: 9px; display: grid; place-items: center; }
+        #i-close:hover { background: rgba(255, 255, 255, 0.08); }
+        #i-close svg { width: 14px; height: 14px; fill: var(--muted); }
+        .i-stats { margin: 14px 0 12px; display: grid; gap: 6px; }
+        .i-stats div { display: flex; justify-content: space-between; align-items: baseline; padding: 7px 10px; border-radius: 9px; background: rgba(255, 255, 255, 0.04); font-size: 13px; }
+        .i-stats span { color: var(--muted); font-weight: 700; }
+        .i-stats em { font-style: normal; font-weight: 900; } .i-stats em small { color: var(--emerald); font-weight: 900; margin-left: 6px; }
+        .i-meta { display: flex; justify-content: space-between; font-size: 12px; color: var(--muted); margin-bottom: 12px; } .i-meta b { color: var(--text); }
+        .i-lab { font-size: 10px; letter-spacing: 0.2em; color: var(--muted); font-weight: 800; margin-bottom: 6px; }
+        #i-prio { display: flex; width: 100%; margin-bottom: 14px; } #i-prio button { flex: 1; padding: 0 6px; }
+        .i-btns { display: grid; grid-template-columns: 1.4fr 1fr; gap: 8px; }
+        .i-btns .btn { height: 52px; padding: 0 10px; flex-direction: column; gap: 0; line-height: 1.15; }
+        .i-btns .btn small { font-size: 12px; font-weight: 900; display: inline-flex; align-items: center; gap: 4px; }
+        .i-btns .btn small svg { width: 12px; height: 12px; }
+
+        #banner { position: fixed; top: 24%; left: 0; right: 0; text-align: center; pointer-events: none; z-index: 6; opacity: 0; }
+        #banner.show { animation: banner 2.6s ease forwards; }
+        @keyframes banner { 0% { opacity: 0; transform: scale(1.15); } 15%, 70% { opacity: 1; transform: none; } 100% { opacity: 0; transform: translateY(-10px); } }
+        #banner .k { font-family: var(--display); font-size: 13px; letter-spacing: 0.4em; color: var(--gold); }
+        #banner .t { font-family: var(--display); font-weight: 800; font-size: clamp(34px, 5vw, 58px); text-shadow: 0 4px 24px rgba(0, 0, 0, 0.7); background: linear-gradient(180deg, #fff6dc, #f0c46a); -webkit-background-clip: text; background-clip: text; color: transparent; }
+        #banner.boss .t { background: linear-gradient(180deg, #ffd0a8, #ff6a2a); -webkit-background-clip: text; background-clip: text; }
+        #toast { position: fixed; bottom: calc(150px + env(safe-area-inset-bottom)); left: 50%; transform: translate(-50%, 8px); padding: 10px 18px; border-radius: 12px; font-size: 13.5px; font-weight: 700; opacity: 0; pointer-events: none; transition: opacity .2s, transform .2s; z-index: 7; white-space: nowrap; }
+        #toast.show { opacity: 1; transform: translate(-50%, 0); }
+        #toast.err { border-color: rgba(255, 90, 79, 0.5); color: #ffc7c2; }
+        #floaters { position: fixed; inset: 0; pointer-events: none; z-index: 4; overflow: hidden; }
+        .fl { position: absolute; font-weight: 900; font-size: 13px; transform: translate(-50%, -50%); text-shadow: 0 1px 3px #000, 0 0 2px #000; animation: fl 0.9s ease-out forwards; white-space: nowrap; }
+        .fl.gold { color: var(--gold); font-size: 15px; animation-duration: 1.2s; }
+        .fl.big { font-size: 22px; }
+        .fl.leak { color: #ff8f86; font-size: 16px; }
+        @keyframes fl { from { opacity: 1; margin-top: 0; } to { opacity: 0; margin-top: -42px; } }
+
+        /* ---------- modals ---------- */
+        .scrim { position: fixed; inset: 0; z-index: 20; display: grid; place-items: center; padding: 16px; background: rgba(8, 9, 13, 0.55); backdrop-filter: blur(3px); -webkit-backdrop-filter: blur(3px); animation: fade .25s both; overflow-y: auto; touch-action: pan-y; }
+        @keyframes fade { from { opacity: 0; } }
+        .modal { position: relative; width: min(460px, 100%); border-radius: 22px; padding: 28px 28px 24px; text-align: center; overflow: hidden; animation: pop .4s cubic-bezier(.2, 1.4, .4, 1) both; background: linear-gradient(180deg, rgba(34, 38, 54, 0.92), rgba(18, 21, 30, 0.94)); }
+        .modal::before { content: ""; position: absolute; inset: 0 0 auto; height: 3px; background: linear-gradient(90deg, transparent, var(--gold), transparent); }
+        @keyframes pop { from { opacity: 0; transform: translateY(12px) scale(0.96); } }
+        .modal h2 { margin: 8px 0 6px; font-family: var(--display); font-weight: 800; font-size: 30px; letter-spacing: 0.02em; }
+        .modal p { margin: 0; color: #cfc6b2; font-size: 14px; line-height: 1.55; }
+        .modal .col { display: grid; gap: 9px; margin-top: 22px; }
+        .modal .btns { display: flex; gap: 10px; justify-content: center; margin-top: 22px; flex-wrap: wrap; }
+        .modal .x { position: absolute; top: 12px; right: 12px; width: 36px; height: 36px; border-radius: 10px; display: grid; place-items: center; }
+        .modal .x:hover { background: rgba(255, 255, 255, 0.08); } .modal .x svg { width: 15px; height: 15px; fill: var(--muted); }
+        .setrow { display: flex; align-items: center; justify-content: space-between; gap: 14px; padding: 13px 0; border-top: 1px solid var(--line-2); text-align: left; font-size: 14px; font-weight: 700; }
+        .setrow:first-of-type { border-top: 0; } .setrow small { display: block; color: var(--muted); font-weight: 600; font-size: 12px; margin-top: 2px; }
+        .switch { width: 46px; height: 28px; border-radius: 14px; background: rgba(255, 255, 255, 0.14); position: relative; transition: background .2s; flex: none; }
+        .switch::after { content: ""; position: absolute; top: 3px; left: 3px; width: 22px; height: 22px; border-radius: 50%; background: #fff; transition: transform .25s cubic-bezier(.3, 1.5, .5, 1); box-shadow: 0 2px 6px rgba(0, 0, 0, 0.4); }
+        .switch[aria-checked="true"] { background: var(--gold-2); } .switch[aria-checked="true"]::after { transform: translateX(18px); }
+        input[type=range] { -webkit-appearance: none; appearance: none; width: 150px; height: 4px; border-radius: 2px; background: linear-gradient(90deg, var(--gold) var(--v, 80%), rgba(255, 255, 255, 0.15) var(--v, 80%)); }
+        input[type=range]::-webkit-slider-thumb { -webkit-appearance: none; width: 18px; height: 18px; border-radius: 50%; background: #fff; box-shadow: 0 2px 8px rgba(0, 0, 0, 0.5); cursor: pointer; }
+        input[type=range]::-moz-range-thumb { width: 18px; height: 18px; border: 0; border-radius: 50%; background: #fff; }
+        .help-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 9px; margin-top: 16px; text-align: left; }
+        .help-grid div { padding: 11px 12px; border-radius: 12px; background: rgba(255, 255, 255, 0.04); font-size: 12.5px; color: #cfc6b2; line-height: 1.45; }
+        .help-grid b { display: flex; align-items: center; gap: 7px; color: var(--text); margin-bottom: 3px; font-size: 13px; }
+        .help-grid b svg { width: 20px; height: 20px; }
+        .keys { display: flex; flex-wrap: wrap; gap: 8px 14px; justify-content: center; margin-top: 14px; font-size: 12px; color: var(--muted); } .keys kbd { margin-right: 4px; }
+        #e-stars { font-size: 46px; letter-spacing: 14px; padding-left: 14px; height: 60px; margin: 4px 0; }
+        #e-stars b { display: inline-block; color: rgba(255, 255, 255, 0.12); font-weight: 400; animation: star .8s cubic-bezier(.2, 1.8, .4, 1) both; }
+        #e-stars b.on { color: var(--gold); text-shadow: 0 0 22px rgba(240, 196, 106, 0.85); }
+        @keyframes star { from { transform: scale(0) rotate(-120deg); opacity: 0; } }
+        .egrid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-top: 16px; }
+        .egrid div { padding: 11px 6px; border-radius: 12px; background: rgba(255, 255, 255, 0.04); border: 1px solid var(--line-2); }
+        .egrid small { display: block; font-size: 9.5px; letter-spacing: 0.18em; color: var(--muted); font-weight: 800; }
+        .egrid span { display: block; margin-top: 3px; font-size: 19px; font-weight: 900; }
+        #m-end.lost .modal::before { background: linear-gradient(90deg, transparent, var(--danger), transparent); }
+        #m-end.lost h2 { color: #ffb3ad; }
+
+        @media (max-width: 900px) {
+            #title { padding-left: 18px; padding-right: 18px; } .t-top { left: 18px; right: 18px; }
+            #maps { grid-template-columns: repeat(3, minmax(230px, 78vw)); }
+            .nextbox { display: none; }
+            .tcard { width: 74px; padding: 6px 4px 7px; } .tcard .nm, .tcard kbd, .tcard .tip { display: none; }
+            .tcard .tic { width: 40px; height: 40px; }
+            #insp { top: auto; bottom: calc(110px + env(safe-area-inset-bottom)); right: 50%; transform: translateX(50%); width: min(340px, calc(100% - 24px)); animation: none; }
+            .pill { height: 44px; font-size: 17px; padding: 0 12px 0 9px; } .pill svg { width: 22px; height: 22px; } .pill .lab { display: none; }
+            .tr .seg button { padding: 0 9px; } .tr .seg, .tr .iconbtn { height: 44px; } .tr .iconbtn { width: 44px; }
+            .wavebox { min-width: 0; padding: 6px 12px; } .wavebox .big { font-size: 18px; }
+            .tc { top: calc(66px + env(safe-area-inset-top)); }
+            #boss { top: calc(124px + env(safe-area-inset-top)); }
+            .help-grid { grid-template-columns: 1fr; }
+        }
+        @media (max-width: 520px) { .tr .seg { display: none; } .logo { font-size: 42px; } .crest svg { width: 54px; } }
+    </style>
+</head>
+
+<body data-state="loading">
+    <svg width="0" height="0" style="position:absolute" aria-hidden="true">
+        <defs>
+            <linearGradient id="gem" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#dff8ff" /><stop offset=".5" stop-color="#7fdcff" /><stop offset="1" stop-color="#3a7fd0" /></linearGradient>
+            <linearGradient id="coin" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ffe7a3" /><stop offset="1" stop-color="#d0902f" /></linearGradient>
+            <linearGradient id="heart" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ffd2f0" /><stop offset=".5" stop-color="#ff7ab8" /><stop offset="1" stop-color="#c23a7a" /></linearGradient>
+            <symbol id="i-coin" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" fill="url(#coin)" stroke="#8a5a14" stroke-width="1.5" /><circle cx="12" cy="12" r="6.5" fill="none" stroke="#b07a25" stroke-width="1.2" /><path d="M12 8.5 13.2 11h2.6l-2.1 1.6.8 2.6-2.5-1.6-2.5 1.6.8-2.6L8.2 11h2.6z" fill="#fff3c9" /></symbol>
+            <symbol id="i-life" viewBox="0 0 24 24"><path d="M12 2 19 9l-7 13L5 9z" fill="url(#heart)" stroke="#7a1f4c" stroke-width="1.2" /><path d="M12 2 9 9h6zM5 9h14" fill="none" stroke="#fff" stroke-opacity=".5" stroke-width="1" /></symbol>
+            <symbol id="t-archer" viewBox="0 0 32 32"><path d="M10 29h12l-1.5-15h-9z" fill="#b8b0a3" /><path d="M9 14h14v-3H9z" fill="#7a5131" /><path d="M16 1l3.5 5L16 10l-3.5-4z" fill="#7fdcff" /><path d="M7 10.5l18-3" stroke="#d9a35b" stroke-width="2" /></symbol>
+            <symbol id="t-cannon" viewBox="0 0 32 32"><rect x="6" y="18" width="20" height="11" rx="2" fill="#a59c90" /><circle cx="16" cy="17" r="6" fill="#4a4442" /><path d="M16 17l11-7" stroke="#3a3433" stroke-width="5" stroke-linecap="round" /><circle cx="27" cy="10" r="2.4" fill="#ff8a3d" /></symbol>
+            <symbol id="t-frost" viewBox="0 0 32 32"><path d="M11 29h10l-2-9h-6z" fill="#c9d6e0" /><path d="M16 2l5 8-5 9-5-9z" fill="#bfe9ff" stroke="#7fc3e8" /><circle cx="7" cy="11" r="1.6" fill="#bfe9ff" /><circle cx="25" cy="9" r="1.6" fill="#bfe9ff" /></symbol>
+            <symbol id="t-storm" viewBox="0 0 32 32"><path d="M12 29h8l-1.5-21h-5z" fill="#3c3850" /><path d="M16 1l3 4-3 4-3-4z" fill="#c49bff" /><path d="M14 13h4M14 18h4M14 23h4" stroke="#c49bff" stroke-width="1.6" /><path d="M24 4l-3 5h3l-3 5" stroke="#e6d4ff" stroke-width="1.3" fill="none" /></symbol>
+        </defs>
+    </svg>
+    <canvas id="view"></canvas>
+    <div id="floaters"></div>
+
+    <div id="loading"><div><svg viewBox="0 0 40 60"><path d="M20 0 36 22 20 60 4 22z" fill="url(#gem)" /><path d="M20 0 13 22h14zM4 22h32" fill="none" stroke="#fff" stroke-opacity=".6" /></svg><p>RAISING THE KEEP</p></div></div>
+
+    <!-- ===== title ===== -->
+    <div id="title" class="hidden">
+        <div class="t-top">
+            <a class="back glass" href="/"><svg class="ic" viewBox="0 0 24 24" fill="currentColor"><path d="M15.4 4.6 14 3.2 5.2 12l8.8 8.8 1.4-1.4L8 12z" /></svg>All games</a>
+            <div class="row">
+                <button class="iconbtn glass" id="t-help" aria-label="How to play"><svg viewBox="0 0 24 24"><path d="M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20zm1 17h-2v-2h2zm2.1-7.7-.9.9C13.4 13 13 13.5 13 15h-2v-.5c0-1.1.4-2.1 1.2-2.8l1.2-1.3A2 2 0 1 0 10 9H8a4 4 0 1 1 7.1 2.3z" /></svg></button>
+                <button class="iconbtn glass" id="t-settings" aria-label="Settings"><svg viewBox="0 0 24 24"><path d="M19.4 13a7.6 7.6 0 0 0 0-2l2.1-1.6-2-3.4-2.5 1a7.4 7.4 0 0 0-1.7-1L15 3.3h-4l-.4 2.7a7.4 7.4 0 0 0-1.7 1l-2.5-1-2 3.4L6.6 11a7.6 7.6 0 0 0 0 2l-2.1 1.6 2 3.4 2.5-1c.5.4 1.1.8 1.7 1l.4 2.7h4l.4-2.7c.6-.2 1.2-.6 1.7-1l2.5 1 2-3.4zM13 15.5a3.5 3.5 0 1 1 0-7 3.5 3.5 0 0 1 0 7z" /></svg></button>
+            </div>
+        </div>
+        <div class="hero">
+            <div class="crest">
+                <svg viewBox="0 0 70 80"><path d="M35 2 66 12v26c0 20-14 33-31 40C18 71 4 58 4 38V12z" fill="#2a2f45" stroke="#f0c46a" stroke-width="2.5" /><path d="M35 9 59 17v21c0 16-11 27-24 33C22 65 11 54 11 38V17z" fill="#1b1f30" /><path d="M35 16 45 34 35 62 25 34z" fill="url(#gem)" /><path d="M35 16 30 34h10zM25 34h20" fill="none" stroke="#fff" stroke-opacity=".6" /></svg>
+                <div><div class="kicker">Tower defense</div><h1 class="logo">Crystal Keep</h1></div>
+            </div>
+            <p class="tagline">Autumn has come to the valley — and so have the shadows. Raise crystal towers along the old road and hold it until the last wave breaks.</p>
+            <div class="row">
+                <button class="btn gold lg" id="t-play"><svg class="ic" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z" /></svg>Defend <span id="t-map">Amber Vale</span></button>
+                <button class="btn lg" id="t-howto">How to play</button>
+            </div>
+            <div class="diffline"><span>Difficulty</span><div class="seg" id="diff"><button data-d="casual">Casual</button><button data-d="normal" class="on">Normal</button><button data-d="heroic">Heroic</button></div><span id="t-diffnote">20 lives · 240 gold</span></div>
+        </div>
+        <div>
+            <div class="gal-head"><h2>Choose your battlefield</h2><span>3 MAPS · 20 WAVES EACH</span></div>
+            <div id="maps"></div>
+        </div>
+    </div>
+
+    <!-- ===== HUD ===== -->
+    <div id="hud" class="hidden">
+        <div class="tl">
+            <div class="pill glass" id="p-lives" title="Lives"><svg><use href="#i-life" /></svg><div><span class="lab">LIVES</span><span class="v num" id="h-lives">20</span></div></div>
+            <div class="pill glass" id="p-gold" title="Gold"><svg><use href="#i-coin" /></svg><div><span class="lab">GOLD</span><span class="v num" id="h-gold">240</span></div></div>
+        </div>
+        <div class="tc">
+            <div class="wavebox glass"><span class="lab" id="h-wlab">WAVE</span><span class="big num"><span id="h-wave">0</span><small> / <span id="h-waves">20</span></small></span><div class="wbar"><div id="h-wbar"></div></div></div>
+            <div class="nextbox glass" id="nextbox"><div><span class="lab" id="h-nextlab">NEXT WAVE</span><div id="h-next"></div></div>
+                <button class="btn gold" id="b-call" title="Call the next wave now (Space)"><svg class="ring" viewBox="0 0 30 30"><circle class="bg" cx="15" cy="15" r="11" /><circle id="call-arc" cx="15" cy="15" r="11" stroke-dasharray="69 69" /></svg><span id="call-txt">Call</span><span class="bonus" id="call-bonus">+0</span></button>
+            </div>
+        </div>
+        <div class="tr">
+            <div class="seg" id="speed"><button data-s="1" class="on">1×</button><button data-s="2">2×</button><button data-s="3">3×</button></div>
+            <button class="iconbtn glass" id="b-pause" aria-label="Pause (P)"><svg viewBox="0 0 24 24"><path d="M7 5h4v14H7zm6 0h4v14h-4z" /></svg></button>
+        </div>
+        <div id="boss" class="hidden"><div class="nm" id="boss-name">STONE GOLEM</div><div class="bar"><div id="boss-fill"></div></div></div>
+        <div class="buildbar glass" id="buildbar"></div>
+        <div id="insp" class="glass hidden">
+            <button id="i-close" aria-label="Close"><svg viewBox="0 0 24 24"><path d="M19 6.4 17.6 5 12 10.6 6.4 5 5 6.4 10.6 12 5 17.6 6.4 19l5.6-5.6 5.6 5.6 1.4-1.4-5.6-5.6z" /></svg></button>
+            <div class="i-head"><div class="tic" id="i-icon"></div><div><h3 id="i-name">Archer Spire</h3><div class="pips" id="i-pips"></div></div></div>
+            <div class="i-stats" id="i-stats"></div>
+            <div class="i-meta"><span>Defeated <b id="i-kills">0</b></span><span>Damage <b id="i-dmg">0</b></span></div>
+            <div class="i-lab">TARGET</div>
+            <div class="seg" id="i-prio"><button data-p="first">First</button><button data-p="last">Last</button><button data-p="strong">Strong</button><button data-p="close">Close</button></div>
+            <div class="i-btns">
+                <button class="btn gold" id="i-up"><span id="i-up-t">Upgrade</span><small id="i-up-c"></small></button>
+                <button class="btn danger" id="i-sell"><span>Sell</span><small id="i-sell-c"></small></button>
+            </div>
+        </div>
+    </div>
+    <div id="banner"><div class="k" id="bn-k">WAVE</div><div class="t" id="bn-t">1</div></div>
+    <div id="toast" class="glass"></div>
+
+    <!-- ===== modals ===== -->
+    <div class="scrim hidden" id="m-pause"><div class="modal glass">
+        <div class="kicker">Paused</div><h2>Hold the line</h2><p id="mp-sub"></p>
+        <div class="col"><button class="btn gold" id="mp-resume">Resume</button><button class="btn" id="mp-settings">Settings</button><button class="btn" id="mp-restart">Restart map</button><button class="btn" id="mp-menu">Leave to map select</button></div>
+    </div></div>
+
+    <div class="scrim hidden" id="m-settings"><div class="modal glass">
+        <button class="x" id="ms-close" aria-label="Close"><svg viewBox="0 0 24 24"><path d="M19 6.4 17.6 5 12 10.6 6.4 5 5 6.4 10.6 12 5 17.6 6.4 19l5.6-5.6 5.6 5.6 1.4-1.4-5.6-5.6z" /></svg></button>
+        <div class="kicker">Settings</div><h2>War council</h2>
+        <div style="margin-top:14px">
+            <div class="setrow"><span>Sound</span><input type="range" id="s-vol" min="0" max="100" value="80" aria-label="Volume"></div>
+            <div class="setrow"><span>Damage numbers<small>Floating numbers when enemies are hit</small></span><button class="switch" id="s-dmg" role="switch" aria-checked="true" aria-label="Damage numbers"></button></div>
+            <div class="setrow"><span>Show all ranges<small>Draw every tower's range ring</small></span><button class="switch" id="s-ranges" role="switch" aria-checked="false" aria-label="Show all ranges"></button></div>
+            <div class="setrow"><span>Auto-call waves<small>Start the next wave as soon as one clears</small></span><button class="switch" id="s-auto" role="switch" aria-checked="false" aria-label="Auto-call waves"></button></div>
+        </div>
+    </div></div>
+
+    <div class="scrim hidden" id="m-help"><div class="modal glass" style="width:min(560px,100%)">
+        <button class="x" id="mh-close" aria-label="Close"><svg viewBox="0 0 24 24"><path d="M19 6.4 17.6 5 12 10.6 6.4 5 5 6.4 10.6 12 5 17.6 6.4 19l5.6-5.6 5.6 5.6 1.4-1.4-5.6-5.6z" /></svg></button>
+        <div class="kicker">How to play</div><h2>Defend the crystal</h2>
+        <p>Shadow creatures walk the road from the violet rift to your Keep. Build towers on the meadow plots beside the road. Each creature that reaches the Keep costs lives.</p>
+        <div class="help-grid">
+            <div><b><svg><use href="#t-archer" /></svg>Archer Spire</b>Cheap, fast and accurate. Shoots flyers.</div>
+            <div><b><svg><use href="#t-cannon" /></svg>Ember Cannon</b>Explosive splash for crowds. Can't hit flyers.</div>
+            <div><b><svg><use href="#t-frost" /></svg>Frost Crystal</b>Slows everything near its target.</div>
+            <div><b><svg><use href="#t-storm" /></svg>Storm Obelisk</b>Lightning chains between enemies.</div>
+            <div><b>Upgrade &amp; target</b>Click a tower to upgrade it, pick who it shoots first, or sell it for 70%.</div>
+            <div><b>Call waves early</b>Calling the next wave before the timer ends earns bonus gold.</div>
+        </div>
+        <div class="keys"><span><kbd>1</kbd>–<kbd>4</kbd>Build</span><span><kbd>U</kbd>Upgrade</span><span><kbd>X</kbd>Sell</span><span><kbd>Tab</kbd>Target</span><span><kbd>Space</kbd>Call wave</span><span><kbd>F</kbd>Speed</span><span><kbd>Esc</kbd>Cancel / pause</span></div>
+        <div class="btns"><button class="btn gold" id="mh-ok">To battle</button></div>
+    </div></div>
+
+    <div class="scrim hidden" id="m-end"><div class="modal glass">
+        <div class="kicker" id="e-k">Victory</div><h2 id="e-t">The Keep stands</h2>
+        <div id="e-stars"></div>
+        <p id="e-msg"></p>
+        <div class="egrid">
+            <div><small>WAVES</small><span id="e-waves">20/20</span></div>
+            <div><small>LIVES</small><span id="e-lives">20</span></div>
+            <div><small>DEFEATED</small><span id="e-kills">0</span></div>
+            <div><small>TOWERS</small><span id="e-towers">0</span></div>
+            <div><small>GOLD EARNED</small><span id="e-gold">0</span></div>
+            <div><small>TIME</small><span id="e-time">0:00</span></div>
+        </div>
+        <div class="btns"><button class="btn" id="e-menu">Map select</button><button class="btn gold" id="e-again">Play again</button></div>
+    </div></div>
+
+    <script type="module" src="main.js"></script>
+</body>
+
+</html>

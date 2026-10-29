@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+<title>Last Light</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,700;1,9..144,500&family=Nunito:wght@400;600;800&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
+<style>
+  :root { --ink: #fff7ea; --muted: #f0dcc0; --glass: rgba(34, 18, 12, 0.42); --line: rgba(255, 230, 190, 0.22); --glow: #ffd36b; --leaf: #b8e07a; --cool: #9fc4ff; --warn: #ff7a5c; }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; height: 100%; overflow: hidden; background: #2a1a14; color: var(--ink); font-family: "Nunito", system-ui, sans-serif; user-select: none; -webkit-user-select: none; touch-action: none; }
+  #view { position: fixed; inset: 0; width: 100%; height: 100%; display: block; }
+  .hide { display: none !important; }
+  .glass { background: var(--glass); border: 1px solid var(--line); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); border-radius: 16px; }
+  .serif { font-family: "Fraunces", Georgia, serif; }
+  #loading { position: fixed; inset: 0; z-index: 20; display: grid; place-items: center; text-align: center; background: radial-gradient(ellipse at 50% 70%, #a8532a 0%, #4a2018 45%, #170c0a 100%); transition: opacity 1.2s; }
+  #loading.out { opacity: 0; pointer-events: none; }
+  .logo { font-family: "Fraunces", Georgia, serif; font-weight: 700; font-size: clamp(44px, 9vw, 104px); line-height: 1; letter-spacing: .01em; color: #fff3df; text-shadow: 0 0 40px rgba(255, 190, 90, .55), 0 4px 18px rgba(0, 0, 0, .4); }
+  .logo small { display: block; margin-top: 12px; font: italic 500 clamp(15px, 2.2vw, 20px) "Fraunces", Georgia, serif; letter-spacing: .04em; color: var(--muted); text-shadow: none; }
+  #ld-msg { margin-top: 18px; font-weight: 600; letter-spacing: .1em; color: var(--muted); font-size: 14px; }
+  .bar { width: min(280px, 70vw); height: 4px; border-radius: 4px; background: rgba(255, 255, 255, .14); margin: 16px auto 0; overflow: hidden; } #ld-bar { display: block; height: 100%; width: 0; background: var(--glow); box-shadow: 0 0 12px var(--glow); transition: width .2s; }
+  #hud { position: fixed; inset: 0; pointer-events: none; }
+  #shake { position: absolute; inset: 0; }
+  /* top left: lights and fireflies */
+  #status { position: absolute; left: 16px; top: max(14px, env(safe-area-inset-top)); padding: 12px 16px 12px; min-width: 210px; }
+  #status h2 { margin: 0 0 6px; font: 700 13px "Nunito", sans-serif; letter-spacing: .16em; color: var(--muted); text-transform: uppercase; display: flex; justify-content: space-between; gap: 12px; }
+  #status h2 b { font: 700 20px "Fraunces", Georgia, serif; letter-spacing: 0; color: var(--ink); text-transform: none; }
+  #caps, #flies { display: flex; gap: 6px; margin-bottom: 8px; }
+  .cap { width: 18px; height: 14px; border-radius: 9px 9px 3px 3px; background: rgba(160, 175, 210, .35); position: relative; }
+  .cap::after { content: ""; position: absolute; left: 7px; bottom: -6px; width: 4px; height: 7px; border-radius: 2px; background: rgba(230, 220, 200, .5); }
+  .cap.part { background: linear-gradient(90deg, rgba(160, 200, 255, .8), rgba(160, 175, 210, .35)); }
+  .cap.lit { background: var(--glow); box-shadow: 0 0 10px var(--glow), 0 0 22px rgba(255, 200, 90, .6); }
+  #flies { margin: 12px 0 0; } .fly { width: 9px; height: 9px; border-radius: 50%; background: rgba(255, 255, 255, .14); border: 1px solid rgba(255, 255, 255, .2); }
+  .fly.on { background: #d8ff7a; border-color: #f2ffc8; box-shadow: 0 0 8px #c8ff6a, 0 0 16px rgba(200, 255, 100, .6); }
+  #status small { display: block; margin-top: 4px; font-size: 11px; letter-spacing: .14em; color: var(--muted); text-transform: uppercase; }
+  /* top centre: the sun's arc */
+  #sun { position: absolute; left: 50%; top: max(10px, env(safe-area-inset-top)); transform: translateX(-50%); width: 130px; padding: 6px 5px 4px; text-align: center; }
+  #sun svg { display: block; width: 120px; height: 62px; } #dusk { font: italic 500 13px "Fraunces", Georgia, serif; color: var(--muted); }
+  /* top right: the owl */
+  #hush { position: absolute; right: 16px; top: max(14px, env(safe-area-inset-top)); padding: 9px 14px; display: flex; align-items: center; gap: 10px; font-weight: 700; font-size: 13px; transition: background .3s, border-color .3s, opacity .4s; }
+  #hush .eye { width: 26px; height: 16px; border-radius: 50%; background: radial-gradient(circle at 50% 50%, #1a0d05 0 30%, #f0b030 32% 60%, #6a4512 62%); box-shadow: 0 0 10px rgba(240, 176, 48, .6); }
+  #hush.off { opacity: 0; } #hush.seen { border-color: rgba(255, 190, 90, .55); } #hush.lock { background: rgba(120, 20, 10, .55); border-color: var(--warn); animation: pulse .4s infinite alternate; }
+  @keyframes pulse { to { box-shadow: 0 0 26px rgba(255, 90, 50, .6); } }
+  /* bottom centre: compass, captions */
+  #compass { position: absolute; left: 50%; bottom: max(22px, env(safe-area-inset-bottom)); transform: translateX(-50%); padding: 8px 16px 8px 10px; display: flex; align-items: center; gap: 10px; }
+  #arrow { width: 30px; height: 30px; transition: transform .15s linear; } #compass b { font: 700 15px "Fraunces", Georgia, serif; } #compass span { display: block; font-size: 11px; letter-spacing: .1em; color: var(--muted); text-transform: uppercase; }
+  #caption { position: absolute; left: 50%; bottom: calc(max(22px, env(safe-area-inset-bottom)) + 70px); transform: translate(-50%, 8px); max-width: min(620px, calc(100vw - 32px)); text-align: center; font: italic 500 clamp(17px, 2.4vw, 22px) "Fraunces", Georgia, serif; color: #fff6e6; text-shadow: 0 2px 12px rgba(0, 0, 0, .8), 0 0 30px rgba(0, 0, 0, .5); opacity: 0; transition: opacity .6s, transform .6s; }
+  #caption.show { opacity: 1; transform: translate(-50%, 0); }
+  #banner { position: absolute; left: 50%; top: 26%; transform: translate(-50%, -10px); text-align: center; opacity: 0; transition: opacity .7s, transform .7s; white-space: nowrap; }
+  #banner.show { opacity: 1; transform: translate(-50%, 0); }
+  #b-title { font: 700 clamp(30px, 5vw, 52px) "Fraunces", Georgia, serif; color: #fff1d0; text-shadow: 0 0 30px rgba(255, 200, 90, .8), 0 3px 14px rgba(0, 0, 0, .6); } #b-sub { margin-top: 4px; font: italic 500 18px "Fraunces", Georgia, serif; color: var(--muted); text-shadow: 0 2px 10px rgba(0, 0, 0, .7); }
+  #help { position: absolute; left: 16px; bottom: max(16px, env(safe-area-inset-bottom)); padding: 9px 14px; font-size: 13px; line-height: 1.8; color: var(--muted); }
+  #help kbd { display: inline-block; min-width: 20px; text-align: center; font: 800 11px "Nunito", sans-serif; padding: 0 5px; border: 1px solid var(--line); border-radius: 5px; color: #fff; background: rgba(255, 255, 255, .1); }
+  #fps { position: absolute; right: 14px; bottom: max(12px, env(safe-area-inset-bottom)); font-size: 11px; padding: 3px 8px; opacity: .7; }
+  #devtag { position: absolute; right: 14px; top: calc(max(14px, env(safe-area-inset-top)) + 52px); font: 800 11px "Nunito", sans-serif; letter-spacing: .14em; padding: 4px 10px; color: var(--leaf); }
+  #mute { position: absolute; right: 14px; bottom: calc(max(12px, env(safe-area-inset-bottom)) + 30px); font-size: 11px; color: var(--muted); opacity: .7; }
+  /* cards */
+  .card { position: fixed; left: 50%; top: 50%; transform: translate(-50%, -50%); width: min(560px, calc(100vw - 32px)); padding: 30px 32px 26px; text-align: center; z-index: 10; pointer-events: auto; }
+  .card h1 { margin: 0; font: 700 clamp(38px, 6vw, 58px) "Fraunces", Georgia, serif; line-height: 1; text-shadow: 0 0 30px rgba(255, 190, 90, .45); }
+  .card .lede { margin: 6px 0 0; font: italic 500 16px "Fraunces", Georgia, serif; color: var(--glow); }
+  .card p { margin: 14px 0; font-size: 16px; line-height: 1.6; color: #f6e7d2; }
+  .card .keys { font-size: 13px; color: var(--muted); }
+  .btn { display: inline-block; margin-top: 6px; padding: 11px 30px; border-radius: 30px; border: 0; background: linear-gradient(180deg, #ffe08a, #f2b13c); color: #3a2208; font: 800 16px "Nunito", sans-serif; letter-spacing: .08em; cursor: pointer; box-shadow: 0 0 24px rgba(255, 200, 90, .5); }
+  .btn:focus-visible { outline: 3px solid #fff; outline-offset: 3px; }
+  @media (max-width: 640px) { #status { min-width: 0; padding: 9px 12px; } #help { display: none; } #hush { top: auto; bottom: calc(max(22px, env(safe-area-inset-bottom)) + 64px); } }
+</style>
+</head>
+<body>
+<canvas id="view"></canvas>
+<div id="loading"><div><div class="logo">Last Light<small>a mouse, a lantern, and the end of the day</small></div><div id="ld-msg">The sun is going down over the old pines…</div><div class="bar"><i id="ld-bar"></i></div></div></div>
+<div id="hud" class="hide"><div id="shake">
+  <div id="status" class="glass">
+    <h2>Lantern-caps <b id="count">0 / 7</b></h2>
+    <div id="caps"></div>
+    <div id="flies"></div>
+    <small>fireflies carried</small>
+  </div>
+  <div id="sun" class="glass"><svg viewBox="0 0 120 62" aria-hidden="true"><path d="M14 56 A46 46 0 0 1 106 56" fill="none" stroke="rgba(255,230,190,.35)" stroke-width="2" stroke-dasharray="3 4"/><line x1="6" y1="56" x2="114" y2="56" stroke="rgba(255,230,190,.5)" stroke-width="1.5"/><circle id="sundot" cx="14" cy="56" r="7" fill="#ffd27a"/></svg><div id="dusk"></div></div>
+  <div id="hush" class="glass off"><i class="eye"></i><span id="hush-t"></span></div>
+  <div id="compass" class="glass hide"><svg id="arrow" viewBox="0 0 30 30" aria-hidden="true"><path d="M15 3 L22 22 L15 18 L8 22 Z" fill="#9fc4ff" stroke="#e6f0ff" stroke-width="1"/></svg><div><b id="c-name"></b><span id="c-dist"></span></div></div>
+  <div id="caption"></div>
+  <div id="banner"><div id="b-title"></div><div id="b-sub"></div></div>
+  <div id="help" class="glass"><kbd>W</kbd><kbd>A</kbd><kbd>S</kbd><kbd>D</kbd> run · <kbd>Shift</kbd> scurry · <kbd>Space</kbd> jump, hold to glide<br>drag or <kbd>Q</kbd><kbd>E</kbd> look around · <kbd>M</kbd> sound · <kbd>H</kbd> hide help</div>
+  <div id="mute"></div>
+  <div id="fps" class="glass"></div>
+  <div id="devtag" class="glass hide">LIVE · AUTO</div>
+</div></div>
+<div id="title" class="card glass hide">
+  <h1>Last Light</h1>
+  <div class="lede">a mouse, a lantern, and the end of the day</div>
+  <p>Every evening the lantern-caps at the feet of the old pines must be woken with fireflies, so the forest's small creatures can find their way home in the dark. Tonight the old lamplighter is ill, and the job falls to <b>Wick</b>, a harvest mouse no taller than a pine cone.</p>
+  <p>Gather fireflies from the long grass and carry them to the <b>seven lantern-caps</b>, three to each, before night falls. And keep to the grass when <b>Old Hush</b> the owl is hunting.</p>
+  <button class="btn" id="start">LIGHT THE LANTERNS</button>
+  <p class="keys">Enter to begin · WASD to run · Shift to scurry · Space to jump (hold to glide)</p>
+  <p class="keys" id="t-best"></p>
+</div>
+<div id="end" class="card glass hide">
+  <h1 id="e-title"></h1>
+  <p id="e-text"></p>
+  <button class="btn" id="again">ANOTHER EVENING</button>
+</div>
+<script>if (/[?&]dev/.test(location.search)) document.getElementById("devtag").classList.remove("hide");</script>
+<script type="module" src="./main.js"></script>
+</body>
+</html>

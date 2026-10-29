@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+<title>Paper Brook – Play Free Online | Classic Games Arcade</title>
+<!-- seo:head -->
+<meta name="description" content="Guide a tiny rower in a paper boat down a sunlit forest brook. Collect petals, dodge rocks and twigs, ride cascades and dry out in sunbeams on the way to the old mill. Free 3D game." />
+<link rel="canonical" href="https://classicgames-flame.vercel.app/paper-brook/" />
+<meta name="robots" content="index, follow, max-image-preview:large" />
+<meta name="theme-color" content="#0b0a14" />
+<link rel="icon" href="/favicon.ico" sizes="32x32" />
+<link rel="icon" href="/icon.svg" type="image/svg+xml" />
+<link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+<link rel="manifest" href="/manifest.webmanifest" />
+<meta property="og:site_name" content="Classic Games Arcade" />
+<meta property="og:type" content="website" />
+<meta property="og:title" content="Paper Brook – Play Free Online | Classic Games Arcade" />
+<meta property="og:description" content="Guide a tiny rower in a paper boat down a sunlit forest brook. Collect petals, dodge rocks and twigs, ride cascades and dry out in sunbeams on the way to the old mill. Free 3D game." />
+<meta property="og:url" content="https://classicgames-flame.vercel.app/paper-brook/" />
+<meta property="og:image" content="https://classicgames-flame.vercel.app/og/paper-brook.jpg" />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+<meta property="og:image:alt" content="Paper Brook gameplay" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="Paper Brook – Play Free Online | Classic Games Arcade" />
+<meta name="twitter:description" content="Guide a tiny rower in a paper boat down a sunlit forest brook. Collect petals, dodge rocks and twigs, ride cascades and dry out in sunbeams on the way to the old mill. Free 3D game." />
+<meta name="twitter:image" content="https://classicgames-flame.vercel.app/og/paper-brook.jpg" />
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "VideoGame",
+      "name": "Paper Brook",
+      "description": "Guide a tiny rower in a paper boat down a sunlit forest brook. Collect petals, dodge rocks and twigs, ride cascades and dry out in sunbeams on the way to the old mill. Free 3D game.",
+      "url": "https://classicgames-flame.vercel.app/paper-brook/",
+      "image": "https://classicgames-flame.vercel.app/thumbs/paper-brook.webp",
+      "genre": [
+        "Adventure",
+        "Casual"
+      ],
+      "gamePlatform": "Web browser",
+      "applicationCategory": "Game",
+      "operatingSystem": "Any",
+      "playMode": "SinglePlayer",
+      "isAccessibleForFree": true,
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "USD",
+        "availability": "https://schema.org/InStock"
+      },
+      "isPartOf": {
+        "@type": "WebSite",
+        "name": "Classic Games Arcade",
+        "url": "https://classicgames-flame.vercel.app/"
+      }
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Games",
+          "item": "https://classicgames-flame.vercel.app/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Paper Brook",
+          "item": "https://classicgames-flame.vercel.app/paper-brook/"
+        }
+      ]
+    }
+  ]
+}
+</script>
+<!-- /seo:head -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;1,9..144,400;1,9..144,600&family=Nunito:wght@400;600;800&display=swap" rel="stylesheet">
+<style>
+  :root { --ink: #fff8ec; --muted: #f3dcc0; --dim: #c9ad8c; --glass: rgba(38, 26, 14, 0.38); --line: rgba(255, 228, 190, 0.28); --gold: #ffcf7a; --rose: #ff9db3; --serif: "Fraunces", Georgia, serif; --ui: "Nunito", system-ui, sans-serif; }
+  * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+  html, body { margin: 0; height: 100%; overflow: hidden; background: #1b140c; color: var(--ink); font-family: var(--ui); user-select: none; -webkit-user-select: none; touch-action: none; }
+  #view { position: fixed; inset: 0; width: 100%; height: 100%; display: block; }
+  .hidden { display: none !important; }
+  button { font: inherit; color: inherit; background: none; border: 0; padding: 0; cursor: pointer; }
+  .glass { background: var(--glass); border: 1px solid var(--line); backdrop-filter: blur(10px) saturate(1.3); -webkit-backdrop-filter: blur(10px) saturate(1.3); }
+  .btn { display: inline-flex; align-items: center; justify-content: center; height: 50px; padding: 0 30px; border-radius: 999px; font-weight: 800; font-size: 15px; letter-spacing: .12em; border: 1px solid var(--line); background: rgba(255, 255, 255, .06); transition: background .15s, transform .15s; text-transform: uppercase; }
+  .btn:hover { background: rgba(255, 255, 255, .16); transform: translateY(-1px); }
+  .btn.pri { border: 0; color: #3a2410; background: linear-gradient(180deg, #fff1d2, #ffc976); box-shadow: 0 6px 30px rgba(255, 190, 100, .35); }
+  .btn.lg { height: 58px; padding: 0 54px; font-size: 17px; }
+  .btn.round { width: 58px; padding: 0; }
+  #loading { position: fixed; inset: 0; z-index: 50; display: grid; place-items: center; background: #1b140c; transition: opacity 1s; font-family: var(--serif); font-style: italic; font-size: 28px; color: var(--muted); }
+  #loading.out { opacity: 0; pointer-events: none; }
+  #title { position: fixed; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: flex-end; padding: 0 16px 7vh; text-align: center; pointer-events: none; background: linear-gradient(0deg, rgba(20, 12, 4, .78), transparent 52%); }
+  #title > * { pointer-events: auto; }
+  .logo { font-family: var(--serif); font-style: italic; font-weight: 600; font-size: clamp(56px, 11vw, 150px); line-height: .9; letter-spacing: -.01em; color: #fff6e4; text-shadow: 0 0 40px rgba(255, 196, 120, .55), 0 2px 0 rgba(120, 70, 20, .3); }
+  .logo small { display: block; font-size: .2em; font-style: normal; letter-spacing: .5em; text-transform: uppercase; font-family: var(--ui); font-weight: 600; color: var(--gold); margin-bottom: 10px; text-shadow: none; }
+  .tag { color: var(--muted); font-family: var(--serif); font-style: italic; font-size: 19px; margin: 14px 0 24px; }
+  .row { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; align-items: center; }
+  .seg { display: inline-flex; border: 1px solid var(--line); border-radius: 999px; overflow: hidden; margin-top: 18px; } .seg button { padding: 9px 18px; font-size: 12px; font-weight: 800; letter-spacing: .14em; color: var(--muted); text-transform: uppercase; } .seg button.on { background: rgba(255, 207, 122, .25); color: #fff; }
+  #t-keys { margin-top: 16px; color: var(--dim); font-size: 13px; line-height: 1.9; } #t-keys kbd { font-family: var(--ui); font-weight: 800; font-size: 11px; padding: 2px 7px; border: 1px solid var(--line); border-radius: 5px; margin: 0 2px; color: var(--ink); background: rgba(255, 255, 255, .05); }
+  #t-best { margin-top: 6px; color: var(--gold); font-size: 13px; letter-spacing: .08em; }
+  #hud { position: fixed; inset: 0; pointer-events: none; }
+  #hud > * { pointer-events: auto; }
+  #tl { position: absolute; top: max(16px, env(safe-area-inset-top)); left: 20px; pointer-events: none; text-shadow: 0 1px 12px rgba(0, 0, 0, .45); }
+  #h-sec { font-family: var(--serif); font-style: italic; font-size: 26px; }
+  #h-time { font-size: 13px; color: var(--muted); letter-spacing: .1em; margin-top: 2px; }
+  #prog { position: relative; width: min(300px, 46vw); height: 4px; border-radius: 4px; background: rgba(255, 255, 255, .18); margin-top: 12px; }
+  #prog-i { position: absolute; left: 0; top: 0; bottom: 0; border-radius: 4px; background: linear-gradient(90deg, #ffe9be, var(--gold)); }
+  #prog-b { position: absolute; top: -7px; width: 18px; height: 18px; margin-left: -9px; background: #fff; clip-path: polygon(50% 0, 100% 55%, 85% 100%, 15% 100%, 0 55%); filter: drop-shadow(0 0 4px rgba(255, 220, 160, .9)); }
+  #prog .cp { position: absolute; top: -3px; width: 10px; height: 10px; margin-left: -5px; border-radius: 50%; background: #ffb35c; box-shadow: 0 0 8px #ffb35c; }
+  #tr { position: absolute; top: max(16px, env(safe-area-inset-top)); right: 76px; text-align: right; pointer-events: none; text-shadow: 0 1px 12px rgba(0, 0, 0, .45); }
+  #h-score { font-family: var(--serif); font-size: 40px; font-weight: 600; line-height: 1; }
+  #h-pets { font-size: 15px; color: var(--muted); margin-top: 4px; } #h-pets b { color: var(--rose); }
+  #h-combo { display: inline-block; margin-left: 8px; color: var(--gold); font-weight: 800; opacity: 0; transform: scale(.8); transition: .2s; } #h-combo.on { opacity: 1; transform: scale(1); }
+  #b-pause, #b-cam { position: absolute; top: max(14px, env(safe-area-inset-top)); width: 44px; height: 44px; border-radius: 50%; font-size: 15px; }
+  #b-pause { right: 16px; } #b-cam { right: 16px; top: calc(max(14px, env(safe-area-inset-top)) + 52px); font-size: 18px; }
+  #bl { position: absolute; left: 20px; bottom: max(20px, env(safe-area-inset-bottom)); display: flex; align-items: flex-end; gap: 14px; pointer-events: none; }
+  #dry { position: relative; width: 64px; height: 64px; border-radius: 50%; overflow: hidden; border: 2px solid rgba(255, 240, 220, .6); background: rgba(70, 110, 140, .45); transition: box-shadow .3s; }
+  #dry-i { position: absolute; left: 0; right: 0; bottom: 0; background: linear-gradient(180deg, #fffaf0, #f1e2c6); transition: height .2s; }
+  #dry svg { position: absolute; inset: 0; width: 100%; height: 100%; }
+  #dry.low { border-color: #9cd0ff; animation: pulse .6s infinite alternate; } #dry.sun { box-shadow: 0 0 22px rgba(255, 200, 100, .9); }
+  @keyframes pulse { from { box-shadow: 0 0 0 rgba(120, 190, 255, 0); } to { box-shadow: 0 0 18px rgba(120, 190, 255, .9); } }
+  #dry-l { font-size: 11px; letter-spacing: .2em; color: var(--muted); } #dry-v { font-family: var(--serif); font-size: 26px; }
+  #breath { width: 130px; height: 6px; border-radius: 6px; background: rgba(255, 255, 255, .15); margin-top: 6px; overflow: hidden; } #breath-i { height: 100%; background: linear-gradient(90deg, #bfe8ff, #fff); }
+  #hop { display: inline-block; margin-top: 8px; font-size: 11px; letter-spacing: .16em; color: var(--dim); } #hop.ready { color: #fff; }
+  #banner { position: absolute; top: 26%; left: 50%; transform: translateX(-50%); font-family: var(--serif); font-style: italic; font-size: clamp(34px, 6vw, 64px); opacity: 0; transition: opacity .6s; pointer-events: none; text-shadow: 0 0 30px rgba(255, 190, 110, .8); white-space: nowrap; }
+  #banner.show { opacity: 1; }
+  #toasts { position: absolute; left: 50%; top: 38%; transform: translateX(-50%); pointer-events: none; display: flex; flex-direction: column; align-items: center; }
+  .toast { font-weight: 800; letter-spacing: .08em; color: var(--gold); text-shadow: 0 0 12px rgba(0, 0, 0, .5); animation: rise 1.4s forwards; } .toast.bad { color: #9cd0ff; }
+  @keyframes rise { from { opacity: 0; transform: translateY(10px); } 15% { opacity: 1; } to { opacity: 0; transform: translateY(-30px); } }
+  #sunk { position: fixed; inset: 0; display: grid; place-items: center; pointer-events: none; opacity: 0; transition: opacity .5s; background: radial-gradient(circle, transparent 30%, rgba(20, 40, 60, .5)); font-family: var(--serif); font-style: italic; font-size: clamp(26px, 4vw, 44px); text-align: center; }
+  #sunk.show { opacity: 1; } #sunk small { display: block; font-family: var(--ui); font-style: normal; font-size: 14px; letter-spacing: .15em; color: var(--muted); margin-top: 8px; }
+  #touch { display: none; } @media (pointer: coarse) { #touch { display: block; } #touch button { position: absolute; bottom: 22px; width: 72px; height: 72px; border-radius: 50%; font-weight: 800; font-size: 12px; letter-spacing: .1em; } #t-left { left: 16px; } #t-right { left: 100px; } #t-hop { right: 16px; } #t-puff { right: 100px; } #t-drag { right: 184px; } #bl { bottom: 110px; } }
+  .modal { position: fixed; inset: 0; display: grid; place-items: center; background: rgba(20, 12, 4, .5); z-index: 20; padding: 16px; }
+  .mcard { padding: 28px 34px; text-align: center; min-width: min(380px, 92vw); border-radius: 18px; }
+  .mcard h2 { font-family: var(--serif); font-style: italic; font-weight: 600; font-size: 34px; margin: 4px 0 10px; } .mcard .col { display: flex; flex-direction: column; gap: 10px; margin-top: 18px; align-items: center; }
+  .kicker { font-size: 11px; font-weight: 800; letter-spacing: .4em; color: var(--gold); text-transform: uppercase; }
+  #r-stars { font-size: 44px; letter-spacing: .2em; color: rgba(255, 255, 255, .2); } #r-stars .on { color: var(--gold); text-shadow: 0 0 20px rgba(255, 200, 100, .9); }
+  #r-score { font-family: var(--serif); font-size: 56px; font-weight: 600; line-height: 1.1; }
+  #r-list { margin-top: 8px; min-width: 260px; } #r-list div { display: flex; justify-content: space-between; padding: 3px 4px; font-size: 14px; color: var(--muted); border-bottom: 1px solid rgba(255, 255, 255, .06); } #r-list em { font-style: normal; color: #fff; font-weight: 600; }
+  #r-best { color: var(--gold); margin-top: 10px; }
+  .set-row { display: flex; align-items: center; justify-content: space-between; gap: 16px; margin: 12px 0; color: var(--muted); } input[type=range] { accent-color: #ffcf7a; width: 160px; }
+</style>
+</head>
+<body>
+<canvas id="view"></canvas>
+<div id="loading">folding the boat…</div>
+<div id="title" class="hidden">
+  <div class="logo"><small>a golden-hour journey</small>Paper Brook</div>
+  <div class="tag">Sail a little paper boat home before the sun goes down.</div>
+  <div class="row"><button class="btn pri lg" id="b-play">Set sail</button><button class="btn lg round" id="b-set" aria-label="Settings">⚙</button></div>
+  <div class="seg" id="t-diff"><button data-v="0">Gentle</button><button data-v="1">Brook</button><button data-v="2">Torrent</button></div>
+  <div id="t-keys"><kbd>←</kbd><kbd>→</kbd> steer · <kbd>W</kbd> row · <kbd>S</kbd> slow down · <kbd>Space</kbd> hop · <kbd>C</kbd> camera (try Pip cam)<br>Collect petals · sunbeams dry your boat · rocks, twigs and rough drops soak it</div>
+  <div id="t-best"></div>
+</div>
+<div id="hud" class="hidden">
+  <div id="tl"><div id="h-sec"></div><div id="h-time"></div><div id="prog"><div id="prog-i"></div><div id="prog-b"></div></div></div>
+  <div id="tr"><div id="h-score">0</div><div id="h-pets">✿ <b id="h-pet">0</b> petals<span id="h-combo"></span></div></div>
+  <button id="b-pause" class="glass" aria-label="Pause">❚❚</button>
+  <button id="b-cam" class="glass" aria-label="Camera">◎</button>
+  <div id="bl">
+    <div id="dry"><div id="dry-i"></div><svg viewBox="0 0 64 64"><path d="M14 38 L50 38 L44 46 L20 46 Z M32 18 L40 37 L24 37 Z" fill="none" stroke="rgba(90,60,30,.55)" stroke-width="2" stroke-linejoin="round"/></svg></div>
+    <div><div id="dry-l">DRY</div><div id="dry-v">100%</div><div id="breath"><div id="breath-i"></div></div><div id="hop">HOP</div></div>
+  </div>
+  <div id="banner"></div><div id="toasts"></div>
+  <div id="touch"><button class="glass" id="t-left">◀</button><button class="glass" id="t-right">▶</button><button class="glass" id="t-drag">SLOW</button><button class="glass" id="t-puff">ROW</button><button class="glass" id="t-hop">HOP</button></div>
+</div>
+<div id="sunk">Your boat got soggy…<small>Back to the last lantern</small></div>
+<div class="modal hidden" id="m-pause"><div class="mcard glass"><div class="kicker">Paused</div><h2>Paper Brook</h2><div class="col"><button class="btn pri" id="p-resume">Resume</button><button class="btn" id="p-restart">Restart</button><button class="btn" id="p-set">Settings</button><button class="btn" id="p-title">Quit</button></div></div></div>
+<div class="modal hidden" id="m-res"><div class="mcard glass"><div class="kicker">Home at the mill</div><div id="r-stars"></div><div id="r-score"></div><div id="r-list"></div><div id="r-best"></div><div class="col"><button class="btn pri" id="r-again">Sail again</button><button class="btn" id="r-title">Title</button></div></div></div>
+<div class="modal hidden" id="m-set"><div class="mcard glass"><div class="kicker">Settings</div><h2>Settings</h2>
+  <div class="set-row">Sound <input type="range" id="st-vol" min="0" max="100"></div>
+  <div class="set-row">Music <input type="range" id="st-mus" min="0" max="100"></div>
+  <div class="col"><button class="btn pri" id="st-close">Done</button></div></div></div>
+<script type="module" src="./main.js"></script>
+</body>
+</html>
